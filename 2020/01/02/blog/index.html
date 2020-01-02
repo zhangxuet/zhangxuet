@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hello World | Ting</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Hello World | Ting">
+  <title>blog搭建 | Ting</title>
+  <meta name="keywords" content=" hexo ">
+  <meta name="description" content="blog搭建 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="1、开始搭建 windows环境搭建 &lt;1&gt;    安装  git+nodejs 测试  node -v      git --version {% asset_img node.png Archer主题页面 %}  2、  搭建流程  在某个文件夹下  Git Bash Here，输入  npm install -g hexo开始安装  完成后输入hexo -v检查   在一个空文件">
 <meta property="og:type" content="article">
@@ -215,24 +215,36 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-blog" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Hello World</h1>
+        <h1 class="article-title">blog搭建</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a  data-rel="技术">技术</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color5">hexo</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-31 08:37:56'>2019-12-31 08:37</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-02 23:08:44'>2020-01-02 22:59</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:75</span>
+        <span>字数:456</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -251,7 +263,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -267,15 +279,93 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p><strong>1、开始搭建</strong></p>
+<p>windows环境搭建</p>
+<p>&lt;1&gt;    安装  <code>git+nodejs</code></p>
+<p>测试  <code>node -v</code>      <code>git --version</code></p>
+<pre><code class="{% asset_img node.png Archer主题页面 %}">{% asset_img node.png Archer主题页面 %}</code></pre>
+<p><img src="/2020/01/02/blog/node.png" alt></p>
+<p><strong>2、  搭建流程</strong></p>
+<ol>
+<li>在某个文件夹下  <code>Git Bash Here</code>，输入  <code>npm install -g hexo</code>开始安装</li>
+</ol>
+<p>完成后输入hexo -v检查</p>
+<p><img src="/2020/01/02/blog/hexo-v.png" alt></p>
+<ol>
+<li>在一个空文件夹下（blog）输入  <code>hexo init</code>  初始化文件夹，若生成以下文件说明安装成功</li>
+</ol>
+<p><img src="/2020/01/02/blog/test.png" alt></p>
+<ol>
+<li>输入    <code>hexo g</code>    <code>hexo s</code>    输入    <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>    访问网站</li>
+</ol>
+<p><img src="/2020/01/02/blog/image-20200102160613245.png" alt></p>
+<ol>
+<li>更换主题</li>
+</ol>
+<p>安装hexo主题</p>
+<p>例<a href="https://github.com/yelog/hexo-theme-3-hexo.git" target="_blank" rel="noopener">https://github.com/yelog/hexo-theme-3-hexo.git</a></p>
+<p><code>git clone https://github.com/yelog/hexo-theme-3-hexo.git themes/3-hexo</code></p>
+<p>修改hexo根目录的<code>_config.yml</code></p>
+<pre><code class="theme:">theme: 3-hexo</code></pre>
+<p>输入  <code>hexo s</code>    刷新浏览器可看到修改后的页面</p>
+<p><img src="/2020/01/02/blog/image-20200102161518422.png" alt></p>
+<ol>
+<li><p>在github创建仓库，仓库名与github账号名一致，命名方式为    <code>username.github.io</code></p>
+</li>
+<li><p>在根目录下_config.yml文件,添加如下代码</p>
+<pre><code>deploy:
+  type: git
+  repository: https://github.com/zhangxuet/zhangxuet.github.io.git
+  branch: master</code></pre></li>
+</ol>
+<p><strong>3、检查 SSH KEY</strong></p>
+<ul>
+<li>输入cd ~/.ssh，说明没有SSH KEY</li>
+</ul>
+<p><img src="/2020/01/02/blog/image-20200102162555031.png" alt></p>
+<ul>
+<li>添加SSH KEY</li>
+</ul>
+<p>输入 <code>ssh-keygen -t rsa -C &quot;邮箱名&quot;</code></p>
+<p>一直回车</p>
+<p><img src="/2020/01/02/blog/image-20200102162912687.png" alt></p>
+<ul>
+<li>再次输入命令    <code>cd ~/.ssh</code>   <code>ls</code></li>
+</ul>
+<p><img src="/2020/01/02/blog/image-20200102163014458.png" alt></p>
+<ul>
+<li>github 设置 SSH KEY</li>
+</ul>
+<p><img src="/2020/01/02/blog/image-20200102163351752.png" alt></p>
+<p><img src="/2020/01/02/blog/image-20200102163427240.png" alt></p>
+<ul>
+<li>输入  eval “$(ssh-agent -s)”</li>
+</ul>
+<p>再输入    ssh-add ~/.ssh/id_rsa，添加生成的SSH key到ssh-agent</p>
+<p>查看密匙   </p>
+<p><img src="/2020/01/02/blog/image-20200102164037200.png" alt></p>
+<p><img src="/2020/01/02/blog/image-20200102165043182.png" alt></p>
+<p>或输入 cat ~/.ssh/id_rsa.pub 查看</p>
+<pre><code class="console">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU
+GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3
+Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XA
+t3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/En
+mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
+NrRFi9wrf+M7Q== schacon@mylaptop.local</code></pre>
+<ul>
+<li>将id_ssa文件下的所有内容复制到github SSH KEY  ，输入 <code>ssh -T git@github.com</code>，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了</li>
+</ul>
+<p><img src="/2020/01/02/blog/image-20200102165517185.png" alt></p>
+<ul>
+<li>设置账号信息</li>
+</ul>
+<pre><code>git config --global user.name &quot;zhangxuet&quot;
+git config --global user.email &quot;111111@qq.com&quot;</code></pre><ul>
+<li>部署到 github，分别输入</li>
+</ul>
+<pre><code class="js">hexo g         hexo d        hexo s</code></pre>
+<p>输入<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 就可以访问博客（本地）</p>
+<p>输入https://用户名.github.io就能访问到你自己的github了</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
@@ -285,12 +375,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Hello World</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">75</span></p>
+    <p><span class="copy-title">文章标题:</span>blog搭建</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">456</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-31, 08:37:56</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-31, 08:37:56</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/31/hello-world/" title="Hello World">https://zhangxuet.github.io/2019/12/31/hello-world/</a>
+    <p><span class="copy-title">发布时间:</span>2020-01-02, 22:59:41</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-02, 23:08:44</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/02/blog/" title="blog搭建">https://zhangxuet.github.io/2020/01/02/blog/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

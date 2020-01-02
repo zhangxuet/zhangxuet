@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>blog搭建</title>
+    <url>/2020/01/02/blog/</url>
+    <content><![CDATA[<p><strong>1、开始搭建</strong></p>
+<p>windows环境搭建</p>
+<p>&lt;1&gt;    安装  <code>git+nodejs</code></p>
+<p>测试  <code>node -v</code>      <code>git --version</code></p>
+<pre><code class="{% asset_img node.png Archer主题页面 %}">{% asset_img node.png Archer主题页面 %}</code></pre>
+<p><img src="/2020/01/02/blog/node.png" alt></p>
+<p><strong>2、  搭建流程</strong></p>
+<ol>
+<li>在某个文件夹下  <code>Git Bash Here</code>，输入  <code>npm install -g hexo</code>开始安装</li>
+</ol>
+<p>完成后输入hexo -v检查</p>
+<p><img src="/2020/01/02/blog/hexo-v.png" alt></p>
+<ol>
+<li>在一个空文件夹下（blog）输入  <code>hexo init</code>  初始化文件夹，若生成以下文件说明安装成功</li>
+</ol>
+<p><img src="/2020/01/02/blog/test.png" alt></p>
+<ol>
+<li>输入    <code>hexo g</code>    <code>hexo s</code>    输入    <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>    访问网站</li>
+</ol>
+<p><img src="/2020/01/02/blog/image-20200102160613245.png" alt></p>
+<ol>
+<li>更换主题</li>
+</ol>
+<p>安装hexo主题</p>
+<p>例<a href="https://github.com/yelog/hexo-theme-3-hexo.git" target="_blank" rel="noopener">https://github.com/yelog/hexo-theme-3-hexo.git</a></p>
+<p><code>git clone https://github.com/yelog/hexo-theme-3-hexo.git themes/3-hexo</code></p>
+<p>修改hexo根目录的<code>_config.yml</code></p>
+<pre><code class="theme:">theme: 3-hexo</code></pre>
+<p>输入  <code>hexo s</code>    刷新浏览器可看到修改后的页面</p>
+<p><img src="/2020/01/02/blog/image-20200102161518422.png" alt></p>
+<ol>
+<li><p>在github创建仓库，仓库名与github账号名一致，命名方式为    <code>username.github.io</code></p>
+</li>
+<li><p>在根目录下_config.yml文件,添加如下代码</p>
+<pre><code>deploy:
+  type: git
+  repository: https://github.com/zhangxuet/zhangxuet.github.io.git
+  branch: master</code></pre></li>
+</ol>
+<p><strong>3、检查 SSH KEY</strong></p>
+<ul>
+<li>输入cd ~/.ssh，说明没有SSH KEY</li>
+</ul>
+<p><img src="/2020/01/02/blog/image-20200102162555031.png" alt></p>
+<ul>
+<li>添加SSH KEY</li>
+</ul>
+<p>输入 <code>ssh-keygen -t rsa -C &quot;邮箱名&quot;</code></p>
+<p>一直回车</p>
+<p><img src="/2020/01/02/blog/image-20200102162912687.png" alt></p>
+<ul>
+<li>再次输入命令    <code>cd ~/.ssh</code>   <code>ls</code></li>
+</ul>
+<p><img src="/2020/01/02/blog/image-20200102163014458.png" alt></p>
+<ul>
+<li>github 设置 SSH KEY</li>
+</ul>
+<p><img src="/2020/01/02/blog/image-20200102163351752.png" alt></p>
+<p><img src="/2020/01/02/blog/image-20200102163427240.png" alt></p>
+<ul>
+<li>输入  eval “$(ssh-agent -s)”</li>
+</ul>
+<p>再输入    ssh-add ~/.ssh/id_rsa，添加生成的SSH key到ssh-agent</p>
+<p>查看密匙   </p>
+<p><img src="/2020/01/02/blog/image-20200102164037200.png" alt></p>
+<p><img src="/2020/01/02/blog/image-20200102165043182.png" alt></p>
+<p>或输入 cat ~/.ssh/id_rsa.pub 查看</p>
+<pre><code class="console">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU
+GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3
+Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XA
+t3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/En
+mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
+NrRFi9wrf+M7Q== schacon@mylaptop.local</code></pre>
+<ul>
+<li>将id_ssa文件下的所有内容复制到github SSH KEY  ，输入 <code>ssh -T git@github.com</code>，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了</li>
+</ul>
+<p><img src="/2020/01/02/blog/image-20200102165517185.png" alt></p>
+<ul>
+<li>设置账号信息</li>
+</ul>
+<pre><code>git config --global user.name &quot;zhangxuet&quot;
+git config --global user.email &quot;111111@qq.com&quot;</code></pre><ul>
+<li>部署到 github，分别输入</li>
+</ul>
+<pre><code class="js">hexo g         hexo d        hexo s</code></pre>
+<p>输入<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 就可以访问博客（本地）</p>
+<p>输入https://用户名.github.io就能访问到你自己的github了</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>工具</title>
     <url>/2020/01/02/resources/index/</url>
     <content><![CDATA[]]></content>
