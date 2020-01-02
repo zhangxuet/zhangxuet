@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>工具</title>
+    <url>/2020/01/02/resources/index/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>First</title>
     <url>/2019/12/31/First/</url>
     <content><![CDATA[<p>[TOC]</p>
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><table>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><table>
 <thead>
 <tr>
 <th></th>
