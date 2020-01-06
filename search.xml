@@ -1,6 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>echarts</title>
+    <url>/2020/01/06/echarts/echarts/</url>
+    <content><![CDATA[<pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+            &lt;title&gt;
+                Document
+            &lt;/title&gt;
+        &lt;/meta&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;main&quot; style=&quot;width: 1000px;height:600px;&quot;&gt;
+        &lt;/div&gt;
+        &lt;script src=&quot;https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts-en.common.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot;&gt;
+            // 基于准备好的dom，初始化echarts实例
+        var chart = echarts.init(document.getElementById(&#39;main&#39;));
+
+        var app = []
+
+
+        var posList = [
+    &#39;left&#39;, &#39;right&#39;, &#39;top&#39;, &#39;bottom&#39;,
+    &#39;inside&#39;,
+    &#39;insideTop&#39;, &#39;insideLeft&#39;, &#39;insideRight&#39;, &#39;insideBottom&#39;,
+    &#39;insideTopLeft&#39;, &#39;insideTopRight&#39;, &#39;insideBottomLeft&#39;, &#39;insideBottomRight&#39;
+];
+
+app.configParameters = {
+    rotate: {
+        min: -90,
+        max: 90
+    },
+    align: {
+        options: {
+            left: &#39;left&#39;,
+            center: &#39;center&#39;,
+            right: &#39;right&#39;
+        }
+    },
+    verticalAlign: {
+        options: {
+            top: &#39;top&#39;,
+            middle: &#39;middle&#39;,
+            bottom: &#39;bottom&#39;
+        }
+    },
+    position: {
+        options: echarts.util.reduce(posList, function (map, pos) {
+            map[pos] = pos;
+            return map;
+        }, {})
+    },
+    distance: {
+        min: 0,
+        max: 100
+    }
+};
+
+app.config = {
+    rotate: 90,
+    align: &#39;left&#39;,
+    verticalAlign: &#39;middle&#39;,
+    position: &#39;insideBottom&#39;,
+    distance: 15,
+    onChange: function () {
+        var labelOption = {
+            normal: {
+                rotate: app.config.rotate,
+                align: app.config.align,
+                verticalAlign: app.config.verticalAlign,
+                position: app.config.position,
+                distance: app.config.distance
+            }
+        };
+        myChart.setOption({
+            series: [{
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }]
+        });
+    }
+};
+
+
+var labelOption = {
+    normal: {
+        show: true,
+        position: app.config.position,
+        distance: app.config.distance,
+        align: app.config.align,
+        verticalAlign: app.config.verticalAlign,
+        rotate: app.config.rotate,
+        formatter: &#39;{c}  {name|{a}}&#39;,
+        fontSize: 16,
+        rich: {
+            name: {
+                textBorderColor: &#39;#fff&#39;
+            }
+        }
+    }
+};
+
+option = {
+    color: [&#39;#003366&#39;, &#39;#006699&#39;, &#39;#4cabce&#39;, &#39;#e5323e&#39;],
+    tooltip: {
+        trigger: &#39;axis&#39;,
+        axisPointer: {
+            type: &#39;shadow&#39;
+        }
+    },
+    legend: {
+        data: [&#39;Forest&#39;, &#39;Steppe&#39;, &#39;Desert&#39;, &#39;Wetland&#39;]
+    },
+    toolbox: {
+        show: true,
+        orient: &#39;vertical&#39;,
+        left: &#39;right&#39;,
+        top: &#39;center&#39;,
+        feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: [&#39;line&#39;, &#39;bar&#39;, &#39;stack&#39;, &#39;tiled&#39;]},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    calculable: true,
+    xAxis: [
+        {
+            type: &#39;category&#39;,
+            axisTick: {show: false},
+            data: [&#39;2012&#39;, &#39;2013&#39;, &#39;2014&#39;, &#39;2015&#39;, &#39;2016&#39;]
+        }
+    ],
+    yAxis: [
+        {
+            type: &#39;value&#39;
+        }
+    ],
+    series: [
+        {
+            name: &#39;Forest&#39;,
+            type: &#39;bar&#39;,
+            barGap: 0,
+            label: labelOption,
+            data: [320, 332, 301, 334, 390]
+        },
+        {
+            name: &#39;Steppe&#39;,
+            type: &#39;bar&#39;,
+            label: labelOption,
+            data: [220, 182, 191, 234, 290]
+        },
+        {
+            name: &#39;Desert&#39;,
+            type: &#39;bar&#39;,
+            label: labelOption,
+            data: [150, 232, 201, 154, 190]
+        },
+        {
+            name: &#39;Wetland&#39;,
+            type: &#39;bar&#39;,
+            label: labelOption,
+            data: [98, 77, 101, 99, 40]
+        }
+    ]
+};
+
+chart.setOption(option)
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>]]></content>
+      <categories>
+        <category>echarts</category>
+      </categories>
+      <tags>
+        <tag>echarts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo引用本地图片无法显示</title>
+    <url>/2020/01/06/problem/hexoImg/</url>
+    <content><![CDATA[<p><strong>hexo引用本地图片无法显示</strong></p>
+<ul>
+<li>_config.yml文件中修改<code>post_asset_folder: true</code></li>
+<li>安装插件<strong>hexo-asset-image</strong></li>
+</ul>
+<pre><code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code></pre><ul>
+<li><p>打开/node_modules/hexo-asset-image/index.js，将内容更换为下面的代码</p>
+<p>hexo-asset-image版本问题，需要3.0以上版本</p>
+</li>
+</ul>
+<pre><code>&#39;use strict&#39;;
+var cheerio = require(&#39;cheerio&#39;);
+
+// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string
+function getPosition(str, m, i) {
+  return str.split(m, i).join(m).length;
+}
+
+var version = String(hexo.version).split(&#39;.&#39;);
+hexo.extend.filter.register(&#39;after_post_render&#39;, function(data){
+  var config = hexo.config;
+  if(config.post_asset_folder){
+        var link = data.permalink;
+    if(version.length &gt; 0 &amp;&amp; Number(version[0]) == 3)
+       var beginPos = getPosition(link, &#39;/&#39;, 1) + 1;
+    else
+       var beginPos = getPosition(link, &#39;/&#39;, 3) + 1;
+    // In hexo 3.1.1, the permalink of &quot;about&quot; page is like &quot;.../about/index.html&quot;.
+    var endPos = link.lastIndexOf(&#39;/&#39;) + 1;
+    link = link.substring(beginPos, endPos);
+
+    var toprocess = [&#39;excerpt&#39;, &#39;more&#39;, &#39;content&#39;];
+    for(var i = 0; i &lt; toprocess.length; i++){
+      var key = toprocess[i];
+
+      var $ = cheerio.load(data[key], {
+        ignoreWhitespace: false,
+        xmlMode: false,
+        lowerCaseTags: false,
+        decodeEntities: false
+      });
+
+      $(&#39;img&#39;).each(function(){
+        if ($(this).attr(&#39;src&#39;)){
+            // For windows style path, we replace &#39;\&#39; to &#39;/&#39;.
+            var src = $(this).attr(&#39;src&#39;).replace(&#39;\\&#39;, &#39;/&#39;);
+            if(!/http[s]*.*|\/\/.*/.test(src) &amp;&amp;
+               !/^\s*\//.test(src)) {
+              // For &quot;about&quot; page, the first part of &quot;src&quot; can&#39;t be removed.
+              // In addition, to support multi-level local directory.
+              var linkArray = link.split(&#39;/&#39;).filter(function(elem){
+                return elem != &#39;&#39;;
+              });
+              var srcArray = src.split(&#39;/&#39;).filter(function(elem){
+                return elem != &#39;&#39; &amp;&amp; elem != &#39;.&#39;;
+              });
+              if(srcArray.length &gt; 1)
+                srcArray.shift();
+              src = srcArray.join(&#39;/&#39;);
+              $(this).attr(&#39;src&#39;, config.root + link + src);
+              console.info&amp;&amp;console.info(&quot;update link as:--&gt;&quot;+config.root + link + src);
+            }
+        }else{
+            console.info&amp;&amp;console.info(&quot;no src attr, skipped...&quot;);
+            console.info&amp;&amp;console.info($(this));
+        }
+      });
+      data[key] = $.html();
+    }
+  }
+});</code></pre><ul>
+<li>hexo new test会生成一个test.md文件与test文件夹，将图片放入text文件夹下</li>
+<li>_config.yml修改URL的url为你自己的github仓库 <a href="https://username.github.io" target="_blank" rel="noopener">https://username.github.io</a></li>
+<li>在test.md中图片路径改为(编译时会把index.html文件放到test文件夹下，因此图片路径直接引用)</li>
+</ul>
+<pre><code>![](test.jpg)</code></pre>]]></content>
+      <categories>
+        <category>hexo问题</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo代码高亮</title>
+    <url>/2020/01/06/problem/problem/</url>
+    <content><![CDATA[<p><strong>hexo代码高亮</strong></p>
+<ul>
+<li><p>在主题的_config.yml文件中修改highlight为true,可自定义主题</p>
+<pre><code>highlight:
+
+ on: true # true开启代码高亮
+
+ lineNum: true # true显示行号
+
+ theme: kimbie-dark</code></pre></li>
+</ul>
+]]></content>
+      <categories>
+        <category>hexo问题</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>blog搭建</title>
     <url>/2020/01/02/blog/</url>
     <content><![CDATA[<p><strong>1、开始搭建</strong></p>
