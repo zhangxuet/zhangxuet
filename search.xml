@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>离线安装node-sass</title>
+    <url>/2020/02/21/node-sass/node-sass/</url>
+    <content><![CDATA[<h1 id="离线安装node-sass"><a href="#离线安装node-sass" class="headerlink" title="离线安装node-sass"></a>离线安装node-sass</h1><h2 id="查看服务器的node版本"><a href="#查看服务器的node版本" class="headerlink" title="查看服务器的node版本"></a>查看服务器的node版本</h2><p><code>node -p &quot;[process.platform, process.arch, process.versions.modules].join(&#39;-&#39;)&quot;</code></p>
+<h2 id="下载node-sass"><a href="#下载node-sass" class="headerlink" title="下载node-sass"></a>下载node-sass</h2><p>​    去<strong>Github</strong>上下载对象的node-sass版本</p>
+<p>​    下载地址：<a href="https://github.com/sass/node-sass/releases" target="_blank" rel="noopener">https://github.com/sass/node-sass/releases</a> </p>
+<h2 id="配置离线信息"><a href="#配置离线信息" class="headerlink" title="配置离线信息"></a>配置离线信息</h2><ol>
+<li><p>在项目里根目录下新建lib文件夹</p>
+</li>
+<li><p>将下载的win32-x64-57_binding.node` 复制到lib中</p>
+</li>
+<li><p>配置package.json中，sass的离线配置</p>
+<pre><code class="json">&quot;nodeSassConfig&quot;: {
+  &quot;binaryPath&quot;: &quot;./lib/linux-x64-57_binding.node&quot;
+}</code></pre>
+<h2 id="设置sass路径"><a href="#设置sass路径" class="headerlink" title="设置sass路径"></a>设置sass路径</h2><pre><code>set SASS_BINARY_PATH=D:/nodejs/.nodes/win32-x64-57_binding.node</code></pre><h2 id="然后安装node-sass模块"><a href="#然后安装node-sass模块" class="headerlink" title="然后安装node-sass模块"></a>然后安装node-sass模块</h2><pre><code>npm i node-sass -D --verbose</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>node</category>
+      </categories>
+      <tags>
+        <tag>node-sass</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>echarts</title>
     <url>/2020/01/06/echarts/echarts/</url>
     <content><![CDATA[<pre><code>
