@@ -13,9 +13,9 @@
 </li>
 <li><p>配置package.json中，sass的离线配置</p>
 <pre><code class="json">&quot;nodeSassConfig&quot;: {
-  &quot;binaryPath&quot;: &quot;./lib/linux-x64-57_binding.node&quot;
+  &quot;binaryPath&quot;: &quot;./lib/win32-x64-72_binding.node&quot;
 }</code></pre>
-<h2 id="设置sass路径"><a href="#设置sass路径" class="headerlink" title="设置sass路径"></a>设置sass路径</h2><pre><code>set SASS_BINARY_PATH=D:/nodejs/.nodes/win32-x64-57_binding.node</code></pre><h2 id="然后安装node-sass模块"><a href="#然后安装node-sass模块" class="headerlink" title="然后安装node-sass模块"></a>然后安装node-sass模块</h2><pre><code>npm i node-sass -D --verbose</code></pre></li>
+<h2 id="设置sass路径"><a href="#设置sass路径" class="headerlink" title="设置sass路径"></a>设置sass路径</h2><pre><code>set SASS_BINARY_PATH=D:/nodejs/lib/win32-x64-72_binding.node</code></pre><h2 id="然后安装node-sass模块"><a href="#然后安装node-sass模块" class="headerlink" title="然后安装node-sass模块"></a>然后安装node-sass模块</h2><pre><code>npm i node-sass -D --verbose</code></pre></li>
 </ol>
 ]]></content>
       <categories>
