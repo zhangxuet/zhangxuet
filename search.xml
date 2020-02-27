@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>VUE打印功能</title>
+    <url>/2020/02/27/vue/element-print/</url>
+    <content><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>npm install vue-print-nb --save</code></pre><h1 id="在main-js文件中引入"><a href="#在main-js文件中引入" class="headerlink" title="在main.js文件中引入"></a>在main.js文件中引入</h1><pre><code>import Print from &#39;vue-print-nb&#39;
+Vue.use(Print);</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><pre><code>&lt;div id=&quot;printTest&quot;&gt;　&lt;/div&gt;
+&lt;button v-print=&quot;&#39;#printTest&#39;&quot;&gt;打印&lt;/button&gt;</code></pre><h1 id="如需通过链接地址打印"><a href="#如需通过链接地址打印" class="headerlink" title="如需通过链接地址打印"></a>如需通过链接地址打印</h1><pre><code>window.location.href = 地址</code></pre>]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element表格导出功能</title>
+    <url>/2020/02/27/vue/elemenet-export/</url>
+    <content><![CDATA[<h1 id="安包"><a href="#安包" class="headerlink" title="安包"></a>安包</h1><pre><code>npm install --save xlsx file-saver</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="给表格添加一个id-table-export"><a href="#给表格添加一个id-table-export" class="headerlink" title="给表格添加一个id     table-export"></a>给表格添加一个id     table-export</h2><h2 id="引入导出表格依赖"><a href="#引入导出表格依赖" class="headerlink" title="引入导出表格依赖"></a>引入导出表格依赖</h2><pre><code>import FileSaver from &quot;file-saver&quot;;
+import XLSX from &quot;xlsx&quot;;</code></pre><h2 id="data声明存表格内容的数据tableData"><a href="#data声明存表格内容的数据tableData" class="headerlink" title="data声明存表格内容的数据tableData"></a>data声明存表格内容的数据tableData</h2><h2 id="定义导出excel事件"><a href="#定义导出excel事件" class="headerlink" title="定义导出excel事件"></a>定义导出excel事件</h2><pre><code class="xml">exportExcel() {
+    /* 从表生成工作簿对象 */
+    var wb = XLSX.utils.table_to_book(document.querySelector(&quot;#table-export&quot;));
+    /* 获取二进制字符串作为输出 */
+    var wbout = XLSX.write(wb, {
+    bookType: &quot;xlsx&quot;,
+    bookSST: true,
+    type: &quot;array&quot;
+    });
+    try {
+    FileSaver.saveAs(
+    //Blob 对象表示一个不可变、原始数据的类文件对象。
+    //Blob 表示的不一定是JavaScript原生格式的数据。
+    //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
+    //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
+    new Blob([wbout], { type: &quot;application/octet-stream&quot; }),
+    //设置导出文件名称
+    &quot;sheetjs.xlsx&quot;
+    );
+    } catch (e) {
+    if (typeof console !== &quot;undefined&quot;) console.log(e, wbout);
+    }
+return wbout;
+        }
+    }</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>离线安装node-sass</title>
     <url>/2020/02/21/node-sass/node-sass/</url>
     <content><![CDATA[<h1 id="离线安装node-sass"><a href="#离线安装node-sass" class="headerlink" title="离线安装node-sass"></a>离线安装node-sass</h1><h2 id="查看服务器的node版本"><a href="#查看服务器的node版本" class="headerlink" title="查看服务器的node版本"></a>查看服务器的node版本</h2><p><code>node -p &quot;[process.platform, process.arch, process.versions.modules].join(&#39;-&#39;)&quot;</code></p>

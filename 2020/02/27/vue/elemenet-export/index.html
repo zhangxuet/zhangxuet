@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>blog搭建 | Ting</title>
-  <meta name="keywords" content=" hexo ">
-  <meta name="description" content="blog搭建 | Ting">
+  <title>element表格导出功能 | Ting</title>
+  <meta name="keywords" content=" vue ">
+  <meta name="description" content="element表格导出功能 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离线安装node-sass查看服务器的node版本node -p &quot;[process.platform, process.arch, process.versions.modules].join(&#39;-&#39;)&quot; 下载node-sass​    去Github上下载对象的node-sass版本 ​    下载地址：https:&#x2F;&#x2F;github.com&#x2F;sass&#x2F;nod">
 <meta property="og:type" content="article">
@@ -297,9 +297,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-blog" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-vue/elemenet-export" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">blog搭建</h1>
+        <h1 class="article-title">element表格导出功能</h1>
     
     <div class="article-meta">
         
@@ -307,26 +307,26 @@
         
         <span class="book">
             
-                <a  data-rel="技术">技术</a>
+                <a  data-rel="vue">vue</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color5">hexo</a>
+            <a class="color4">vue</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-02 23:08:44'>2020-01-02 22:59</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-27 18:02:18'>2020-02-27 17:52</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:456</span>
+        <span>字数:234</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -345,7 +345,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安包"><span class="toc-text">安包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#给表格添加一个id-table-export"><span class="toc-text">给表格添加一个id     table-export</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引入导出表格依赖"><span class="toc-text">引入导出表格依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#data声明存表格内容的数据tableData"><span class="toc-text">data声明存表格内容的数据tableData</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义导出excel事件"><span class="toc-text">定义导出excel事件</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -361,93 +361,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>1、开始搭建</strong></p>
-<p>windows环境搭建</p>
-<p>&lt;1&gt;    安装  <code>git+nodejs</code></p>
-<p>测试  <code>node -v</code>      <code>git --version</code></p>
-<pre><code class="{% asset_img node.png Archer主题页面 %}">{% asset_img node.png Archer主题页面 %}</code></pre>
-<p><img src="/2020/01/02/blog/node.png" alt></p>
-<p><strong>2、  搭建流程</strong></p>
-<ol>
-<li>在某个文件夹下  <code>Git Bash Here</code>，输入  <code>npm install -g hexo</code>开始安装</li>
-</ol>
-<p>完成后输入hexo -v检查</p>
-<p><img src="/2020/01/02/blog/hexo-v.png" alt></p>
-<ol>
-<li>在一个空文件夹下（blog）输入  <code>hexo init</code>  初始化文件夹，若生成以下文件说明安装成功</li>
-</ol>
-<p><img src="/2020/01/02/blog/test.png" alt></p>
-<ol>
-<li>输入    <code>hexo g</code>    <code>hexo s</code>    输入    <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>    访问网站</li>
-</ol>
-<p><img src="/2020/01/02/blog/image-20200102160613245.png" alt></p>
-<ol>
-<li>更换主题</li>
-</ol>
-<p>安装hexo主题</p>
-<p>例<a href="https://github.com/yelog/hexo-theme-3-hexo.git" target="_blank" rel="noopener">https://github.com/yelog/hexo-theme-3-hexo.git</a></p>
-<p><code>git clone https://github.com/yelog/hexo-theme-3-hexo.git themes/3-hexo</code></p>
-<p>修改hexo根目录的<code>_config.yml</code></p>
-<pre><code class="theme:">theme: 3-hexo</code></pre>
-<p>输入  <code>hexo s</code>    刷新浏览器可看到修改后的页面</p>
-<p><img src="/2020/01/02/blog/image-20200102161518422.png" alt></p>
-<ol>
-<li><p>在github创建仓库，仓库名与github账号名一致，命名方式为    <code>username.github.io</code></p>
-</li>
-<li><p>在根目录下_config.yml文件,添加如下代码</p>
-<pre><code>deploy:
-  type: git
-  repository: https://github.com/zhangxuet/zhangxuet.github.io.git
-  branch: master</code></pre></li>
-</ol>
-<p><strong>3、检查 SSH KEY</strong></p>
-<ul>
-<li>输入cd ~/.ssh，说明没有SSH KEY</li>
-</ul>
-<p><img src="/2020/01/02/blog/image-20200102162555031.png" alt></p>
-<ul>
-<li>添加SSH KEY</li>
-</ul>
-<p>输入 <code>ssh-keygen -t rsa -C &quot;邮箱名&quot;</code></p>
-<p>一直回车</p>
-<p><img src="/2020/01/02/blog/image-20200102162912687.png" alt></p>
-<ul>
-<li>再次输入命令    <code>cd ~/.ssh</code>   <code>ls</code></li>
-</ul>
-<p><img src="/2020/01/02/blog/image-20200102163014458.png" alt></p>
-<ul>
-<li>github 设置 SSH KEY</li>
-</ul>
-<p><img src="/2020/01/02/blog/image-20200102163351752.png" alt></p>
-<p><img src="/2020/01/02/blog/image-20200102163427240.png" alt></p>
-<ul>
-<li>输入  eval “$(ssh-agent -s)”</li>
-</ul>
-<p>再输入    ssh-add ~/.ssh/id_rsa，添加生成的SSH key到ssh-agent</p>
-<p>查看密匙   </p>
-<p><img src="/2020/01/02/blog/image-20200102164037200.png" alt></p>
-<p><img src="/2020/01/02/blog/image-20200102165043182.png" alt></p>
-<p>或输入 cat ~/.ssh/id_rsa.pub 查看</p>
-<pre><code class="console">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU
-GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3
-Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XA
-t3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/En
-mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
-NrRFi9wrf+M7Q== schacon@mylaptop.local</code></pre>
-<ul>
-<li>将id_ssa文件下的所有内容复制到github SSH KEY  ，输入 <code>ssh -T git@github.com</code>，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了</li>
-</ul>
-<p><img src="/2020/01/02/blog/image-20200102165517185.png" alt></p>
-<ul>
-<li>设置账号信息</li>
-</ul>
-<pre><code>git config --global user.name &quot;zhangxuet&quot;
-git config --global user.email &quot;111111@qq.com&quot;</code></pre><ul>
-<li>部署到 github，分别输入</li>
-</ul>
-<pre><code class="js">hexo g         hexo d        hexo s</code></pre>
-<p>输入<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 就可以访问博客（本地）</p>
-<p>输入https://用户名.github.io就能访问到你自己的github了</p>
+        <h1 id="安包"><a href="#安包" class="headerlink" title="安包"></a>安包</h1><pre><code>npm install --save xlsx file-saver</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="给表格添加一个id-table-export"><a href="#给表格添加一个id-table-export" class="headerlink" title="给表格添加一个id     table-export"></a>给表格添加一个id     table-export</h2><h2 id="引入导出表格依赖"><a href="#引入导出表格依赖" class="headerlink" title="引入导出表格依赖"></a>引入导出表格依赖</h2><pre><code>import FileSaver from &quot;file-saver&quot;;
+import XLSX from &quot;xlsx&quot;;</code></pre><h2 id="data声明存表格内容的数据tableData"><a href="#data声明存表格内容的数据tableData" class="headerlink" title="data声明存表格内容的数据tableData"></a>data声明存表格内容的数据tableData</h2><h2 id="定义导出excel事件"><a href="#定义导出excel事件" class="headerlink" title="定义导出excel事件"></a>定义导出excel事件</h2><pre><code class="xml">exportExcel() {
+    /* 从表生成工作簿对象 */
+    var wb = XLSX.utils.table_to_book(document.querySelector(&quot;#table-export&quot;));
+    /* 获取二进制字符串作为输出 */
+    var wbout = XLSX.write(wb, {
+    bookType: &quot;xlsx&quot;,
+    bookSST: true,
+    type: &quot;array&quot;
+    });
+    try {
+    FileSaver.saveAs(
+    //Blob 对象表示一个不可变、原始数据的类文件对象。
+    //Blob 表示的不一定是JavaScript原生格式的数据。
+    //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
+    //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
+    new Blob([wbout], { type: &quot;application/octet-stream&quot; }),
+    //设置导出文件名称
+    &quot;sheetjs.xlsx&quot;
+    );
+    } catch (e) {
+    if (typeof console !== &quot;undefined&quot;) console.log(e, wbout);
+    }
+return wbout;
+        }
+    }</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
@@ -457,12 +396,12 @@ git config --global user.email &quot;111111@qq.com&quot;</code></pre><ul>
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>blog搭建</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">456</span></p>
+    <p><span class="copy-title">文章标题:</span>element表格导出功能</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">234</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-01-02, 22:59:41</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-02, 23:08:44</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/02/blog/" title="blog搭建">https://zhangxuet.github.io/2020/01/02/blog/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-27, 17:52:22</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-27, 18:02:18</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/27/vue/elemenet-export/" title="element表格导出功能">https://zhangxuet.github.io/2020/02/27/vue/elemenet-export/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
