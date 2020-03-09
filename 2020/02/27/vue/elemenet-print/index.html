@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>VUE打印功能 | Ting</title>
+  <title>element表格导出功能 | Ting</title>
   <meta name="keywords" content=" vue ">
-  <meta name="description" content="VUE打印功能 | Ting">
+  <meta name="description" content="element表格导出功能 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离线安装node-sass查看服务器的node版本node -p &quot;[process.platform, process.arch, process.versions.modules].join(&#39;-&#39;)&quot; 下载node-sass​    去Github上下载对象的node-sass版本 ​    下载地址：https:&#x2F;&#x2F;github.com&#x2F;sass&#x2F;nod">
 <meta property="og:type" content="article">
@@ -79,7 +79,7 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(10)</small></div></li>
+    <li><div class="all active">全部文章<small>(11)</small></div></li>
     
         
             
@@ -129,6 +129,14 @@
             
         
     
+        
+            
+            <li><div data-rel="正则">正则<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
 </ul>
 <div class="left-bottom">
     <div class="menus">
@@ -139,8 +147,8 @@
     </div>
     <div><a class="about  site_url"  href="javascript:void(0)">关于</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="10">
-<input type="hidden" id="yelog_site_word_count" value="2k">
+<input type="hidden" id="yelog_site_posts_number" value="11">
+<input type="hidden" id="yelog_site_word_count" value="3.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -193,6 +201,10 @@
     
     <li class="article-tag-list-item">
         <a class="color4">vue</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">正则</a>
     </li>
     
     <div class="clearfix"></div>
@@ -269,8 +281,16 @@
             <span class="post-date" title="2020-02-21 12:18:27">2020/02/21</span>
         </a>
         
+        <a  class="正则 "
+           href="/2020/03/09/problem/%E6%AD%A3%E5%88%99/"
+           data-tag="正则"
+           data-author="" >
+            <span class="post-title" title="正则">正则</span>
+            <span class="post-date" title="2020-03-09 14:56:03">2020/03/09</span>
+        </a>
+        
         <a  class="vue "
-           href="/2020/02/27/vue/element-print/"
+           href="/2020/02/27/vue/vue-print/"
            data-tag="vue"
            data-author="" >
             <span class="post-title" title="VUE打印功能">VUE打印功能</span>
@@ -278,7 +298,7 @@
         </a>
         
         <a  class="vue "
-           href="/2020/02/27/vue/elemenet-export/"
+           href="/2020/02/27/vue/elemenet-print/"
            data-tag="vue"
            data-author="" >
             <span class="post-title" title="element表格导出功能">element表格导出功能</span>
@@ -297,9 +317,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-vue/element-print" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-vue/elemenet-print" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">VUE打印功能</h1>
+        <h1 class="article-title">element表格导出功能</h1>
     
     <div class="article-meta">
         
@@ -321,12 +341,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-27 20:36:18'>2020-02-27 20:28</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-27 18:02:18'>2020-02-27 17:52</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:67</span>
+        <span>字数:234</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -345,7 +365,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在main-js文件中引入"><span class="toc-text">在main.js文件中引入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如需通过链接地址打印"><span class="toc-text">如需通过链接地址打印</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安包"><span class="toc-text">安包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#给表格添加一个id-table-export"><span class="toc-text">给表格添加一个id     table-export</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引入导出表格依赖"><span class="toc-text">引入导出表格依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#data声明存表格内容的数据tableData"><span class="toc-text">data声明存表格内容的数据tableData</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义导出excel事件"><span class="toc-text">定义导出excel事件</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -361,9 +381,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>npm install vue-print-nb --save</code></pre><h1 id="在main-js文件中引入"><a href="#在main-js文件中引入" class="headerlink" title="在main.js文件中引入"></a>在main.js文件中引入</h1><pre><code>import Print from &#39;vue-print-nb&#39;
-Vue.use(Print);</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><pre><code>&lt;div id=&quot;printTest&quot;&gt;　&lt;/div&gt;
-&lt;button v-print=&quot;&#39;#printTest&#39;&quot;&gt;打印&lt;/button&gt;</code></pre><h1 id="如需通过链接地址打印"><a href="#如需通过链接地址打印" class="headerlink" title="如需通过链接地址打印"></a>如需通过链接地址打印</h1><pre><code>window.location.href = 地址</code></pre>
+        <h1 id="安包"><a href="#安包" class="headerlink" title="安包"></a>安包</h1><pre><code>npm install --save xlsx file-saver</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="给表格添加一个id-table-export"><a href="#给表格添加一个id-table-export" class="headerlink" title="给表格添加一个id     table-export"></a>给表格添加一个id     table-export</h2><h2 id="引入导出表格依赖"><a href="#引入导出表格依赖" class="headerlink" title="引入导出表格依赖"></a>引入导出表格依赖</h2><pre><code>import FileSaver from &quot;file-saver&quot;;
+import XLSX from &quot;xlsx&quot;;</code></pre><h2 id="data声明存表格内容的数据tableData"><a href="#data声明存表格内容的数据tableData" class="headerlink" title="data声明存表格内容的数据tableData"></a>data声明存表格内容的数据tableData</h2><h2 id="定义导出excel事件"><a href="#定义导出excel事件" class="headerlink" title="定义导出excel事件"></a>定义导出excel事件</h2><pre><code class="xml">exportExcel() {
+    /* 从表生成工作簿对象 */
+    var wb = XLSX.utils.table_to_book(document.querySelector(&quot;#table-export&quot;));
+    /* 获取二进制字符串作为输出 */
+    var wbout = XLSX.write(wb, {
+    bookType: &quot;xlsx&quot;,
+    bookSST: true,
+    type: &quot;array&quot;
+    });
+    try {
+    FileSaver.saveAs(
+    //Blob 对象表示一个不可变、原始数据的类文件对象。
+    //Blob 表示的不一定是JavaScript原生格式的数据。
+    //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
+    //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
+    new Blob([wbout], { type: &quot;application/octet-stream&quot; }),
+    //设置导出文件名称
+    &quot;sheetjs.xlsx&quot;
+    );
+    } catch (e) {
+    if (typeof console !== &quot;undefined&quot;) console.log(e, wbout);
+    }
+return wbout;
+        }
+    }</code></pre>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -372,12 +416,12 @@ Vue.use(Print);</code></pre><h1 id="使用"><a href="#使用" class="headerlink"
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>VUE打印功能</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">67</span></p>
+    <p><span class="copy-title">文章标题:</span>element表格导出功能</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">234</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-02-27, 20:28:51</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-27, 20:36:18</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/27/vue/element-print/" title="VUE打印功能">https://zhangxuet.github.io/2020/02/27/vue/element-print/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-27, 17:52:22</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-27, 18:02:18</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/27/vue/elemenet-print/" title="element表格导出功能">https://zhangxuet.github.io/2020/02/27/vue/elemenet-print/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
@@ -421,7 +465,7 @@ Vue.use(Print);</code></pre><h1 id="使用"><a href="#使用" class="headerlink"
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#工具','#hexo','#markdown','#echarts','#node-sass','#vue',],
+            'data': ['#工具','#hexo','#markdown','#echarts','#node-sass','#vue','#正则',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
