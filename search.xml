@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Element使用i18n国际化</title>
+    <url>/2020/03/13/vue/i18n/</url>
+    <content><![CDATA[<h1 id="安装i18n-elementUI"><a href="#安装i18n-elementUI" class="headerlink" title="安装i18n+elementUI"></a>安装i18n+elementUI</h1><pre><code>npm i i18n element-ui</code></pre><h1 id="在main-js中导入"><a href="#在main-js中导入" class="headerlink" title="在main.js中导入"></a>在main.js中导入</h1><pre><code>import ElementUI from &#39;element-ui&#39;
+import &#39;element-ui/lib/theme-chalk/index.css&#39;
+import i18n from &#39;./i18n.js&#39;
+
+Vue.use(ElementUI)
+
+Vue.config.productionTip = false
+
+new Vue({
+  i18n,
+  router,
+  render: h =&gt; h(App)
+}).$mount(&#39;#app&#39;)</code></pre><h2 id="在static文件夹下创建config-js-en-js-zh-js-index-js-文件"><a href="#在static文件夹下创建config-js-en-js-zh-js-index-js-文件" class="headerlink" title="在static文件夹下创建config.js     en.js   zh.js    index.js  文件"></a>在static文件夹下创建config.js     en.js   zh.js    index.js  文件</h2><h2 id="config-js"><a href="#config-js" class="headerlink" title="config.js"></a>config.js</h2><pre><code>window.apiConfig = {
+  language: &#39;zh-CN&#39;
+}</code></pre><h2 id="en-js"><a href="#en-js" class="headerlink" title="en.js"></a>en.js</h2><pre><code>var en = {
+  main: {
+    Main_Title: &#39;shopping&#39;
+  }
+}</code></pre><h2 id="zh-js"><a href="#zh-js" class="headerlink" title="zh.js"></a>zh.js</h2><pre><code>var zh = {
+  main: {
+    Main_Title: &#39;购物&#39;
+  }
+}</code></pre><h2 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h2><pre><code>import en from &#39;./en&#39;
+
+import zh from &#39;./zh&#39;
+
+export default {
+
+  en: en,
+
+  zh: zh
+
+}</code></pre><h2 id="static文件下创建css文件夹"><a href="#static文件下创建css文件夹" class="headerlink" title="static文件下创建css文件夹"></a>static文件下创建css文件夹</h2><h3 id="en-css"><a href="#en-css" class="headerlink" title="en.css"></a>en.css</h3><pre><code>.login-container .login_top .login_input .login_title {
+    position: absolute;
+    top: 52%;
+    left: 10%;
+    font-size: 26px;
+    color: #017fba;
+}</code></pre><h3 id="zh-css"><a href="#zh-css" class="headerlink" title="zh.css"></a>zh.css</h3><pre><code>.UserRightsManagement .el-form .usersDataDiv .contentDiv .silde-panel .content .power-sort .el-checkbox {
+    width: 40%;
+    min-width: 200px;
+
+  }</code></pre><h1 id="在与main-js同级创建i18n-js"><a href="#在与main-js同级创建i18n-js" class="headerlink" title="在与main.js同级创建i18n.js"></a>在与main.js同级创建i18n.js</h1><pre><code>import Vue from &#39;vue&#39;
+import VueI18n from &#39;vue-i18n&#39;
+import locale from &#39;element-ui/lib/locale&#39;
+import znLocale from &#39;element-ui/lib/locale/lang/zh-CN&#39;
+import enLocale from &#39;element-ui/lib/locale/lang/en&#39;
+
+Vue.use(VueI18n)
+var message = {
+  &#39;en-US&#39;: Object.assign(en, enLocale),
+  &#39;zh-CN&#39;: Object.assign(zh, znLocale)
+}
+const i18n = new VueI18n({
+  locale: window.apiConfig.language,
+  message
+})
+
+locale.i18n((key, value) =&gt; i18n.t(key, value))
+export default i18n
+</code></pre><h1 id="在public-index-html文件引入"><a href="#在public-index-html文件引入" class="headerlink" title="在public/index.html文件引入"></a>在public/index.html文件引入</h1><pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;&lt;%= BASE_URL %&gt;static/config.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;&lt;%= BASE_URL %&gt;static/zh.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;&lt;%= BASE_URL %&gt;static/en.js&quot;&gt;&lt;/script&gt;</code></pre><pre><code>&lt;script&gt;
+      document.oncontextmenu = function () {  //取消鼠标右键
+        return false;
+      };
+      //禁用开发者工具F12
+      document.onkeydown = function () {
+        if (window.event &amp;&amp; window.event.keyCode == 123) {
+          event.keyCode = 0;
+          event.returnValue = false;
+          return false;
+        }
+      }
+      var lang = window.apiConfig.language;
+      var linkNode = document.createElement(&quot;link&quot;);
+      linkNode.setAttribute(&quot;rel&quot;, &quot;stylesheet&quot;);
+      linkNode.setAttribute(&quot;type&quot;, &quot;text/css&quot;);
+      if (lang == &quot;es&quot;) {
+        linkNode.setAttribute(&quot;href&quot;, &quot;./static/css/en.css&quot;);
+      } else if (lang == &quot;zh-CN&quot;) {
+        linkNode.setAttribute(&quot;href&quot;, &quot;./static/css/zh.css&quot;);
+      }
+      document.head.appendChild(linkNode)
+    &lt;/script&gt;</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><pre><code>{{$t('main.Main_Title')}}</code></pre>]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>token</title>
     <url>/2020/03/11/vue/token/</url>
     <content><![CDATA[<h1 id="存在本地"><a href="#存在本地" class="headerlink" title="存在本地"></a>存在本地</h1><p>utils/auth.js</p>
