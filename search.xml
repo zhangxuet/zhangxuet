@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>webpack4打包vue文件</title>
-    <url>/2020/03/13/webpack/webpack/</url>
+    <url>/2020/03/13/webpack/</url>
     <content><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>npm init -y
 npm i webpack -D
 npm i webpack-cli -D</code></pre><h1 id="配置package-json"><a href="#配置package-json" class="headerlink" title="配置package.json"></a>配置package.json</h1><ul>
@@ -473,7 +473,7 @@ module.exports = {
     &quot;dev&quot;: &quot;vue-cli-service serve --config webpack.config.js --hot --inline --progress --open&quot;,
     &quot;build&quot;: &quot;webpack&quot;,
     &quot;watch&quot;: &quot;webpack --watch&quot;
-}</code></pre><h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><img src="/2020/03/13/webpack/webpack/webpack.jpg" alt></p>
+}</code></pre><h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><img src="/2020/03/13/webpack/webpack.png" alt></p>
 ]]></content>
       <categories>
         <category>webpack</category>
