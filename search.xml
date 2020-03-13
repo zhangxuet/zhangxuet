@@ -1,6 +1,488 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>webpack4打包vue文件</title>
+    <url>/2020/03/13/webpack/webpack/</url>
+    <content><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>npm init -y
+npm i webpack -D
+npm i webpack-cli -D</code></pre><h1 id="配置package-json"><a href="#配置package-json" class="headerlink" title="配置package.json"></a>配置package.json</h1><ul>
+<li>npm run serve  在package.json  scripts配置过</li>
+</ul>
+<pre><code class="json">{
+    &quot;scripts&quot;:{
+        &quot;build&quot;:&quot;webpack&quot;
+    }   
+}</code></pre>
+<ol>
+<li>调用webpack工具</li>
+</ol>
+<pre><code class="bash">npm run build</code></pre>
+<h1 id="webpack打包模式（mode）"><a href="#webpack打包模式（mode）" class="headerlink" title="webpack打包模式（mode）"></a>webpack打包模式（mode）</h1><ul>
+<li>需要在配置文件下进行配置</li>
+<li>默认的配置文件名称是：webpack.config.js</li>
+</ul>
+<pre><code class="js">module.exports = {
+    //development 开发模式打包 打包速度快 没做优化处理
+    //production 生成模式打包 打不速度慢 做了一些优化处理，压缩
+    mode: &#39;development&#39;
+} </code></pre>
+<h1 id="webpack入口与出口"><a href="#webpack入口与出口" class="headerlink" title="webpack入口与出口"></a>webpack入口与出口</h1><ul>
+<li>默认入口是 src下的index.js文件</li>
+<li>默认出口是 dist 目录下的 main.js 文件</li>
+</ul>
+<pre><code class="js">const path = require(&#39;path&#39;);
+
+&lt;1&gt;
+module.exports = {
+  // 打包的入口文件
+  entry: &#39;./src/main.js&#39;,
+  // 输出的出口文件
+  output: {
+    // 必须指定的是绝对路径
+    filename: &#39;main.js&#39;
+    path: path.join(__dirname, &#39;./dist&#39;),
+  }
+};
+
+&lt;2&gt;
+module.exports = {
+  entry: &#39;./src/main.js&#39;,
+    output: {
+      filename: &#39;js/bundle.js&#39;,
+      path: path.resolve(__dirname, &#39;./dist&#39;)
+    },
+}</code></pre>
+<h1 id="webpack打包-vue文件"><a href="#webpack打包-vue文件" class="headerlink" title="webpack打包.vue文件"></a>webpack打包.vue文件</h1><pre><code>npm install -D vue-loader vue-template-compiler</code></pre><pre><code> const VueLoaderPlugin = require(&#39;vue-loader/lib/plugin&#39;)
+
+  module.exports = {
+    entry: &#39;./src/index.js&#39;,
+    output: {
+      filename: &#39;main.js&#39;,
+      path: path.resolve(__dirname, &#39;dist&#39;)
+    },
+   module: {
+     rules: [
+       {
+        test: /\.vue$/,
+        loader: &#39;vue-loader&#39;
+      },
+     ]
+   },
+   plugins: [
+    // 请确保引入这个插件！
+    new VueLoaderPlugin()
+  ]
+  };</code></pre><h1 id="webpack打包css"><a href="#webpack打包css" class="headerlink" title="webpack打包css"></a>webpack打包css</h1><pre><code class="bash">npm install --save-dev style-loader css-loader</code></pre>
+<pre><code class="diff">  const path = require(&#39;path&#39;);
+
+  module.exports = {
+   module: {
+     rules: [
+       {
+        test: /\.css$/,
+        use: [
+          &#39;style-loader&#39;,
+          &#39;css-loader&#39;
+        ]
+      },
+     ]
+   }
+  };</code></pre>
+<h1 id="webpack打包sass"><a href="#webpack打包sass" class="headerlink" title="webpack打包sass"></a>webpack打包sass</h1><pre><code class="diff">npm install --save-dev style-loader css-loader node-sass sass-loader</code></pre>
+<pre><code class="diff">const path = require(&#39;path&#39;)
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.sass$/,
+        use: [
+          &#39;style-loader&#39;,
+          &#39;css-loader&#39;,
+          &#39;sass-loader&#39;
+        ]
+      },
+    ]
+  }
+}
+</code></pre>
+<h1 id="webpack打包图片"><a href="#webpack打包图片" class="headerlink" title="webpack打包图片"></a>webpack打包图片</h1><pre><code class="bash">npm install --save-dev file-loader</code></pre>
+<pre><code class="diff">onst path = require(&#39;path&#39;);
+
+  module.exports = {
+    entry: &#39;./src/index.js&#39;,
+    output: {
+      filename: &#39;bundle.js&#39;,
+      path: path.resolve(__dirname, &#39;dist&#39;)
+    },
+    module: {
+      rules: [
+        {
+        test: /\.(png|jp?g|gif|svg)$/,
+        use: [
+          {
+            loader: &#39;url-loader&#39;,
+            options: {
+              limit: 8192, // 小于8192字节的图片打包成base 64图片
+              name: &#39;images/[name].[hash:8].[ext]&#39;,
+              publicPath: &#39;&#39;
+            }
+          }
+        ]
+      },
+      ]
+    }
+  };
+</code></pre>
+<h1 id="webpack打包字体文件、音频、视频"><a href="#webpack打包字体文件、音频、视频" class="headerlink" title="webpack打包字体文件、音频、视频"></a>webpack打包字体文件、音频、视频</h1><pre><code class="css">@font-face{
+  font-family: &#39;myfont&#39;;
+  src:url(../fonts/font.ttf) format(&#39;truetype&#39;)
+}
+body{
+  font-family: &#39;myfont&#39;;
+  background: hotpink;
+}
+</code></pre>
+<pre><code>npm install url-loader file-loader html-loader -D</code></pre><pre><code class="diff">{
+        // 文件依赖配置项——字体图标
+        test: /\.(woff|woff2|svg|eot|ttf)$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;fonts/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      },
+      {
+        // 文件依赖配置项——音频
+        test: /\.(wav|mp3|ogg)?$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;audios/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      }, {
+        // 文件依赖配置项——视频
+        test: /\.(ogg|mpeg4|webm)?$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;videos/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      }
+    ]
+  },
+</code></pre>
+<h1 id="webpack生成html"><a href="#webpack生成html" class="headerlink" title="webpack生成html"></a>webpack生成html</h1><pre><code class="bash">npm install --save-dev html-webpack-plugin</code></pre>
+<pre><code class="diff">const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;);
++   plugins: [
++     new HtmlWebpackPlugin({
++       title: &#39;Output Management&#39;，
++        template: &#39;index.html&#39;
++     })
++   ],
+</code></pre>
+<p>如果你想要了解更多 <code>HtmlWebpackPlugin</code> 插件提供的全部功能和选项，那么你就应该多多熟悉 <a href="https://github.com/jantimon/html-webpack-plugin" target="_blank" rel="noopener"><code>HtmlWebpackPlugin</code></a> 仓库。</p>
+<p>使用自己的文件做为模版：</p>
+<pre><code class="diff">+   plugins: [
++     new HtmlWebpackPlugin({
++       template: &#39;./public/index.html&#39;
++     })
++   ],
+</code></pre>
+<h1 id="webpack清理dist"><a href="#webpack清理dist" class="headerlink" title="webpack清理dist"></a>webpack清理dist</h1><ul>
+<li>参照官网</li>
+</ul>
+<p><a href="https://webpack.js.org/guides/output-management/#cleaning-up-the-dist-folder" target="_blank" rel="noopener">https://webpack.js.org/guides/output-management/#cleaning-up-the-dist-folder</a></p>
+<pre><code class="bash">npm install clean-webpack-plugin --save-dev</code></pre>
+<pre><code class="diff">+ const {CleanWebpackPlugin} = require(&#39;clean-webpack-plugin&#39;);</code></pre>
+<pre><code class="diff">    plugins: [
++     new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        title: &#39;Output Management&#39;
+      })
+    ],
+</code></pre>
+<h1 id="webpack-babel介绍"><a href="#webpack-babel介绍" class="headerlink" title="webpack-babel介绍"></a>webpack-babel介绍</h1><ul>
+<li>目前部分浏览器和 Node.js 已经支持 ES6，但由于它们对 ES6 所有的标准支持不全，这导致在开发中不敢全面地使用 ES6。</li>
+<li>Babel 是一个 JavaScript 编译器，能将 ES6 语法转为 ES5 语法，让你使用最新的语言特性而不用担心兼容性问题，把采用 ES6 编写的代码转换成目前已经支持良好的 ES5 代码。</li>
+<li>官网：<a href="https://babeljs.io/" target="_blank" rel="noopener">https://babeljs.io/</a></li>
+</ul>
+<h1 id="webpack-babel使用"><a href="#webpack-babel使用" class="headerlink" title="webpack-babel使用"></a>webpack-babel使用</h1><pre><code class="bash">npm install -D babel-loader @babel/core @babel/preset-env </code></pre>
+<pre><code class="javascript">module: {
+  rules: [
+    {
+      test: /\.m?js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: &#39;babel-loader&#39;,
+        options: {
+          presets: [&#39;@babel/preset-env&#39;]
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<p>以上操作是语法解析，但是ES6还更新了一些高阶函数。</p>
+<pre><code class="bahs">npm install --save @babel/polyfill</code></pre>
+<p>使用：优先加载</p>
+<pre><code class="js">import &quot;@babel/polyfill&quot;;</code></pre>
+<p>或者：</p>
+<pre><code class="js">module.exports = {
+  entry: [&quot;@babel/polyfill&quot;, &quot;./src/index.js&quot;],
+};</code></pre>
+<h1 id="webpack-sourceMap"><a href="#webpack-sourceMap" class="headerlink" title="webpack-sourceMap"></a>webpack-sourceMap</h1><p>为了更容易地追踪错误和警告，JavaScript 提供了 <a href="http://blog.teamtreehouse.com/introduction-source-maps" target="_blank" rel="noopener">source map</a> 功能，将编译后的代码映射回原始源代码。如果一个错误来自于 <code>b.js</code>，source map 就会明确的告诉你。</p>
+<pre><code class="diff">+   devtool: &#39;inline-source-map&#39;,
+    plugins:
+</code></pre>
+<h1 id="webpack-watch监听"><a href="#webpack-watch监听" class="headerlink" title="webpack-watch监听"></a>webpack-watch监听</h1><p>我们添加一个用于启动 webpack watch mode 的 npm scripts：</p>
+<pre><code class="diff">    &quot;scripts&quot;: {
+      &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
++     &quot;watch&quot;: &quot;webpack --watch&quot;,
+      &quot;build&quot;: &quot;webpack&quot;
+    },
+</code></pre>
+<p>唯一的缺点是，为了看到修改后的实际效果，你需要刷新浏览器。如果能够自动刷新浏览器就更好了，因此接下来我们会尝试通过 <code>webpack-dev-server</code> 实现此功能。</p>
+<h1 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h1><p><code>webpack-dev-server</code> 为你提供了一个简单的 web 服务器，并且能够实时重新加载(live reloading),自动刷新浏览器进行实时的预览。</p>
+<pre><code class="bash">npm install --save-dev webpack-dev-server</code></pre>
+<pre><code class="diff">    devtool: &#39;inline-source-map&#39;,
++   devServer: {
++     contentBase: &#39;./dist&#39;
++   },
+</code></pre>
+<p><strong>package.json</strong></p>
+<pre><code class="diff">    &quot;scripts&quot;: {
++     &quot;dev&quot;: &quot;webpack-dev-server --open&quot;,
+</code></pre>
+<p>执行：</p>
+<pre><code class="bash">npm run dev</code></pre>
+<ul>
+<li>不会把资源打包到磁盘中，存储在内存中。读取更快。</li>
+</ul>
+<h1 id="webpack热更新"><a href="#webpack热更新" class="headerlink" title="webpack热更新"></a>webpack热更新</h1><ul>
+<li>实现浏览器不刷新，更新打包后的结果，默认对js不生效，对样式，vue组件生效。</li>
+</ul>
+<pre><code class="diff">+ const webpack = require(&#39;webpack&#39;);
+
+  module.exports = {
+    devtool: &#39;inline-source-map&#39;,
+    devServer: {
+      contentBase: &#39;./dist&#39;,
++     hot: true
+    },
+    plugins: [
+      new CleanWebpackPlugin([&#39;dist&#39;]),
+      new HtmlWebpackPlugin({
+        title: &#39;模块热替换&#39;
+      }),
++     new webpack.HotModuleReplacementPlugin()
+    ],
+</code></pre>
+<h1 id="webpack路径别名"><a href="#webpack路径别名" class="headerlink" title="webpack路径别名"></a>webpack路径别名</h1><pre><code class="js">  resolve: {
+    alias: {
+      &#39;@&#39;: path.resolve(__dirname, &#39;./src&#39;)
+    }
+  },
+</code></pre>
+<h1 id="webpack文件后缀"><a href="#webpack文件后缀" class="headerlink" title="webpack文件后缀"></a>webpack文件后缀</h1><pre><code class="diff">  resolve: {
+    alias: {
+      &#39;@&#39;: path.resolve(__dirname, &#39;./src&#39;)
+    },
++    extensions: [&#39;.js&#39;, &#39;.vue&#39;, &#39;.json&#39;, &#39;.css&#39;]
+  },
+</code></pre>
+<h1 id="打包部署"><a href="#打包部署" class="headerlink" title="打包部署"></a>打包部署</h1><p>打包</p>
+<pre><code class="bash">npm run build</code></pre>
+<p>部署（dist目录代码）</p>
+<p>不同的后台所部署的服务器不一样。</p>
+<p>问题：首屏加载慢（spa网站通病）</p>
+<ul>
+<li>chunk-vendors-xxxxxx.js   所有第三方模块打包文件    <strong>1867kb</strong></li>
+<li>app.xxxxx.js  所有自己模块打包文件</li>
+<li>chunk-vendors-xxxxxx.css  所有第三方css打包文件</li>
+<li>app.xxxxx.css 所有自己css打包文件</li>
+</ul>
+<p>方案：按需加载（路由懒加载）</p>
+<pre><code class="js">// const Foo = () =&gt; import(&#39;./Foo.vue&#39;) 路由懒加载  将代码分块
+
+const Login = () =&gt; import(&#39;@/views/login&#39;)
+const Home = () =&gt; import(&#39;@/views/home&#39;)
+const Welcome = () =&gt; import(&#39;@/views/welcome&#39;)
+const NotFound = () =&gt; import(&#39;@/views/404&#39;)
+const Test = () =&gt; import(&#39;@/views/test&#39;)
+const Article = () =&gt; import(&#39;@/views/article&#39;)
+const Image = () =&gt; import(&#39;@/views/image&#39;)
+const Publish = () =&gt; import(&#39;@/views/publish&#39;)
+const Comment = () =&gt; import(&#39;@/views/comment&#39;)
+const Setting = () =&gt; import(&#39;@/views/setting&#39;)
+const Fans = () =&gt; import(&#39;@/views/fans&#39;)</code></pre>
+<h1 id="打包优化"><a href="#打包优化" class="headerlink" title="打包优化"></a>打包优化</h1><ul>
+<li>打包后个别块代码，还是体积较大，因为依赖一些较大的第三方包。</li>
+<li>将第三方包，分割出去，降低打包代码体积。<ul>
+<li>使用cdn引入方式（script标签引入其他服务器资源）<ul>
+<li>cdn是提供前端资源的网站  例如 echarts</li>
+</ul>
+</li>
+<li>排除对应的包的导入<ul>
+<li>注释 import echarts from ‘echarts’   不建议使用</li>
+<li>配置webpack排除这些包不去打包。</li>
+</ul>
+</li>
+<li>才能在打包降低体积</li>
+</ul>
+</li>
+</ul>
+<p>具体配置：</p>
+<p>public/index.html</p>
+<pre><code class="html">&lt;script src=&quot;https://cdn.bootcss.com/echarts/4.3.0-rc.1/echarts.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p>vue.config.js</p>
+<pre><code class="js">// 进行vue-cli配置
+// vue-cli配置实现了部分webpack的配置
+module.exports = {
+  // 覆盖webpack的配置选项
+  configureWebpack: {
+    externals: {
+      // key 包名 value 暴露全局的变量名
+      echarts: &#39;echarts&#39;
+    }
+  }
+}
+</code></pre>
+<h1 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h1><p>webpack.config.js</p>
+<pre><code>const path = require(&#39;path&#39;)
+const VueLoaderPlugin = require(&#39;vue-loader/lib/plugin&#39;)
+const webpack = require(&#39;webpack&#39;)
+const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;)
+const CopyWebpackPlugin = require(&#39;copy-webpack-plugin&#39;)
+
+module.exports = {
+  mode: &#39;development&#39;,
+  devtool: &#39;inline-source-map&#39;,
+  devServer: {
+    contentBase: path.resolve(__dirname, &#39;dist&#39;),
+    historyApiFallback: true,
+    hot: true,
+    port: 8080,
+    host: &#39;127.0.0.1&#39;,
+    overlay: true
+  },
+  resolve: {
+    alias: {
+      &#39;@&#39;: path.resolve(__dirname, &#39;./src&#39;)
+    },
+    extensions: [&#39;.js&#39;, &#39;.vue&#39;, &#39;.json&#39;, &#39;.css&#39;]
+  },
+  entry: &#39;./src/main.js&#39;,
+  output: {
+    filename: &#39;js/bundle.js&#39;,
+    path: path.resolve(__dirname, &#39;./dist&#39;)
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: &#39;vue-loader&#39;
+      },
+      {
+        test: /\.css$/,
+        use: [
+          &#39;style-loader&#39;,
+          &#39;css-loader&#39;
+        ]
+      },
+      {
+        test: /\.sass$/,
+        use: [
+          &#39;style-loader&#39;,
+          &#39;css-loader&#39;,
+          &#39;sass-loader&#39;
+        ]
+      },
+      {
+        test: /\.(png|jp?g|gif|svg)$/,
+        use: [
+          {
+            loader: &#39;url-loader&#39;,
+            options: {
+              limit: 8192, // 小于8192字节的图片打包成base 64图片
+              name: &#39;images/[name].[hash:8].[ext]&#39;,
+              publicPath: &#39;&#39;
+            }
+          }
+        ]
+      },
+      {
+        // 文件依赖配置项——字体图标
+        test: /\.(woff|woff2|svg|eot|ttf)$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;fonts/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      },
+      {
+        // 文件依赖配置项——音频
+        test: /\.(wav|mp3|ogg)?$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;audios/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      }, {
+        // 文件依赖配置项——视频
+        test: /\.(ogg|mpeg4|webm)?$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;videos/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      }
+    ]
+  },
+  plugins: [
+    // 请确保引入这个插件！
+    new HtmlWebpackPlugin({
+      template: &#39;./public/index.html&#39;
+    }),
+    new CopyWebpackPlugin([{
+      from: path.resolve(__dirname, &#39;./public/static&#39;), // 打包的静态资源目录地址
+      to: &#39;static&#39; // 打包到dist下面的static
+    }]),
+    new VueLoaderPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  ]
+}</code></pre><p>package.json</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;vue-cli-service serve --config webpack.config.js --hot --inline --progress --open&quot;,
+    &quot;build&quot;: &quot;webpack&quot;,
+    &quot;watch&quot;: &quot;webpack --watch&quot;
+}</code></pre><h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><img src="/2020/03/13/webpack/webpack/webpack.jpg" alt></p>
+]]></content>
+      <categories>
+        <category>webpack</category>
+      </categories>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>node写接口</title>
     <url>/2020/03/13/node/node/</url>
     <content><![CDATA[<h1 id="安装express-mysql-body-parser"><a href="#安装express-mysql-body-parser" class="headerlink" title="安装express  mysql  body-parser"></a>安装express  mysql  body-parser</h1><pre><code>npm i express mysql body-parser</code></pre><h1 id="创建db-js"><a href="#创建db-js" class="headerlink" title="创建db.js"></a>创建db.js</h1><pre><code>module.exports = (sql, values, cb) =&gt; {

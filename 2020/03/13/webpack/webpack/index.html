@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>webpack4打包vue文件 | Ting</title>
+  <meta name="keywords" content=" webpack ">
+  <meta name="description" content="webpack4打包vue文件 | Ting">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="安装express  mysql  body-parsernpm i express mysql body-parser创建db.jsmodule.exports &#x3D; (sql, values, cb) &#x3D;&gt; {     const mysql &#x3D; require(&#39;mysql&#39;)     const conn &#x3D; mysql.createConnection({">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node写接口">
+<meta property="og:url" content="https://zhangxuet.github.io/2020/03/13/node/node/index.html">
+<meta property="og:site_name" content="Ting">
+<meta property="og:description" content="安装express  mysql  body-parsernpm i express mysql body-parser创建db.jsmodule.exports &#x3D; (sql, values, cb) &#x3D;&gt; {     const mysql &#x3D; require(&#39;mysql&#39;)     const conn &#x3D; mysql.createConnection({">
+<meta property="article:published_time" content="2020-03-13T01:54:42.000Z">
+<meta property="article:modified_time" content="2020-03-13T02:06:43.438Z">
+<meta property="article:author" content="Ting">
+<meta property="article:tag" content="node">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/kimbie-dark.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>Ting</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="github" href="https://zhangxuet.github.io/" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(15)</small></div></li>
+    
+        
+            
+            <li><div data-rel="工具">工具<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="技术">技术<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="hexo问题">hexo问题<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="echarts">echarts<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="node">node<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="vue">vue<small>(5)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="正则">正则<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="webpack">webpack<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a class="about  site_url"  href="javascript:void(0)">关于</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="15">
+<input type="hidden" id="yelog_site_word_count" value="7.3k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode==13){return false;}">
+        <input class="search" type="text" placeholder="search..." autocomplete="off"id="local-search-input" >
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color3">工具</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">markdown</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">echarts</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">node-sass</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">vue</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">正则</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">token</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">node</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">webpack</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2019/12/31/First/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="First">First</span>
+            <span class="post-date" title="2019-12-31 16:49:20">2019/12/31</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/12/31/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2019-12-31 08:37:56">2019/12/31</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2020/01/02/resources/index/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="工具">工具</span>
+            <span class="post-date" title="2020-01-02 10:06:54">2020/01/02</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/01/02/blog/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="blog搭建">blog搭建</span>
+            <span class="post-date" title="2020-01-02 22:59:41">2020/01/02</span>
+        </a>
+        
+        <a  class="hexo问题 "
+           href="/2020/01/06/problem/hexoImg/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="hexo引用本地图片无法显示">hexo引用本地图片无法显示</span>
+            <span class="post-date" title="2020-01-06 22:23:53">2020/01/06</span>
+        </a>
+        
+        <a  class="hexo问题 "
+           href="/2020/01/06/problem/problem/"
+           data-tag="hexo,markdown"
+           data-author="" >
+            <span class="post-title" title="hexo代码高亮">hexo代码高亮</span>
+            <span class="post-date" title="2020-01-06 22:23:34">2020/01/06</span>
+        </a>
+        
+        <a  class="echarts "
+           href="/2020/01/06/echarts/echarts/"
+           data-tag="echarts"
+           data-author="" >
+            <span class="post-title" title="echarts">echarts</span>
+            <span class="post-date" title="2020-01-06 22:27:11">2020/01/06</span>
+        </a>
+        
+        <a  class="正则 "
+           href="/2020/03/09/problem/%E6%AD%A3%E5%88%99/"
+           data-tag="正则"
+           data-author="" >
+            <span class="post-title" title="正则">正则</span>
+            <span class="post-date" title="2020-03-09 14:56:03">2020/03/09</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/27/vue/vue-print/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="VUE打印功能">VUE打印功能</span>
+            <span class="post-date" title="2020-02-27 20:28:51">2020/02/27</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/27/vue/elemenet-print/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="element表格导出功能">element表格导出功能</span>
+            <span class="post-date" title="2020-02-27 17:52:22">2020/02/27</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/03/11/vue/token/"
+           data-tag="token"
+           data-author="" >
+            <span class="post-title" title="token">token</span>
+            <span class="post-date" title="2020-03-11 11:36:01">2020/03/11</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/03/13/vue/i18n/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="Element使用i18n国际化">Element使用i18n国际化</span>
+            <span class="post-date" title="2020-03-13 09:05:24">2020/03/13</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/21/vue/node-sass/"
+           data-tag="node-sass"
+           data-author="" >
+            <span class="post-title" title="离线安装node-sass">离线安装node-sass</span>
+            <span class="post-date" title="2020-02-21 12:18:27">2020/02/21</span>
+        </a>
+        
+        <a  class="node "
+           href="/2020/03/13/node/node/"
+           data-tag="node"
+           data-author="" >
+            <span class="post-title" title="node写接口">node写接口</span>
+            <span class="post-date" title="2020-03-13 09:54:42">2020/03/13</span>
+        </a>
+        
+        <a  class="webpack "
+           href="/2020/03/13/webpack/webpack/"
+           data-tag="webpack"
+           data-author="" >
+            <span class="post-title" title="webpack4打包vue文件">webpack4打包vue文件</span>
+            <span class="post-date" title="2020-03-13 19:03:46">2020/03/13</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-webpack/webpack" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">webpack4打包vue文件</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="webpack">webpack</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color3">webpack</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-03-13 20:06:41'>2020-03-13 19:03</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:2.1k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置package-json"><span class="toc-text">配置package.json</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包模式（mode）"><span class="toc-text">webpack打包模式（mode）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack入口与出口"><span class="toc-text">webpack入口与出口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包-vue文件"><span class="toc-text">webpack打包.vue文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包css"><span class="toc-text">webpack打包css</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包sass"><span class="toc-text">webpack打包sass</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包图片"><span class="toc-text">webpack打包图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包字体文件、音频、视频"><span class="toc-text">webpack打包字体文件、音频、视频</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack生成html"><span class="toc-text">webpack生成html</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack清理dist"><span class="toc-text">webpack清理dist</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-babel介绍"><span class="toc-text">webpack-babel介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-babel使用"><span class="toc-text">webpack-babel使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-sourceMap"><span class="toc-text">webpack-sourceMap</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-watch监听"><span class="toc-text">webpack-watch监听</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-dev-server"><span class="toc-text">webpack-dev-server</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack热更新"><span class="toc-text">webpack热更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack路径别名"><span class="toc-text">webpack路径别名</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack文件后缀"><span class="toc-text">webpack文件后缀</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#打包部署"><span class="toc-text">打包部署</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#打包优化"><span class="toc-text">打包优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#全部代码"><span class="toc-text">全部代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>npm init -y
+npm i webpack -D
+npm i webpack-cli -D</code></pre><h1 id="配置package-json"><a href="#配置package-json" class="headerlink" title="配置package.json"></a>配置package.json</h1><ul>
+<li>npm run serve  在package.json  scripts配置过</li>
+</ul>
+<pre><code class="json">{
+    &quot;scripts&quot;:{
+        &quot;build&quot;:&quot;webpack&quot;
+    }   
+}</code></pre>
+<ol>
+<li>调用webpack工具</li>
+</ol>
+<pre><code class="bash">npm run build</code></pre>
+<h1 id="webpack打包模式（mode）"><a href="#webpack打包模式（mode）" class="headerlink" title="webpack打包模式（mode）"></a>webpack打包模式（mode）</h1><ul>
+<li>需要在配置文件下进行配置</li>
+<li>默认的配置文件名称是：webpack.config.js</li>
+</ul>
+<pre><code class="js">module.exports = {
+    //development 开发模式打包 打包速度快 没做优化处理
+    //production 生成模式打包 打不速度慢 做了一些优化处理，压缩
+    mode: &#39;development&#39;
+} </code></pre>
+<h1 id="webpack入口与出口"><a href="#webpack入口与出口" class="headerlink" title="webpack入口与出口"></a>webpack入口与出口</h1><ul>
+<li>默认入口是 src下的index.js文件</li>
+<li>默认出口是 dist 目录下的 main.js 文件</li>
+</ul>
+<pre><code class="js">const path = require(&#39;path&#39;);
+
+&lt;1&gt;
+module.exports = {
+  // 打包的入口文件
+  entry: &#39;./src/main.js&#39;,
+  // 输出的出口文件
+  output: {
+    // 必须指定的是绝对路径
+    filename: &#39;main.js&#39;
+    path: path.join(__dirname, &#39;./dist&#39;),
+  }
+};
+
+&lt;2&gt;
+module.exports = {
+  entry: &#39;./src/main.js&#39;,
+    output: {
+      filename: &#39;js/bundle.js&#39;,
+      path: path.resolve(__dirname, &#39;./dist&#39;)
+    },
+}</code></pre>
+<h1 id="webpack打包-vue文件"><a href="#webpack打包-vue文件" class="headerlink" title="webpack打包.vue文件"></a>webpack打包.vue文件</h1><pre><code>npm install -D vue-loader vue-template-compiler</code></pre><pre><code> const VueLoaderPlugin = require(&#39;vue-loader/lib/plugin&#39;)
+
+  module.exports = {
+    entry: &#39;./src/index.js&#39;,
+    output: {
+      filename: &#39;main.js&#39;,
+      path: path.resolve(__dirname, &#39;dist&#39;)
+    },
+   module: {
+     rules: [
+       {
+        test: /\.vue$/,
+        loader: &#39;vue-loader&#39;
+      },
+     ]
+   },
+   plugins: [
+    // 请确保引入这个插件！
+    new VueLoaderPlugin()
+  ]
+  };</code></pre><h1 id="webpack打包css"><a href="#webpack打包css" class="headerlink" title="webpack打包css"></a>webpack打包css</h1><pre><code class="bash">npm install --save-dev style-loader css-loader</code></pre>
+<pre><code class="diff">  const path = require(&#39;path&#39;);
+
+  module.exports = {
+   module: {
+     rules: [
+       {
+        test: /\.css$/,
+        use: [
+          &#39;style-loader&#39;,
+          &#39;css-loader&#39;
+        ]
+      },
+     ]
+   }
+  };</code></pre>
+<h1 id="webpack打包sass"><a href="#webpack打包sass" class="headerlink" title="webpack打包sass"></a>webpack打包sass</h1><pre><code class="diff">npm install --save-dev style-loader css-loader node-sass sass-loader</code></pre>
+<pre><code class="diff">const path = require(&#39;path&#39;)
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.sass$/,
+        use: [
+          &#39;style-loader&#39;,
+          &#39;css-loader&#39;,
+          &#39;sass-loader&#39;
+        ]
+      },
+    ]
+  }
+}
+</code></pre>
+<h1 id="webpack打包图片"><a href="#webpack打包图片" class="headerlink" title="webpack打包图片"></a>webpack打包图片</h1><pre><code class="bash">npm install --save-dev file-loader</code></pre>
+<pre><code class="diff">onst path = require(&#39;path&#39;);
+
+  module.exports = {
+    entry: &#39;./src/index.js&#39;,
+    output: {
+      filename: &#39;bundle.js&#39;,
+      path: path.resolve(__dirname, &#39;dist&#39;)
+    },
+    module: {
+      rules: [
+        {
+        test: /\.(png|jp?g|gif|svg)$/,
+        use: [
+          {
+            loader: &#39;url-loader&#39;,
+            options: {
+              limit: 8192, // 小于8192字节的图片打包成base 64图片
+              name: &#39;images/[name].[hash:8].[ext]&#39;,
+              publicPath: &#39;&#39;
+            }
+          }
+        ]
+      },
+      ]
+    }
+  };
+</code></pre>
+<h1 id="webpack打包字体文件、音频、视频"><a href="#webpack打包字体文件、音频、视频" class="headerlink" title="webpack打包字体文件、音频、视频"></a>webpack打包字体文件、音频、视频</h1><pre><code class="css">@font-face{
+  font-family: &#39;myfont&#39;;
+  src:url(../fonts/font.ttf) format(&#39;truetype&#39;)
+}
+body{
+  font-family: &#39;myfont&#39;;
+  background: hotpink;
+}
+</code></pre>
+<pre><code>npm install url-loader file-loader html-loader -D</code></pre><pre><code class="diff">{
+        // 文件依赖配置项——字体图标
+        test: /\.(woff|woff2|svg|eot|ttf)$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;fonts/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      },
+      {
+        // 文件依赖配置项——音频
+        test: /\.(wav|mp3|ogg)?$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;audios/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      }, {
+        // 文件依赖配置项——视频
+        test: /\.(ogg|mpeg4|webm)?$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;videos/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      }
+    ]
+  },
+</code></pre>
+<h1 id="webpack生成html"><a href="#webpack生成html" class="headerlink" title="webpack生成html"></a>webpack生成html</h1><pre><code class="bash">npm install --save-dev html-webpack-plugin</code></pre>
+<pre><code class="diff">const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;);
++   plugins: [
++     new HtmlWebpackPlugin({
++       title: &#39;Output Management&#39;，
++        template: &#39;index.html&#39;
++     })
++   ],
+</code></pre>
+<p>如果你想要了解更多 <code>HtmlWebpackPlugin</code> 插件提供的全部功能和选项，那么你就应该多多熟悉 <a href="https://github.com/jantimon/html-webpack-plugin" target="_blank" rel="noopener"><code>HtmlWebpackPlugin</code></a> 仓库。</p>
+<p>使用自己的文件做为模版：</p>
+<pre><code class="diff">+   plugins: [
++     new HtmlWebpackPlugin({
++       template: &#39;./public/index.html&#39;
++     })
++   ],
+</code></pre>
+<h1 id="webpack清理dist"><a href="#webpack清理dist" class="headerlink" title="webpack清理dist"></a>webpack清理dist</h1><ul>
+<li>参照官网</li>
+</ul>
+<p><a href="https://webpack.js.org/guides/output-management/#cleaning-up-the-dist-folder" target="_blank" rel="noopener">https://webpack.js.org/guides/output-management/#cleaning-up-the-dist-folder</a></p>
+<pre><code class="bash">npm install clean-webpack-plugin --save-dev</code></pre>
+<pre><code class="diff">+ const {CleanWebpackPlugin} = require(&#39;clean-webpack-plugin&#39;);</code></pre>
+<pre><code class="diff">    plugins: [
++     new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        title: &#39;Output Management&#39;
+      })
+    ],
+</code></pre>
+<h1 id="webpack-babel介绍"><a href="#webpack-babel介绍" class="headerlink" title="webpack-babel介绍"></a>webpack-babel介绍</h1><ul>
+<li>目前部分浏览器和 Node.js 已经支持 ES6，但由于它们对 ES6 所有的标准支持不全，这导致在开发中不敢全面地使用 ES6。</li>
+<li>Babel 是一个 JavaScript 编译器，能将 ES6 语法转为 ES5 语法，让你使用最新的语言特性而不用担心兼容性问题，把采用 ES6 编写的代码转换成目前已经支持良好的 ES5 代码。</li>
+<li>官网：<a href="https://babeljs.io/" target="_blank" rel="noopener">https://babeljs.io/</a></li>
+</ul>
+<h1 id="webpack-babel使用"><a href="#webpack-babel使用" class="headerlink" title="webpack-babel使用"></a>webpack-babel使用</h1><pre><code class="bash">npm install -D babel-loader @babel/core @babel/preset-env </code></pre>
+<pre><code class="javascript">module: {
+  rules: [
+    {
+      test: /\.m?js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: &#39;babel-loader&#39;,
+        options: {
+          presets: [&#39;@babel/preset-env&#39;]
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<p>以上操作是语法解析，但是ES6还更新了一些高阶函数。</p>
+<pre><code class="bahs">npm install --save @babel/polyfill</code></pre>
+<p>使用：优先加载</p>
+<pre><code class="js">import &quot;@babel/polyfill&quot;;</code></pre>
+<p>或者：</p>
+<pre><code class="js">module.exports = {
+  entry: [&quot;@babel/polyfill&quot;, &quot;./src/index.js&quot;],
+};</code></pre>
+<h1 id="webpack-sourceMap"><a href="#webpack-sourceMap" class="headerlink" title="webpack-sourceMap"></a>webpack-sourceMap</h1><p>为了更容易地追踪错误和警告，JavaScript 提供了 <a href="http://blog.teamtreehouse.com/introduction-source-maps" target="_blank" rel="noopener">source map</a> 功能，将编译后的代码映射回原始源代码。如果一个错误来自于 <code>b.js</code>，source map 就会明确的告诉你。</p>
+<pre><code class="diff">+   devtool: &#39;inline-source-map&#39;,
+    plugins:
+</code></pre>
+<h1 id="webpack-watch监听"><a href="#webpack-watch监听" class="headerlink" title="webpack-watch监听"></a>webpack-watch监听</h1><p>我们添加一个用于启动 webpack watch mode 的 npm scripts：</p>
+<pre><code class="diff">    &quot;scripts&quot;: {
+      &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
++     &quot;watch&quot;: &quot;webpack --watch&quot;,
+      &quot;build&quot;: &quot;webpack&quot;
+    },
+</code></pre>
+<p>唯一的缺点是，为了看到修改后的实际效果，你需要刷新浏览器。如果能够自动刷新浏览器就更好了，因此接下来我们会尝试通过 <code>webpack-dev-server</code> 实现此功能。</p>
+<h1 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h1><p><code>webpack-dev-server</code> 为你提供了一个简单的 web 服务器，并且能够实时重新加载(live reloading),自动刷新浏览器进行实时的预览。</p>
+<pre><code class="bash">npm install --save-dev webpack-dev-server</code></pre>
+<pre><code class="diff">    devtool: &#39;inline-source-map&#39;,
++   devServer: {
++     contentBase: &#39;./dist&#39;
++   },
+</code></pre>
+<p><strong>package.json</strong></p>
+<pre><code class="diff">    &quot;scripts&quot;: {
++     &quot;dev&quot;: &quot;webpack-dev-server --open&quot;,
+</code></pre>
+<p>执行：</p>
+<pre><code class="bash">npm run dev</code></pre>
+<ul>
+<li>不会把资源打包到磁盘中，存储在内存中。读取更快。</li>
+</ul>
+<h1 id="webpack热更新"><a href="#webpack热更新" class="headerlink" title="webpack热更新"></a>webpack热更新</h1><ul>
+<li>实现浏览器不刷新，更新打包后的结果，默认对js不生效，对样式，vue组件生效。</li>
+</ul>
+<pre><code class="diff">+ const webpack = require(&#39;webpack&#39;);
+
+  module.exports = {
+    devtool: &#39;inline-source-map&#39;,
+    devServer: {
+      contentBase: &#39;./dist&#39;,
++     hot: true
+    },
+    plugins: [
+      new CleanWebpackPlugin([&#39;dist&#39;]),
+      new HtmlWebpackPlugin({
+        title: &#39;模块热替换&#39;
+      }),
++     new webpack.HotModuleReplacementPlugin()
+    ],
+</code></pre>
+<h1 id="webpack路径别名"><a href="#webpack路径别名" class="headerlink" title="webpack路径别名"></a>webpack路径别名</h1><pre><code class="js">  resolve: {
+    alias: {
+      &#39;@&#39;: path.resolve(__dirname, &#39;./src&#39;)
+    }
+  },
+</code></pre>
+<h1 id="webpack文件后缀"><a href="#webpack文件后缀" class="headerlink" title="webpack文件后缀"></a>webpack文件后缀</h1><pre><code class="diff">  resolve: {
+    alias: {
+      &#39;@&#39;: path.resolve(__dirname, &#39;./src&#39;)
+    },
++    extensions: [&#39;.js&#39;, &#39;.vue&#39;, &#39;.json&#39;, &#39;.css&#39;]
+  },
+</code></pre>
+<h1 id="打包部署"><a href="#打包部署" class="headerlink" title="打包部署"></a>打包部署</h1><p>打包</p>
+<pre><code class="bash">npm run build</code></pre>
+<p>部署（dist目录代码）</p>
+<p>不同的后台所部署的服务器不一样。</p>
+<p>问题：首屏加载慢（spa网站通病）</p>
+<ul>
+<li>chunk-vendors-xxxxxx.js   所有第三方模块打包文件    <strong>1867kb</strong></li>
+<li>app.xxxxx.js  所有自己模块打包文件</li>
+<li>chunk-vendors-xxxxxx.css  所有第三方css打包文件</li>
+<li>app.xxxxx.css 所有自己css打包文件</li>
+</ul>
+<p>方案：按需加载（路由懒加载）</p>
+<pre><code class="js">// const Foo = () =&gt; import(&#39;./Foo.vue&#39;) 路由懒加载  将代码分块
+
+const Login = () =&gt; import(&#39;@/views/login&#39;)
+const Home = () =&gt; import(&#39;@/views/home&#39;)
+const Welcome = () =&gt; import(&#39;@/views/welcome&#39;)
+const NotFound = () =&gt; import(&#39;@/views/404&#39;)
+const Test = () =&gt; import(&#39;@/views/test&#39;)
+const Article = () =&gt; import(&#39;@/views/article&#39;)
+const Image = () =&gt; import(&#39;@/views/image&#39;)
+const Publish = () =&gt; import(&#39;@/views/publish&#39;)
+const Comment = () =&gt; import(&#39;@/views/comment&#39;)
+const Setting = () =&gt; import(&#39;@/views/setting&#39;)
+const Fans = () =&gt; import(&#39;@/views/fans&#39;)</code></pre>
+<h1 id="打包优化"><a href="#打包优化" class="headerlink" title="打包优化"></a>打包优化</h1><ul>
+<li>打包后个别块代码，还是体积较大，因为依赖一些较大的第三方包。</li>
+<li>将第三方包，分割出去，降低打包代码体积。<ul>
+<li>使用cdn引入方式（script标签引入其他服务器资源）<ul>
+<li>cdn是提供前端资源的网站  例如 echarts</li>
+</ul>
+</li>
+<li>排除对应的包的导入<ul>
+<li>注释 import echarts from ‘echarts’   不建议使用</li>
+<li>配置webpack排除这些包不去打包。</li>
+</ul>
+</li>
+<li>才能在打包降低体积</li>
+</ul>
+</li>
+</ul>
+<p>具体配置：</p>
+<p>public/index.html</p>
+<pre><code class="html">&lt;script src=&quot;https://cdn.bootcss.com/echarts/4.3.0-rc.1/echarts.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p>vue.config.js</p>
+<pre><code class="js">// 进行vue-cli配置
+// vue-cli配置实现了部分webpack的配置
+module.exports = {
+  // 覆盖webpack的配置选项
+  configureWebpack: {
+    externals: {
+      // key 包名 value 暴露全局的变量名
+      echarts: &#39;echarts&#39;
+    }
+  }
+}
+</code></pre>
+<h1 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h1><p>webpack.config.js</p>
+<pre><code>const path = require(&#39;path&#39;)
+const VueLoaderPlugin = require(&#39;vue-loader/lib/plugin&#39;)
+const webpack = require(&#39;webpack&#39;)
+const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;)
+const CopyWebpackPlugin = require(&#39;copy-webpack-plugin&#39;)
+
+module.exports = {
+  mode: &#39;development&#39;,
+  devtool: &#39;inline-source-map&#39;,
+  devServer: {
+    contentBase: path.resolve(__dirname, &#39;dist&#39;),
+    historyApiFallback: true,
+    hot: true,
+    port: 8080,
+    host: &#39;127.0.0.1&#39;,
+    overlay: true
+  },
+  resolve: {
+    alias: {
+      &#39;@&#39;: path.resolve(__dirname, &#39;./src&#39;)
+    },
+    extensions: [&#39;.js&#39;, &#39;.vue&#39;, &#39;.json&#39;, &#39;.css&#39;]
+  },
+  entry: &#39;./src/main.js&#39;,
+  output: {
+    filename: &#39;js/bundle.js&#39;,
+    path: path.resolve(__dirname, &#39;./dist&#39;)
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: &#39;vue-loader&#39;
+      },
+      {
+        test: /\.css$/,
+        use: [
+          &#39;style-loader&#39;,
+          &#39;css-loader&#39;
+        ]
+      },
+      {
+        test: /\.sass$/,
+        use: [
+          &#39;style-loader&#39;,
+          &#39;css-loader&#39;,
+          &#39;sass-loader&#39;
+        ]
+      },
+      {
+        test: /\.(png|jp?g|gif|svg)$/,
+        use: [
+          {
+            loader: &#39;url-loader&#39;,
+            options: {
+              limit: 8192, // 小于8192字节的图片打包成base 64图片
+              name: &#39;images/[name].[hash:8].[ext]&#39;,
+              publicPath: &#39;&#39;
+            }
+          }
+        ]
+      },
+      {
+        // 文件依赖配置项——字体图标
+        test: /\.(woff|woff2|svg|eot|ttf)$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;fonts/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      },
+      {
+        // 文件依赖配置项——音频
+        test: /\.(wav|mp3|ogg)?$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;audios/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      }, {
+        // 文件依赖配置项——视频
+        test: /\.(ogg|mpeg4|webm)?$/,
+        use: [{
+          loader: &#39;file-loader&#39;,
+          options: {
+            limit: 8192,
+            name: &#39;videos/[name].[ext]?[hash:8]&#39;,
+            publicPath: &#39;&#39;
+          }
+        }]
+      }
+    ]
+  },
+  plugins: [
+    // 请确保引入这个插件！
+    new HtmlWebpackPlugin({
+      template: &#39;./public/index.html&#39;
+    }),
+    new CopyWebpackPlugin([{
+      from: path.resolve(__dirname, &#39;./public/static&#39;), // 打包的静态资源目录地址
+      to: &#39;static&#39; // 打包到dist下面的static
+    }]),
+    new VueLoaderPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  ]
+}</code></pre><p>package.json</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;vue-cli-service serve --config webpack.config.js --hot --inline --progress --open&quot;,
+    &quot;build&quot;: &quot;webpack&quot;,
+    &quot;watch&quot;: &quot;webpack --watch&quot;
+}</code></pre><h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><img src="/2020/03/13/webpack/webpack/webpack.jpg" alt></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>webpack4打包vue文件</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">2.1k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-03-13, 19:03:46</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-13, 20:06:41</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/13/webpack/webpack/" title="webpack4打包vue文件">https://zhangxuet.github.io/2020/03/13/webpack/webpack/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2019-2020 Ting</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#工具','#hexo','#markdown','#echarts','#node-sass','#vue','#正则','#token','#node','#webpack',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+
+</html>
