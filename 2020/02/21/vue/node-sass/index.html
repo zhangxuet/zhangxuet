@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>VUE打印功能 | Ting</title>
-  <meta name="keywords" content=" vue ">
-  <meta name="description" content="VUE打印功能 | Ting">
+  <title>离线安装node-sass | Ting</title>
+  <meta name="keywords" content=" node-sass ">
+  <meta name="description" content="离线安装node-sass | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="安装i18n+elementUInpm i i18n element-ui在main.js中导入import ElementUI from &#39;element-ui&#39; import &#39;element-ui&#x2F;lib&#x2F;theme-chalk&#x2F;index.css&#39; import i18n from &#39;.&#x2F;i18n.js&#39;  Vue.use(ElementUI">
 <meta property="og:type" content="article">
@@ -349,9 +349,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-vue/vue-print" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-vue/node-sass" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">VUE打印功能</h1>
+        <h1 class="article-title">离线安装node-sass</h1>
     
     <div class="article-meta">
         
@@ -366,19 +366,19 @@
         
         <span class="tag">
             
-            <a class="color4">vue</a>
+            <a class="color5">node-sass</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-27 20:36:18'>2020-02-27 20:28</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-13 10:05:45'>2020-02-21 12:18</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:67</span>
+        <span>字数:135</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -397,7 +397,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在main-js文件中引入"><span class="toc-text">在main.js文件中引入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如需通过链接地址打印"><span class="toc-text">如需通过链接地址打印</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#离线安装node-sass"><span class="toc-text">离线安装node-sass</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看服务器的node版本"><span class="toc-text">查看服务器的node版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载node-sass"><span class="toc-text">下载node-sass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置离线信息"><span class="toc-text">配置离线信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置sass路径"><span class="toc-text">设置sass路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#然后安装node-sass模块"><span class="toc-text">然后安装node-sass模块</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -413,9 +413,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>npm install vue-print-nb --save</code></pre><h1 id="在main-js文件中引入"><a href="#在main-js文件中引入" class="headerlink" title="在main.js文件中引入"></a>在main.js文件中引入</h1><pre><code>import Print from &#39;vue-print-nb&#39;
-Vue.use(Print);</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><pre><code>&lt;div id=&quot;printTest&quot;&gt;　&lt;/div&gt;
-&lt;button v-print=&quot;&#39;#printTest&#39;&quot;&gt;打印&lt;/button&gt;</code></pre><h1 id="如需通过链接地址打印"><a href="#如需通过链接地址打印" class="headerlink" title="如需通过链接地址打印"></a>如需通过链接地址打印</h1><pre><code>window.location.href = 地址</code></pre>
+        <h1 id="离线安装node-sass"><a href="#离线安装node-sass" class="headerlink" title="离线安装node-sass"></a>离线安装node-sass</h1><h2 id="查看服务器的node版本"><a href="#查看服务器的node版本" class="headerlink" title="查看服务器的node版本"></a>查看服务器的node版本</h2><p><code>node -p &quot;[process.platform, process.arch, process.versions.modules].join(&#39;-&#39;)&quot;</code></p>
+<h2 id="下载node-sass"><a href="#下载node-sass" class="headerlink" title="下载node-sass"></a>下载node-sass</h2><p>​    去<strong>Github</strong>上下载对象的node-sass版本</p>
+<p>​    下载地址：<a href="https://github.com/sass/node-sass/releases" target="_blank" rel="noopener">https://github.com/sass/node-sass/releases</a> </p>
+<h2 id="配置离线信息"><a href="#配置离线信息" class="headerlink" title="配置离线信息"></a>配置离线信息</h2><ol>
+<li><p>在项目里根目录下新建lib文件夹</p>
+</li>
+<li><p>将下载的win32-x64-57_binding.node` 复制到lib中</p>
+</li>
+<li><p>配置package.json中，sass的离线配置</p>
+<pre><code class="json">&quot;nodeSassConfig&quot;: {
+  &quot;binaryPath&quot;: &quot;./lib/win32-x64-72_binding.node&quot;
+}</code></pre>
+<h2 id="设置sass路径"><a href="#设置sass路径" class="headerlink" title="设置sass路径"></a>设置sass路径</h2><pre><code>set SASS_BINARY_PATH=D:/nodejs/lib/win32-x64-72_binding.node</code></pre><h2 id="然后安装node-sass模块"><a href="#然后安装node-sass模块" class="headerlink" title="然后安装node-sass模块"></a>然后安装node-sass模块</h2><pre><code>npm i node-sass -D --verbose</code></pre></li>
+</ol>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -424,12 +436,12 @@ Vue.use(Print);</code></pre><h1 id="使用"><a href="#使用" class="headerlink"
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>VUE打印功能</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">67</span></p>
+    <p><span class="copy-title">文章标题:</span>离线安装node-sass</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">135</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-02-27, 20:28:51</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-27, 20:36:18</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/27/vue/vue-print/" title="VUE打印功能">https://zhangxuet.github.io/2020/02/27/vue/vue-print/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-21, 12:18:27</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-13, 10:05:45</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/21/vue/node-sass/" title="离线安装node-sass">https://zhangxuet.github.io/2020/02/21/vue/node-sass/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

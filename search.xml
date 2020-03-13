@@ -1,6 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>node写接口</title>
+    <url>/2020/03/13/node/node/</url>
+    <content><![CDATA[<h1 id="安装express-mysql-body-parser"><a href="#安装express-mysql-body-parser" class="headerlink" title="安装express  mysql  body-parser"></a>安装express  mysql  body-parser</h1><pre><code>npm i express mysql body-parser</code></pre><h1 id="创建db-js"><a href="#创建db-js" class="headerlink" title="创建db.js"></a>创建db.js</h1><pre><code>module.exports = (sql, values, cb) =&gt; {
+    const mysql = require(&#39;mysql&#39;)
+    const conn = mysql.createConnection({
+        host: &#39;localhost&#39;,
+        port: &#39;3306&#39;,
+        user: &#39;root&#39;,
+        password: &#39;&#39;,
+        database: &#39;hero&#39;,
+        multipleStatements: true
+    })
+    conn.connect()
+    conn.query(sql, values, cb)
+    conn.end()
+}</code></pre><h1 id="创建app-js"><a href="#创建app-js" class="headerlink" title="创建app.js"></a>创建app.js</h1><pre><code>// 创建web服务器
+const express = require(&#39;express&#39;);
+const app = express();
+app.listen(3000, () =&gt; console.log(&#39;服务器启动了&#39;));
+
+// 使用中间件，处理文件资源
+app.use(express.static(&#39;manager&#39;));
+app.use(&#39;/uploads&#39;, express.static(__dirname + &#39;/uploads&#39;));
+
+// 处理 ‘x-www-form-urlencoded’ 编码格式的POST请求体 （把浏览器提交的数据放到 req.body中）
+const bodyParser = require(&#39;body-parser&#39;);
+app.use(bodyParser.urlencoded({extended: false}));
+
+const db = require(&#39;./db.js&#39;);
+///////////////////////////// 下面是接口 ////////////////////////////////////////
+// app.get(&#39;/time&#39;, (req, res) =&gt; {
+//     res.send(Date.now() + &#39;&#39;);
+// });
+
+// 1. 完成获取英雄的接口
+app.get(&#39;/getHeroes&#39;, (req, res) =&gt; {
+    // 接收前端传递过来的page
+    let page = req.query.page || 1; // page表示页码
+    let pageNum = 5; // 表示每页显示多少条
+    let sql = &#39;select * from heroes limit &#39; + (page-1) * pageNum + &#39;,&#39; + pageNum;
+    sql += &#39;;select count(*) c from heroes&#39;;
+    db(sql, null, (err, result) =&gt; {
+        if (err) throw err;
+        console.log(result);
+        res.send({
+            data: result[0],
+            pageTotal: Math.ceil(result[1][0].c / pageNum)
+        });
+        // res.send(result);
+    });
+});
+
+
+// 2. 完成添加英雄的接口
+// 加载multer
+const multer = require(&#39;multer&#39;);
+// 配置multer
+const upload = multer({ dest: &#39;uploads/&#39;});
+
+app.post(&#39;/addHero&#39;, upload.single(&#39;heroIcon&#39;), (req, res) =&gt; {
+    // console.log(req.body); 
+    // console.log(req.file);
+    // 写SQL，完成添加入库
+    let sql = &#39;insert into heroes set ?&#39;;
+    let values = {
+        // 字段： 值
+        name: req.body.heroName,
+        nickname: req.body.heroNickName,
+        skill: req.body.skillName,
+        file: req.file.path
+    };
+    db(sql, values, (err, result) =&gt; {
+        if (err) {
+            // send方法，它会将对象自动转成json格式并响应
+            res.send({code: 201, message: &#39;添加失败&#39;});
+        } else {
+            res.send({code: 200, message: &#39;添加成功&#39;});
+        }
+    });
+});
+
+
+// 3. 根据id，获取一个英雄
+app.get(&#39;/getHeroById&#39;, (req, res) =&gt; {
+    // 获取url上的id参数
+    // req.query -- 可以获取到url上所有的参数。这是express提供的一个属性
+    let id = req.query.id;
+    if (id == &#39;&#39; || isNaN(id)) {
+        res.send(&#39;参数错误&#39;);
+        return;
+    }
+    db(&#39;select * from heroes where id=?&#39;, id, (err, result) =&gt; {
+        if (err) throw err;
+        res.send(result[0]);
+    });
+});
+
+// 4. 更新的接口
+app.post(&#39;/updateHero&#39;, upload.single(&#39;heroIcon&#39;), (req, res) =&gt; {
+    // console.log(req.body); 
+    // console.log(req.file);
+    // 写SQL，完成添加入库
+    let sql = &#39;update heroes set ? where id = ?&#39;;
+    let values = {
+        // 字段： 值
+        name: req.body.heroName,
+        nickname: req.body.heroNickName,
+        skill: req.body.skillName
+    };
+    // 单独设置文件
+    // console.log(req.file); // 如果没有选择图片，req.file为undefined
+    if (req.file !== undefined) {
+        // 说明此次更新了头像
+        values.file = req.file.path;
+    }
+    // return;
+    db(sql, [values, req.body.id], (err, result) =&gt; {
+        if (err) {
+            // send方法，它会将对象自动转成json格式并响应
+            res.send({code: 201, message: &#39;更新失败&#39;});
+        } else {
+            res.send({code: 200, message: &#39;更新成功&#39;});
+        }
+    });
+});
+
+
+// 5. 删除英雄的接口
+app.get(&#39;/deleteHero&#39;, (req, res) =&gt; {
+    // 获取url上的id
+    // console.log(req.query);
+    let id = req.query.id;
+    if (id == &#39;&#39; || isNaN(id)) {
+        res.send(&#39;参数错误&#39;);
+        return;
+    }
+    // 完成删除
+    db(&#39;delete from heroes where id = ?&#39;, id, (err, result) =&gt; {
+        if (err) {
+            res.send({code: 201, message: &#39;删除失败&#39;});
+        } else {
+            res.send({code: 200, message: &#39;删除成功&#39;});
+        }
+    });
+});</code></pre>]]></content>
+      <categories>
+        <category>node</category>
+      </categories>
+      <tags>
+        <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Element使用i18n国际化</title>
     <url>/2020/03/13/vue/i18n/</url>
     <content><![CDATA[<h1 id="安装i18n-elementUI"><a href="#安装i18n-elementUI" class="headerlink" title="安装i18n+elementUI"></a>安装i18n+elementUI</h1><pre><code>npm i i18n element-ui</code></pre><h1 id="在main-js中导入"><a href="#在main-js中导入" class="headerlink" title="在main.js中导入"></a>在main.js中导入</h1><pre><code>import ElementUI from &#39;element-ui&#39;
@@ -398,7 +551,7 @@ return wbout;
   </entry>
   <entry>
     <title>离线安装node-sass</title>
-    <url>/2020/02/21/node-sass/node-sass/</url>
+    <url>/2020/02/21/vue/node-sass/</url>
     <content><![CDATA[<h1 id="离线安装node-sass"><a href="#离线安装node-sass" class="headerlink" title="离线安装node-sass"></a>离线安装node-sass</h1><h2 id="查看服务器的node版本"><a href="#查看服务器的node版本" class="headerlink" title="查看服务器的node版本"></a>查看服务器的node版本</h2><p><code>node -p &quot;[process.platform, process.arch, process.versions.modules].join(&#39;-&#39;)&quot;</code></p>
 <h2 id="下载node-sass"><a href="#下载node-sass" class="headerlink" title="下载node-sass"></a>下载node-sass</h2><p>​    去<strong>Github</strong>上下载对象的node-sass版本</p>
 <p>​    下载地址：<a href="https://github.com/sass/node-sass/releases" target="_blank" rel="noopener">https://github.com/sass/node-sass/releases</a> </p>
@@ -415,7 +568,7 @@ return wbout;
 </ol>
 ]]></content>
       <categories>
-        <category>node</category>
+        <category>vue</category>
       </categories>
       <tags>
         <tag>node-sass</tag>
