@@ -1,6 +1,346 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>小程序</title>
+    <url>/2020/03/28/wxprogram/%E5%90%B8%E9%A1%B6/</url>
+    <content><![CDATA[<h1 id="小程序吸顶效果"><a href="#小程序吸顶效果" class="headerlink" title="小程序吸顶效果"></a>小程序吸顶效果</h1><pre><code>&lt;div class=&quot;tabs&quot; :class=&quot;scrollTop &gt; 0 ? &#39;groupPosition&#39; : &#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+    &lt;div data-index=&#39;1&#39; class=&quot;tab all&quot; :class=&quot;currentIndex === 1?&#39;current&#39;:&#39;&#39;&quot;&gt;全部&lt;/div&gt;
+    &lt;div data-index=&#39;2&#39; class=&quot;tab handle&quot; :class=&quot;currentIndex === 2?&#39;current&#39;:&#39;&#39;&quot;&gt;处理中&lt;/div&gt;
+    &lt;div data-index=&#39;3&#39; class=&quot;tab complete&quot; :class=&quot;currentIndex===3?&#39;current&#39;:&#39;&#39;&quot;&gt;已完成&lt;/div&gt;
+&lt;/div&gt;</code></pre><pre><code>mounted () {
+},
+onPageScroll (e) {
+  this.scrollTop = e.scrollTop
+},</code></pre><p>css</p>
+<pre><code>.groupPosition {
+    position: fixed;
+}</code></pre><h1 id="小程序tab栏切换效果"><a href="#小程序tab栏切换效果" class="headerlink" title="小程序tab栏切换效果"></a>小程序tab栏切换效果</h1><p>css</p>
+<pre><code>.tabs {
+    display: flex;
+    flex: 1;
+    z-index: 100;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 50rpx;
+    .tab {
+        padding:20rpx 47rpx;
+    }
+    .current {
+        color: #EF4238;
+        border-bottom: 1px solid #EF4238;
+     }
+}</code></pre><p>js</p>
+<pre><code>changeTab (e) {
+    let index = parseInt(e.target.dataset.index)
+    this.currentIndex = index
+}</code></pre><h1 id="小程序自定义下拉框"><a href="#小程序自定义下拉框" class="headerlink" title="小程序自定义下拉框"></a>小程序自定义下拉框</h1><p>data</p>
+<pre><code>selectItem: &#39;点击选择项目&#39;,
+selectProject: false,
+projectItem: [ &#39;你好1&#39;, &#39;你好2&#39;, &#39;你好3&#39; ],</code></pre><p>html</p>
+<pre><code>&lt;div class=&#39;top&#39;&gt;
+    &lt;div class=&#39;top-text&#39;&gt; 选择项目&lt;/div&gt;
+    &lt;!-- 下拉框 --&gt;
+    &lt;div class=&#39;top-selected&#39; @click=&#39;handleProject&#39;&gt;
+    &lt;span class=&quot;select-top&quot;&gt;{{selectItem}}&lt;/span&gt;
+    &lt;span class=&quot;icon&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;!-- 下拉需要显示的列表 --&gt;
+    &lt;span class=&quot;san&quot; v-if=&quot;selectProject&quot;&gt;&lt;/span&gt;
+    &lt;div class=&quot;select_box&quot; v-if=&quot;selectProject&quot;&gt;
+    &lt;div v-for=&quot;(item, index) in projectItem&quot; :key=&quot;index&quot;&gt;
+    &lt;div class=&quot;select_one&quot; @click=&quot;mySelect&quot; :data-name=&quot;item&quot;&gt;{{item}}&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre><p>js</p>
+<pre><code>handleProject () {
+   this.selectProject = !this.selectProject
+},
+mySelect (e) {
+    var select = e.currentTarget.dataset.name
+    this.selectItem = select
+}</code></pre><p>css</p>
+<pre><code>.top {
+    position: relative;
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 34rpx;
+    border-bottom: 1px solid #000;
+    .top-text {
+        float: left;
+        width: 45%;
+        padding-left: 20rpx;
+    }
+    .top-selected {
+        width: 52%;
+        display: flex;
+        float: right;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        font-size: 30rpx;
+        .select-top {
+            padding-left: 50rpx;
+        }
+        .icon {
+            width: 20rpx;
+            height: 20rpx;
+            margin-right: 50rpx;
+            border-bottom: 2rpx solid #000;
+            border-right: 2rpx solid #000;
+            transform: rotate(45deg);
+        }
+    }
+      /* 下拉内容 */
+    .san {
+        position: absolute;
+        left: 420rpx;
+        top: 118rpx;
+        width: 35rpx;
+        height: 35rpx;
+        margin-right: 50rpx;
+        border-top: 2rpx solid #ddd;
+        border-left: 2rpx solid #ddd;
+        border-bottom: 2rpx solid #fff;
+        box-shadow: 2rpx #eee;
+        background:#fff;
+        transform: rotate(45deg);
+        z-index: 10;
+    }
+    .select_box {
+        background-color: #fff;
+        width: 46%;
+        float: right;
+        position: absolute;
+        right: 10rpx;
+        top: 86rpx;
+        z-index: 1;
+        overflow: hidden;
+        text-align: left;
+        animation: myfirst 0.5s;
+        font-size: 32rpx;
+        border: 5rpx solid #eee;
+        box-shadow: 2rpx #eee;
+        margin-top: 50rpx;
+        padding-left: 20rpx;
+        .select_one {
+            width: 100%;
+            height: 75rpx;
+            line-height: 75rpx;
+        }
+      }
+    }</code></pre><h1 id="小程序授权"><a href="#小程序授权" class="headerlink" title="小程序授权"></a>小程序授权</h1><p>app.vue</p>
+<pre><code>onLaunch () {
+    wx.login({
+      success: res =&gt; {
+        //       // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          this.code = res.code
+          this.wxGetUserInfo()
+        }
+      }
+    })
+    // 获取用户信息
+    wx.getSetting({
+      success: res =&gt; {
+        // console.log(res)
+        if (res.authSetting[&#39;scope.userInfo&#39;]) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res =&gt; {
+              // 可以将 res 发送给后台解码出 unionId
+              this.userInfo = res.userInfo
+              wx.setStorageSync(&#39;userInfo&#39;, res.userInfo)
+              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+              // 所以此处加入 callback 以防止这种情况
+              if (this.userInfoReadyCallback) {
+                this.userInfoReadyCallback(res)
+              }
+            }
+          })
+        }
+      }
+    })
+  },</code></pre><pre><code>wxGetUserInfo () {
+      wx.request({
+        url: `http://39.107.35.106:8001/api/Auth`,
+        method: &#39;get&#39;,
+        data: {
+          code: this.code
+        },
+        header: {
+          &#39;content-type&#39;: &#39;application/json&#39;
+        },
+        success: (res) =&gt; {
+          // console.log(res.data)
+        }
+      })
+    }</code></pre><p>user/index.vue</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;!--index.wxml--&gt;
+    &lt;view class=&quot;container&quot;&gt;
+      &lt;view class=&quot;userinfo&quot;&gt;
+        &lt;button v-if=&quot;!hasUserInfo &amp;&amp; canIUse&quot; open-type=&quot;getUserInfo&quot; @getuserinfo=&quot;getUserInfo&quot;&gt; 获取头像昵称 &lt;/button&gt;
+        &lt;block wx:else&gt;
+          &lt;image @click=&quot;bindViewTap&quot; class=&quot;userinfo-avatar&quot; :src=&quot;userInfo.avatarUrl&quot; mode=&quot;cover&quot;&gt;&lt;/image&gt;
+          &lt;text class=&quot;userinfo-nickname&quot;&gt;{{userInfo.nickName}}&lt;/text&gt;
+        &lt;/block&gt;
+      &lt;/view&gt; 
+    &lt;/view&gt;
+
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data () {
+    return {
+      userInfo: {},
+      hasUserInfo: false,
+      canIUse: mpvue.canIUse(&#39;button.open-type.getUserInfo&#39;)
+    }
+  },
+  methods: {
+    bindViewTap () {
+      wx.getSetting({
+        success (res) {
+          if (!res.authSetting[&#39;scope.record&#39;]) {
+            wx.switchTab({
+              url: &#39;/pages/index/main&#39;
+            })
+            // mpvue.authorize({
+            //   scope: &#39;scope.record&#39;,
+            //   success () {
+            //   // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+            //     wx.startRecord()
+            //   }
+            // })
+          }
+        }
+      })
+    },
+    getUserInfo () {
+      // 调用登录接口
+      mpvue.getUserInfo({// 当已授权getUserInfo时
+        success: res =&gt; {
+          // console.log(res.userInfo)
+          this.userInfo = res.userInfo
+          wx.setStorageSync(&#39;userInfo&#39;, res.userInfo)
+          this.hasUserInfo = true
+          wx.switchTab({
+            url: &#39;/pages/index/main&#39;
+          })
+        },
+        fail: (err) =&gt; {
+          console.log(err)
+        }
+      })
+    }
+  }
+}
+&lt;/script&gt;
+
+&lt;style scoped lang=&quot;less&quot;&gt;
+  @import &#39;./main.less&#39;;
+&lt;/style&gt;
+</code></pre>]]></content>
+      <categories>
+        <category>小程序</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>css选三角形</title>
+    <url>/2020/03/28/css/css/</url>
+    <content><![CDATA[<h1 id="空心三角"><a href="#空心三角" class="headerlink" title="空心三角"></a>空心三角</h1><pre><code>.angel {
+    width: 7px;
+    height: 7px;
+    border-bottom: 2px solid #000;
+    border-right: 2px solid #000;
+    transform: rotate(45deg)
+    }</code></pre><h1 id="实心三角形"><a href="#实心三角形" class="headerlink" title="实心三角形"></a>实心三角形</h1><pre><code>.angel {
+    width: 0px;
+    height: 0px;
+    border: 20px solid #fff;
+    /*border-bottom: 20px solid #f00;*/
+    /*border-right: 20px solid #000;*/
+    /*border-left: 20px solid #00f;*/
+    border-top: 20px solid #0f0;
+    }</code></pre>]]></content>
+      <categories>
+        <category>css</category>
+      </categories>
+      <tags>
+        <tag>css</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>小程序国际化</title>
+    <url>/2020/03/20/wxprogram/i18n/</url>
+    <content><![CDATA[<h1 id="安装gulp-及-miniprogram-i18n-的-gulp-插件"><a href="#安装gulp-及-miniprogram-i18n-的-gulp-插件" class="headerlink" title="安装gulp 及 miniprogram-i18n 的 gulp 插件"></a>安装gulp 及 miniprogram-i18n 的 gulp 插件</h1><pre><code>npm i -D gulp @miniprogram-i18n/gulp-i18n-locales @miniprogram-i18n/gulp-i18n-wxml</code></pre><h1 id="安装国际化运行时并在开发工具”构建npm"><a href="#安装国际化运行时并在开发工具”构建npm" class="headerlink" title="安装国际化运行时并在开发工具”构建npm"></a>安装国际化运行时并在开发工具”构建npm</h1><pre><code>npm i -S @miniprogram-i18n/core</code></pre><h1 id="在项目根目录新建-gulpfile-js，并编写构建脚本"><a href="#在项目根目录新建-gulpfile-js，并编写构建脚本" class="headerlink" title="在项目根目录新建 gulpfile.js，并编写构建脚本!"></a>在项目根目录新建 gulpfile.js，并编写构建脚本!</h1>]]></content>
+      <categories>
+        <category>小程序</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mpvue框架</title>
+    <url>/2020/03/19/wxprogram/wxprogram/</url>
+    <content><![CDATA[<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><ul>
+<li>安装Node.js(版本号大于v8.9.0)</li>
+<li>安装vue脚手架<ul>
+<li>npm install -g @vue/cli</li>
+<li>npm install -g @vue/cli-init</li>
+</ul>
+</li>
+<li>初始化项目（最后的项目名称自定义）<ul>
+<li>vue init mpvue/mpvue-quickstart mytest</li>
+</ul>
+</li>
+<li>安装依赖包（进入到项目的目录中进行）<ul>
+<li>npm install</li>
+</ul>
+</li>
+<li>运行项目<ul>
+<li>npm run dev</li>
+</ul>
+</li>
+<li>项目要导入到小程序开发工具中，但是代码通过vscode或者sublime进行开发</li>
+</ul>
+<h1 id="基于mpvue的实践Tab"><a href="#基于mpvue的实践Tab" class="headerlink" title="基于mpvue的实践Tab"></a>基于mpvue的实践Tab</h1><ul>
+<li>如果添加新的文件，命令行需要重启 npm run dev</li>
+<li>如果修改文件的内容，不需要重启</li>
+<li>在vue模板中可以使用小程序内置标签，比如view标签</li>
+</ul>
+<h1 id="配置less环境"><a href="#配置less环境" class="headerlink" title="配置less环境"></a>配置less环境</h1><p>装包</p>
+<pre><code>npm install less less-loader -D
+npm install node-sass sass-loader -D</code></pre><p>样式标签配置less</p>
+<pre><code>&lt;style scoped lang=&#39;less&#39;&gt;
+    @import &#39;main.less&#39;;            //一定要加 ； 号
+ &lt;/style&gt;</code></pre>]]></content>
+      <categories>
+        <category>小程序</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue-echarts</title>
+    <url>/2020/03/17/echarts/vue-echarts/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+  </entry>
+  <entry>
     <title>webpack4打包vue文件</title>
     <url>/2020/03/13/webpack/</url>
     <content><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>npm init -y
@@ -72,7 +412,13 @@ module.exports = {
     // 请确保引入这个插件！
     new VueLoaderPlugin()
   ]
-  };</code></pre><h1 id="webpack打包css"><a href="#webpack打包css" class="headerlink" title="webpack打包css"></a>webpack打包css</h1><pre><code class="bash">npm install --save-dev style-loader css-loader</code></pre>
+  };</code></pre><h1 id="打包静态资源"><a href="#打包静态资源" class="headerlink" title="打包静态资源"></a>打包静态资源</h1><p>npm i copy-webpack-plugin -D</p>
+<pre><code>const CopyWebpackPlugin = require(&#39;copy-webpack-plugin&#39;)
+
+new CopyWebpackPlugin([{
+    from: path.resolve(__dirname, &#39;./public/static&#39;), // 打包的静态资源目录地址
+    to: &#39;static&#39; // 打包到dist下面的static
+}]),</code></pre><h1 id="webpack打包css"><a href="#webpack打包css" class="headerlink" title="webpack打包css"></a>webpack打包css</h1><pre><code class="bash">npm install --save-dev style-loader css-loader</code></pre>
 <pre><code class="diff">  const path = require(&#39;path&#39;);
 
   module.exports = {
@@ -88,7 +434,21 @@ module.exports = {
      ]
    }
   };</code></pre>
-<h1 id="webpack打包sass"><a href="#webpack打包sass" class="headerlink" title="webpack打包sass"></a>webpack打包sass</h1><pre><code class="diff">npm install --save-dev style-loader css-loader node-sass sass-loader</code></pre>
+<h1 id="css预处理"><a href="#css预处理" class="headerlink" title="css预处理"></a>css预处理</h1><pre><code>npm i postcss postcss-loader autoprefixer cssnano postcss-cssnext --save-dev  </code></pre><p>在css-loader和style-loader之间使用</p>
+<pre><code>{
+    loader: &#39;postcss-loader&#39;,
+    options: {
+        ident: &#39;postcss&#39;,
+        plugins: [
+           // require(&#39;autoprefixer&#39;)()
+            require(&#39;postcss-next&#39;)()
+        ]
+    }
+}</code></pre><p>package.json</p>
+<pre><code>&quot;browserslist&quot;: [
+    &quot;&gt;= 1%&quot;,
+    &quot;last 2 versions&quot;
+]</code></pre><h1 id="webpack打包sass"><a href="#webpack打包sass" class="headerlink" title="webpack打包sass"></a>webpack打包sass</h1><pre><code class="diff">npm install --save-dev style-loader css-loader node-sass sass-loader</code></pre>
 <pre><code class="diff">const path = require(&#39;path&#39;)
 module.exports = {
   module: {
@@ -209,7 +569,8 @@ body{
         title: &#39;Output Management&#39;
       })
     ],
-</code></pre>
+
+    //new CleanWebpackPlugin([&#39;dist&#39;])</code></pre>
 <h1 id="webpack-babel介绍"><a href="#webpack-babel介绍" class="headerlink" title="webpack-babel介绍"></a>webpack-babel介绍</h1><ul>
 <li>目前部分浏览器和 Node.js 已经支持 ES6，但由于它们对 ES6 所有的标准支持不全，这导致在开发中不敢全面地使用 ES6。</li>
 <li>Babel 是一个 JavaScript 编译器，能将 ES6 语法转为 ES5 语法，让你使用最新的语言特性而不用担心兼容性问题，把采用 ES6 编写的代码转换成目前已经支持良好的 ES5 代码。</li>
@@ -239,7 +600,21 @@ body{
 <pre><code class="js">module.exports = {
   entry: [&quot;@babel/polyfill&quot;, &quot;./src/index.js&quot;],
 };</code></pre>
-<h1 id="webpack-sourceMap"><a href="#webpack-sourceMap" class="headerlink" title="webpack-sourceMap"></a>webpack-sourceMap</h1><p>为了更容易地追踪错误和警告，JavaScript 提供了 <a href="http://blog.teamtreehouse.com/introduction-source-maps" target="_blank" rel="noopener">source map</a> 功能，将编译后的代码映射回原始源代码。如果一个错误来自于 <code>b.js</code>，source map 就会明确的告诉你。</p>
+<h1 id="局部垫片（选用）"><a href="#局部垫片（选用）" class="headerlink" title="局部垫片（选用）"></a>局部垫片（选用）</h1><p>不希望污染全局变量</p>
+<pre><code>npm i babel-plugin-transform-runtime --save-dev
+npm i babel-runtime --save
+npm i @babel/plugin-transform-runtime --save-dev
+npm i @babel/runtime --save</code></pre><p>.babelrc</p>
+<pre><code>{
+    &quot;presets&quot;: [
+        [&quot;@babel/preset-env&quot;. {
+            &quot;targets&quot;: {
+            &quot;browsers&quot;: [&quot;last 2 versions&quot;]
+            }
+        }]
+    ],
+    &quot;plugins&quot;: [&quot;@babel/transform-runtime&quot;]
+}</code></pre><h1 id="webpack-sourceMap"><a href="#webpack-sourceMap" class="headerlink" title="webpack-sourceMap"></a>webpack-sourceMap</h1><p>为了更容易地追踪错误和警告，JavaScript 提供了 <a href="http://blog.teamtreehouse.com/introduction-source-maps" target="_blank" rel="noopener">source map</a> 功能，将编译后的代码映射回原始源代码。如果一个错误来自于 <code>b.js</code>，source map 就会明确的告诉你。</p>
 <pre><code class="diff">+   devtool: &#39;inline-source-map&#39;,
     plugins:
 </code></pre>
@@ -299,7 +674,31 @@ body{
 +    extensions: [&#39;.js&#39;, &#39;.vue&#39;, &#39;.json&#39;, &#39;.css&#39;]
   },
 </code></pre>
-<h1 id="打包部署"><a href="#打包部署" class="headerlink" title="打包部署"></a>打包部署</h1><p>打包</p>
+<h1 id="提取公共代码"><a href="#提取公共代码" class="headerlink" title="提取公共代码"></a>提取公共代码</h1><pre><code>entry: {
+    &#39;vendor&#39;: [&#39;lodash&#39;]
+}</code></pre><pre><code>plugin: [
+ new webpack.optimize.CommonsChunkPlugin({
+        name: &#39;common&#39;,
+        minChunks: 2,
+        chunks: [&#39;pageA&#39;, &#39;pageB&#39;]
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+        name: &#39;vendor&#39;,
+        minChunks: Infinity
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+        name: &#39;manifest&#39;,
+        minChunks: Infinity
+    })
+]</code></pre><pre><code>new webpack.optimize.CommonsChunkPlugin({
+        async: &#39;async-common&#39;,
+        children: true
+        minChunks: 2
+    }),
+new webpack.optimize.CommonsChunkPlugin({
+        names: [&#39;vendor&#39;, &#39;manifest&#39;],
+        minChunks: Infinity
+    })</code></pre><h1 id="打包部署"><a href="#打包部署" class="headerlink" title="打包部署"></a>打包部署</h1><p>打包</p>
 <pre><code class="bash">npm run build</code></pre>
 <p>部署（dist目录代码）</p>
 <p>不同的后台所部署的服务器不一样。</p>
@@ -356,7 +755,112 @@ module.exports = {
   }
 }
 </code></pre>
-<h1 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h1><p>webpack.config.js</p>
+<h1 id="生产环境构建"><a href="#生产环境构建" class="headerlink" title="生产环境构建"></a>生产环境构建</h1><pre><code>npm install --save-dev webpack-merge</code></pre><pre><code>- |- webpack.config.js
++ |- webpack.common.js
++ |- webpack.dev.js
++ |- webpack.prod.js</code></pre><p>webpack.common.js</p>
+<pre><code>+ const path = require(&#39;path&#39;);
++ const CleanWebpackPlugin = require(&#39;clean-webpack-plugin&#39;);
++ const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;);
++
++ module.exports = {
++   entry: {
++     app: &#39;./src/index.js&#39;
++   },
++   plugins: [
++     new CleanWebpackPlugin([&#39;dist&#39;]),
++     new HtmlWebpackPlugin({
++       title: &#39;Production&#39;
++     })
++   ],
++   output: {
++     filename: &#39;[name].bundle.js&#39;,
++     path: path.resolve(__dirname, &#39;dist&#39;)
++   }
++ };</code></pre><p>webpack.dev.js</p>
+<pre><code>+ const merge = require(&#39;webpack-merge&#39;);
++ const common = require(&#39;./webpack.common.js&#39;);
++
++ module.exports = merge(common, {
++   devtool: &#39;inline-source-map&#39;,
++   devServer: {
++     contentBase: &#39;./dist&#39;
++   }
++ });</code></pre><p>webpack.prod.js</p>
+<pre><code> const merge = require(&#39;webpack-merge&#39;);
+ const UglifyJSPlugin = require(&#39;uglifyjs-webpack-plugin&#39;);
+ const common = require(&#39;./webpack.common.js&#39;);
+ const webpack = require(&#39;webpack&#39;)  //指定环境
+
+  module.exports = merge(common, {
++   devtool: &#39;source-map&#39;,
+    plugins: [
++     new UglifyJSPlugin({
++       sourceMap: true
++     }),
+    new webpack.DefinePlugin({
++       &#39;process.env.NODE_ENV&#39;: JSON.stringify(&#39;production&#39;)
++     })
+    ]
+  });</code></pre><p><strong>package.json</strong></p>
+<pre><code>-     &quot;start&quot;: &quot;webpack-dev-server --open&quot;,
++     &quot;start&quot;: &quot;webpack-dev-server --open --config webpack.dev.js&quot;,
+-     &quot;build&quot;: &quot;webpack&quot;
++     &quot;build&quot;: &quot;webpack --config webpack.prod.js&quot;</code></pre><h1 id="生产环境代码压缩"><a href="#生产环境代码压缩" class="headerlink" title="生产环境代码压缩"></a>生产环境代码压缩</h1><p>css  js 压缩</p>
+<pre><code>npm i mini-css-extract-plugin uglifyjs-webpack-plugin optimize-css-assets-webpack-plugin -D</code></pre><pre><code>修改 webpack.prod.conf.js 增加如下配置
+
+const MiniCssExtractPlugin = require(&quot;mini-css-extract-plugin&quot;)
+const UglifyJsPlugin = require(&#39;uglifyjs-webpack-plugin&#39;)
+const OptimizeCSSAssetsPlugin = require(&#39;optimize-css-assets-webpack-plugin&#39;)
+
+//例
+{
+    test: /\.css$/,
+    use: [
+        MiniCssExtractPlugin.loader,
+        {
+            loader: &#39;css-loader&#39;
+        },{
+            loader: &#39;postcss-loader&#39;,
+            options: {
+                sourceMap: true,
+                config: {
+                    path: &#39;postcss.config.js&#39;
+                }
+            }
+        }
+    ]
+},
+
+plugin: {
+    new MiniCssExtractPlugin({
+        filename: &quot;static/css/[name].[hash].css&quot;,
+        chunkFilename: &quot;static/css/[name].[hash].css&quot;
+    })
+}
+optimization: {
+    minimizer: [ // 用于配置 minimizers 和选项
+        new UglifyJsPlugin({
+            cache: true,
+            parallel: true,
+            sourceMap: true // set to true if you want JS source maps
+        }),
+        new OptimizeCSSAssetsPlugin({})
+    ]
+},</code></pre><p>html压缩   修改<code>html-webpack-plugin</code> 的配置</p>
+<pre><code>new HtmlWebpackPlugin({
+    filename: &#39;index.html&#39;,
+    template: path.join(__dirname, &#39;./public/index.html&#39;),
+    minify:{
+        removeRedundantAttributes:true, // 删除多余的属性
+        collapseWhitespace:true, // 折叠空白区域
+        removeAttributeQuotes: true, // 移除属性的引号
+        removeComments: true, // 移除注释
+        collapseBooleanAttributes: true // 省略只有 boolean 值的属性值 例如：readonly checked
+    },
+    title:&#39;webpack-主页&#39;,
+    favicon:&#39;&#39;
+})</code></pre><h1 id="shimming-全局变量"><a href="#shimming-全局变量" class="headerlink" title="shimming 全局变量"></a>shimming 全局变量</h1><h1 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h1><p>webpack.config.js</p>
 <pre><code>const path = require(&#39;path&#39;)
 const VueLoaderPlugin = require(&#39;vue-loader/lib/plugin&#39;)
 const webpack = require(&#39;webpack&#39;)
