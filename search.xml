@@ -246,7 +246,52 @@ export default {
 &lt;style scoped lang=&quot;less&quot;&gt;
   @import &#39;./main.less&#39;;
 &lt;/style&gt;
-</code></pre>]]></content>
+</code></pre><h1 id="页面内的转发分享功能"><a href="#页面内的转发分享功能" class="headerlink" title="页面内的转发分享功能"></a>页面内的转发分享功能</h1><pre><code>onShareAppMessage () {
+    return {
+      title: &#39;转发&#39;,
+      path: &#39;/pages/index/index&#39;,
+      success: function (res) {}
+    }
+  },
+  created () {}</code></pre><h1 id="图片上传"><a href="#图片上传" class="headerlink" title="图片上传"></a>图片上传</h1><pre><code>&lt;div class=&quot;addImg&quot;&gt;
+    &lt;span class=&quot;ImgTitle&quot;&gt;添加图片&lt;/span&gt;
+    &lt;span class=&quot;addIcon&quot; @click=&quot;handleImg&quot;&gt;+&lt;/span&gt;
+    &lt;div class=&quot;img&quot; v-if=&quot;ImgFilePaths&quot;&gt;
+        &lt;span v-for=&quot;(item, index) in ImgFilePaths&quot; :key=&quot;index&quot;&gt;
+            &lt;img :src=&quot;item&quot; alt=&quot;&quot;&gt;
+        &lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre><pre><code>handleImg () {
+      wx.chooseImage({
+        count: 9,
+        sizeType: [&#39;original&#39;, &#39;compressed&#39;],
+        sourceType: [&#39;album&#39;, &#39;camera&#39;],
+        success: (res) =&gt; {
+          // tempFilePath可以作为img标签的src属性显示图片
+          this.ImgFilePaths = res.tempFilePaths
+          console.log(this.ImgFilePaths)
+        }
+      })
+    },</code></pre><h1 id="视频上传"><a href="#视频上传" class="headerlink" title="视频上传"></a>视频上传</h1><pre><code>&lt;div class=&quot;addVedio&quot;&gt;
+    &lt;span class=&quot;vedioTitle&quot;&gt;添加视频&lt;/span&gt;
+    &lt;sapn class=&quot;addIcon&quot; @click=&quot;handleVedio&quot;&gt;+&lt;/sapn&gt;
+    &lt;div class=&quot;vedio&quot; v-if=&quot;VedioFilePaths&quot;&gt;
+        &lt;video class=&quot;vedioFile&quot; :src=&quot;VedioFilePaths&quot; alt=&quot;&quot;/&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre><pre><code>handleVedio () {
+      wx.chooseVideo({
+        sourceType: [&#39;album&#39;, &#39;camera&#39;],
+        maxDuration: 60,
+        camera: &#39;back&#39;,
+        success: (res) =&gt; {
+          this.VedioFilePaths = res.tempFilePath
+          console.log(this.VedioFilePaths)
+        },
+        fail: (err) =&gt; {
+          console.log(err)
+        }
+      })
+    },</code></pre>]]></content>
       <categories>
         <category>小程序</category>
       </categories>
