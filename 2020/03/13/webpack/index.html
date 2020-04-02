@@ -6,16 +6,16 @@
   <meta name="keywords" content=" webpack ">
   <meta name="description" content="webpack4打包vue文件 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="小程序吸顶效果&lt;div class&#x3D;&quot;tabs&quot; :class&#x3D;&quot;scrollTop &gt; 0 ? &#39;groupPosition&#39; : &#39;&#39;&quot; @click&#x3D;&quot;changeTab&quot;&gt;     &lt;div data-index&#x3D;&#39;1&#39; class&#x3D;&quot;tab all">
+<meta name="description" content="app.json配置     “custom”: true,&quot;tabBar&quot;: {     &quot;custom&quot;: true,     &quot;color&quot;: &quot;#999&quot;,     &quot;backgroundColor&quot;: &quot;#ffffff&quot;,     &quot;selectedColor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="小程序">
-<meta property="og:url" content="https://zhangxuet.github.io/2020/03/28/wxprogram/%E5%90%B8%E9%A1%B6/index.html">
+<meta property="og:title" content="小程序自定义tabbar">
+<meta property="og:url" content="https://zhangxuet.github.io/2020/04/02/wxprogram/tabbar/index.html">
 <meta property="og:site_name" content="Ting">
-<meta property="og:description" content="小程序吸顶效果&lt;div class&#x3D;&quot;tabs&quot; :class&#x3D;&quot;scrollTop &gt; 0 ? &#39;groupPosition&#39; : &#39;&#39;&quot; @click&#x3D;&quot;changeTab&quot;&gt;     &lt;div data-index&#x3D;&#39;1&#39; class&#x3D;&quot;tab all">
-<meta property="article:published_time" content="2020-03-28T06:15:14.000Z">
-<meta property="article:modified_time" content="2020-03-29T04:11:58.335Z">
+<meta property="og:description" content="app.json配置     “custom”: true,&quot;tabBar&quot;: {     &quot;custom&quot;: true,     &quot;color&quot;: &quot;#999&quot;,     &quot;backgroundColor&quot;: &quot;#ffffff&quot;,     &quot;selectedColor">
+<meta property="article:published_time" content="2020-04-02T05:04:15.000Z">
+<meta property="article:modified_time" content="2020-04-02T05:25:51.431Z">
 <meta property="article:author" content="Ting">
-<meta property="article:tag" content="小程序">
+<meta property="article:tag" content="tabbar">
 <meta name="twitter:card" content="summary">
 
 
@@ -79,7 +79,7 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(20)</small></div></li>
+    <li><div class="all active">全部文章<small>(22)</small></div></li>
     
         
             
@@ -139,7 +139,7 @@
     
         
             
-            <li><div data-rel="webpack">webpack<small>(1)</small></div>
+            <li><div data-rel="webpack">webpack<small>(2)</small></div>
                 
             </li>
             
@@ -147,7 +147,7 @@
     
         
             
-            <li><div data-rel="小程序">小程序<small>(3)</small></div>
+            <li><div data-rel="小程序">小程序<small>(4)</small></div>
                 
             </li>
             
@@ -171,8 +171,8 @@
     </div>
     <div><a class="about  site_url"  href="javascript:void(0)">关于</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="20">
-<input type="hidden" id="yelog_site_word_count" value="9.6k">
+<input type="hidden" id="yelog_site_posts_number" value="22">
+<input type="hidden" id="yelog_site_word_count" value="10.5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -249,6 +249,10 @@
     
     <li class="article-tag-list-item">
         <a class="color4">css</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">tabbar</a>
     </li>
     
     <div class="clearfix"></div>
@@ -421,6 +425,22 @@
             <span class="post-date" title="2020-03-28 14:04:11">2020/03/28</span>
         </a>
         
+        <a  class="webpack "
+           href="/2020/03/30/webpack/vue%E5%92%8Cwebpack/"
+           data-tag="webpack"
+           data-author="" >
+            <span class="post-title" title="vue和webpack">vue和webpack</span>
+            <span class="post-date" title="2020-03-30 16:02:02">2020/03/30</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/04/02/wxprogram/tabbar/"
+           data-tag="tabbar"
+           data-author="" >
+            <span class="post-title" title="小程序自定义tabbar">小程序自定义tabbar</span>
+            <span class="post-date" title="2020-04-02 13:04:15">2020/04/02</span>
+        </a>
+        
     </nav>
 </div>
     </div>
@@ -457,12 +477,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-03-17 14:34:26'>2020-03-13 19:03</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-30 16:01:06'>2020-03-13 19:03</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:2.8k</span>
+        <span>字数:3k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -481,7 +501,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置package-json"><span class="toc-text">配置package.json</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包模式（mode）"><span class="toc-text">webpack打包模式（mode）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack入口与出口"><span class="toc-text">webpack入口与出口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包-vue文件"><span class="toc-text">webpack打包.vue文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#打包静态资源"><span class="toc-text">打包静态资源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包css"><span class="toc-text">webpack打包css</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#css预处理"><span class="toc-text">css预处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包sass"><span class="toc-text">webpack打包sass</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包图片"><span class="toc-text">webpack打包图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包字体文件、音频、视频"><span class="toc-text">webpack打包字体文件、音频、视频</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack生成html"><span class="toc-text">webpack生成html</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack清理dist"><span class="toc-text">webpack清理dist</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-babel介绍"><span class="toc-text">webpack-babel介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-babel使用"><span class="toc-text">webpack-babel使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#局部垫片（选用）"><span class="toc-text">局部垫片（选用）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-sourceMap"><span class="toc-text">webpack-sourceMap</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-watch监听"><span class="toc-text">webpack-watch监听</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-dev-server"><span class="toc-text">webpack-dev-server</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack热更新"><span class="toc-text">webpack热更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack路径别名"><span class="toc-text">webpack路径别名</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack文件后缀"><span class="toc-text">webpack文件后缀</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#提取公共代码"><span class="toc-text">提取公共代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#打包部署"><span class="toc-text">打包部署</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#打包优化"><span class="toc-text">打包优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生产环境构建"><span class="toc-text">生产环境构建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生产环境代码压缩"><span class="toc-text">生产环境代码压缩</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shimming-全局变量"><span class="toc-text">shimming 全局变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#全部代码"><span class="toc-text">全部代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置package-json"><span class="toc-text">配置package.json</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包模式（mode）"><span class="toc-text">webpack打包模式（mode）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack入口与出口"><span class="toc-text">webpack入口与出口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包-vue文件"><span class="toc-text">webpack打包.vue文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#打包静态资源"><span class="toc-text">打包静态资源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包css"><span class="toc-text">webpack打包css</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#css预处理"><span class="toc-text">css预处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包sass"><span class="toc-text">webpack打包sass</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包图片"><span class="toc-text">webpack打包图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack打包字体文件、音频、视频"><span class="toc-text">webpack打包字体文件、音频、视频</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack生成html"><span class="toc-text">webpack生成html</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack清理dist"><span class="toc-text">webpack清理dist</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-babel介绍"><span class="toc-text">webpack-babel介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-babel使用"><span class="toc-text">webpack-babel使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#局部垫片（选用）"><span class="toc-text">局部垫片（选用）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-sourceMap"><span class="toc-text">webpack-sourceMap</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-watch监听"><span class="toc-text">webpack-watch监听</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack-dev-server"><span class="toc-text">webpack-dev-server</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack热更新"><span class="toc-text">webpack热更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack路径别名"><span class="toc-text">webpack路径别名</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack文件后缀"><span class="toc-text">webpack文件后缀</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#提取公共代码"><span class="toc-text">提取公共代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#打包部署"><span class="toc-text">打包部署</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#打包优化"><span class="toc-text">打包优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生产环境构建"><span class="toc-text">生产环境构建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生产环境代码压缩"><span class="toc-text">生产环境代码压缩</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shimming-全局变量"><span class="toc-text">shimming 全局变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用middleware搭建开发环境"><span class="toc-text">使用middleware搭建开发环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#全部代码"><span class="toc-text">全部代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1014,7 +1034,45 @@ optimization: {
     },
     title:&#39;webpack-主页&#39;,
     favicon:&#39;&#39;
-})</code></pre><h1 id="shimming-全局变量"><a href="#shimming-全局变量" class="headerlink" title="shimming 全局变量"></a>shimming 全局变量</h1><h1 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h1><p>webpack.config.js</p>
+})</code></pre><h1 id="shimming-全局变量"><a href="#shimming-全局变量" class="headerlink" title="shimming 全局变量"></a>shimming 全局变量</h1><h1 id="使用middleware搭建开发环境"><a href="#使用middleware搭建开发环境" class="headerlink" title="使用middleware搭建开发环境"></a>使用middleware搭建开发环境</h1><pre><code>npm i express opn webpack-dev-middleware webpack-hot-middleware http-proxy-middleware connect-history-api-fallback --save-dev</code></pre><p>在build目录下建server.js</p>
+<pre><code>const express = require(&#39;express&#39;)
+const webpack = require(&#39;webpack&#39;)
+const opn = require(&#39;opn&#39;)
+const app = express()
+const port = 3000
+
+const webpackDevMiddleware = require(&#39;webpack-dev-middleware&#39;)
+const webpackHotMiddleware = require(&#39;webpack-hot-middleware&#39;)
+const proxyMiddelware = require(&#39;proxy-middleware&#39;)
+const historyApiFallback = require(&#39;history-api-fallback&#39;)
+
+const config = require(&#39;./webpack.common.conf&#39;)(&#39;development&#39;)
+const compiler = webpack(config)
+
+const proxyTable = require(&#39;./proxy&#39;)
+for(let context in proxyTable) {
+    app.use(proxyMiddleware(context, proxyTable[context]))
+}
+app.use(historyFallback(require(&#39;./historyfallback&#39;)))
+
+app.use(wwebpackDevMiddleware(compiler), {
+    publicPath: config.output.publicPath     
+})
+app.use(webpackHotMiddleware(complier))
+
+app.listen(port, () =&gt; { 
+    console.log(&#39;success listen to &#39;+ port)
+    opn(&#39;http://localhost:&#39; + port)
+})</code></pre><p>build/proxy.js</p>
+<pre><code>module.exports = {
+
+}</code></pre><p>build/historyfallback.js</p>
+<pre><code>module.exports = {
+
+}</code></pre><p>在package.json修改启动</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node build/server.js&quot;
+}</code></pre><h1 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h1><p>webpack.config.js</p>
 <pre><code>const path = require(&#39;path&#39;)
 const VueLoaderPlugin = require(&#39;vue-loader/lib/plugin&#39;)
 const webpack = require(&#39;webpack&#39;)
@@ -1142,10 +1200,10 @@ module.exports = {
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>webpack4打包vue文件</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">2.8k</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">3k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
     <p><span class="copy-title">发布时间:</span>2020-03-13, 19:03:46</p>
-    <p><span class="copy-title">最后更新:</span>2020-03-17, 14:34:26</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-30, 16:01:06</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/13/webpack/" title="webpack4打包vue文件">https://zhangxuet.github.io/2020/03/13/webpack/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -1190,7 +1248,7 @@ module.exports = {
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#工具','#hexo','#markdown','#echarts','#node-sass','#vue','#正则','#token','#node','#webpack','#小程序','#css',],
+            'data': ['#工具','#hexo','#markdown','#echarts','#node-sass','#vue','#正则','#token','#node','#webpack','#小程序','#css','#tabbar',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');

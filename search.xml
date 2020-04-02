@@ -1,6 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>小程序自定义tabbar</title>
+    <url>/2020/04/02/wxprogram/tabbar/</url>
+    <content><![CDATA[<h1 id="app-json配置-“custom”-true"><a href="#app-json配置-“custom”-true" class="headerlink" title="app.json配置     “custom”: true,"></a>app.json配置     “custom”: true,</h1><pre><code>&quot;tabBar&quot;: {
+    &quot;custom&quot;: true,
+    &quot;color&quot;: &quot;#999&quot;,
+    &quot;backgroundColor&quot;: &quot;#ffffff&quot;,
+    &quot;selectedColor&quot;: &quot;#2a7ffb&quot;,
+    &quot;borderStyle&quot;: &quot;black&quot;,
+
+    &quot;list&quot;: [{</code></pre><h1 id="封装组件"><a href="#封装组件" class="headerlink" title="封装组件"></a>封装组件</h1><h2 id="tabbar-tabbar-vue"><a href="#tabbar-tabbar-vue" class="headerlink" title="tabbar/tabbar.vue"></a>tabbar/tabbar.vue</h2><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;div class=&quot;tabbar&quot; @click.stop=&quot;handleTabbar&quot;&gt;
+      &lt;div class=&quot;tab-bar-border&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tab-bar-item index&quot; data-index=&quot;1&quot;&gt;
+        &lt;cover-image data-index=&quot;1&quot; :src=&quot;selectedTabbar === 1 ? &#39;/static/tabs/home-active.jpg&#39; : &#39;/static/tabs/home.jpg&#39;&quot; class=&quot;_cover-image&quot;&gt;
+        &lt;/cover-image&gt;
+        &lt;cover-view data-index=&quot;1&quot; :style=&quot;{color: selectedTabbar === 1 ? selectedColor : color}&quot;&gt;首页&lt;/cover-view&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tab-bar-item editText&quot; data-index=&quot;2&quot;&gt;
+        &lt;cover-view data-index=&quot;2&quot; :style=&quot;{color: selectedTabbar === 2 ? selectedColor : color}&quot;&gt;编辑&lt;/cover-view&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tab-bar-item my&quot; data-index=&quot;3&quot;&gt;
+        &lt;cover-image data-index=&quot;3&quot; :src=&quot;selectedTabbar === 3 ? &#39;/static/tabs/my-active.jpg&#39; : &#39;/static/tabs/my.jpg&#39;&quot; class=&quot;_cover-image&quot;&gt;
+        &lt;/cover-image&gt;
+        &lt;cover-view data-index=&quot;3&quot; :style=&quot;{color: selectedTabbar === 3 ? selectedColor : color}&quot;&gt;我的&lt;/cover-view&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;edit&quot; data-index=&quot;2&quot;&gt;
+      &lt;cover-image data-index=&quot;2&quot; :src=&quot;selectedTabbar === 2 ? &#39;/static/tabs/edit-active.jpg&#39; : &#39;/static/tabs/edit.jpg&#39;&quot; class=&quot;_cover-image&quot;&gt;
+      &lt;/cover-image&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  export default {
+    props: [ &#39;selectedTabbar&#39; ],
+    data () {
+      return {
+        color: &#39;#7A7E83&#39;,
+        selectedColor: &#39;#2a7ffb&#39;
+      }
+    },
+    created () {
+    },
+    updated () {
+      // console.log(this.selectedTabbar)
+    },
+    mounted () {
+    },
+    methods: {
+      handleTabbar (e) {
+        this.selectedTabbar = parseInt(e.target.dataset.index)
+        this.$emit(&#39;selectTab&#39;, this.selectedTabbar)
+        if (this.selectedTabbar === 1) {
+          wx.switchTab({
+            url: &#39;/pages/index/main&#39;
+          })
+        } else if (this.selectedTabbar === 2) {
+          wx.switchTab({
+            url: &#39;/pages/edit/main&#39;
+          })
+        } else if (this.selectedTabbar === 3) {
+          wx.switchTab({
+            url: &#39;/pages/my/main&#39;
+          })
+        }
+      }
+    },
+    computed: {
+    }
+  }
+&lt;/script&gt;
+&lt;style scoped lang=&quot;less&quot;&gt;
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: white;
+  // display: flex;
+  // padding-bottom: env(safe-area-inset-bottom);
+}
+.tab-bar-border {
+  background-color: rgba(0, 0, 0, 0.33);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleY(0.5);
+}
+
+// .tab-bar-item {
+//   flex: 1;
+//   text-align: center;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+// }
+.index {
+  position: absolute;
+  // top: 15rpx;
+  width: 50rpx;
+  height: 100rpx;
+  padding: 15rpx 100rpx;
+}
+.tab-bar-item cover-image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.tab-bar-item cover-view {
+  margin-top: 8rpx;
+  font-size: 10px;
+}
+.editText {
+  position: absolute;
+  left: 258rpx;
+  padding: 50rpx 100rpx;
+}
+.my {
+  position: absolute;
+  width: 50rpx;
+  left: 500rpx;
+  padding: 15rpx 100rpx;
+}
+.edit {
+  position: fixed;
+  width: 90rpx;
+  height: 90rpx;
+  left: 320rpx;
+  bottom: 40rpx;
+  padding: 10rpx;
+  background: #fff;
+  border: 1rpx solid #fff;
+  border-radius: 50%;
+}
+&lt;/style&gt;</code></pre><h2 id="tabbar-main-json"><a href="#tabbar-main-json" class="headerlink" title="tabbar/main.json"></a>tabbar/main.json</h2><pre><code>{
+    &quot;component&quot;: true
+}</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="index-main-json"><a href="#index-main-json" class="headerlink" title="index/main.json"></a>index/main.json</h2><pre><code>{
+    &quot;usingComponents&quot;: {}
+}
+</code></pre><h2 id="index-index-vue"><a href="#index-index-vue" class="headerlink" title="index.index.vue"></a>index.index.vue</h2><pre><code>import tabBar from &#39;@/components/tabBar/tabbar&#39;
+export default {
+  components: { tabBar },
+  data () {
+    return {
+      selectedTabbar: 1
+    }
+  }
+ }</code></pre><pre><code>&lt;tab-bar :selectedTabbar=&quot;selectedTabbar&quot; @selectTab=&quot;handleTab&quot;&gt;&lt;/tab-bar&gt;</code></pre><pre><code>handleTab (index) {
+    this.selectedTabbar = index
+},</code></pre><h1 id="index改变图片和字体不跟随变动"><a href="#index改变图片和字体不跟随变动" class="headerlink" title="index改变图片和字体不跟随变动"></a>index改变图片和字体不跟随变动</h1><pre><code>updated () {
+    this.selectedTabbar = 1
+},</code></pre>]]></content>
+      <categories>
+        <category>小程序</category>
+      </categories>
+      <tags>
+        <tag>tabbar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue和webpack</title>
+    <url>/2020/03/30/webpack/vue%E5%92%8Cwebpack/</url>
+    <content><![CDATA[<h1 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h1><pre><code>npm install -g @vue/cli</code></pre><h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code>vue init webpack 项目名</code></pre>]]></content>
+      <categories>
+        <category>webpack</category>
+      </categories>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>小程序</title>
     <url>/2020/03/28/wxprogram/%E5%90%B8%E9%A1%B6/</url>
     <content><![CDATA[<h1 id="小程序吸顶效果"><a href="#小程序吸顶效果" class="headerlink" title="小程序吸顶效果"></a>小程序吸顶效果</h1><pre><code>&lt;div class=&quot;tabs&quot; :class=&quot;scrollTop &gt; 0 ? &#39;groupPosition&#39; : &#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
@@ -905,7 +1081,45 @@ optimization: {
     },
     title:&#39;webpack-主页&#39;,
     favicon:&#39;&#39;
-})</code></pre><h1 id="shimming-全局变量"><a href="#shimming-全局变量" class="headerlink" title="shimming 全局变量"></a>shimming 全局变量</h1><h1 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h1><p>webpack.config.js</p>
+})</code></pre><h1 id="shimming-全局变量"><a href="#shimming-全局变量" class="headerlink" title="shimming 全局变量"></a>shimming 全局变量</h1><h1 id="使用middleware搭建开发环境"><a href="#使用middleware搭建开发环境" class="headerlink" title="使用middleware搭建开发环境"></a>使用middleware搭建开发环境</h1><pre><code>npm i express opn webpack-dev-middleware webpack-hot-middleware http-proxy-middleware connect-history-api-fallback --save-dev</code></pre><p>在build目录下建server.js</p>
+<pre><code>const express = require(&#39;express&#39;)
+const webpack = require(&#39;webpack&#39;)
+const opn = require(&#39;opn&#39;)
+const app = express()
+const port = 3000
+
+const webpackDevMiddleware = require(&#39;webpack-dev-middleware&#39;)
+const webpackHotMiddleware = require(&#39;webpack-hot-middleware&#39;)
+const proxyMiddelware = require(&#39;proxy-middleware&#39;)
+const historyApiFallback = require(&#39;history-api-fallback&#39;)
+
+const config = require(&#39;./webpack.common.conf&#39;)(&#39;development&#39;)
+const compiler = webpack(config)
+
+const proxyTable = require(&#39;./proxy&#39;)
+for(let context in proxyTable) {
+    app.use(proxyMiddleware(context, proxyTable[context]))
+}
+app.use(historyFallback(require(&#39;./historyfallback&#39;)))
+
+app.use(wwebpackDevMiddleware(compiler), {
+    publicPath: config.output.publicPath     
+})
+app.use(webpackHotMiddleware(complier))
+
+app.listen(port, () =&gt; { 
+    console.log(&#39;success listen to &#39;+ port)
+    opn(&#39;http://localhost:&#39; + port)
+})</code></pre><p>build/proxy.js</p>
+<pre><code>module.exports = {
+
+}</code></pre><p>build/historyfallback.js</p>
+<pre><code>module.exports = {
+
+}</code></pre><p>在package.json修改启动</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node build/server.js&quot;
+}</code></pre><h1 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h1><p>webpack.config.js</p>
 <pre><code>const path = require(&#39;path&#39;)
 const VueLoaderPlugin = require(&#39;vue-loader/lib/plugin&#39;)
 const webpack = require(&#39;webpack&#39;)

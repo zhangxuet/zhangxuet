@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>token | Ting</title>
-  <meta name="keywords" content=" token ">
-  <meta name="description" content="token | Ting">
+  <title>vue和webpack | Ting</title>
+  <meta name="keywords" content=" webpack ">
+  <meta name="description" content="vue和webpack | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="app.json配置     “custom”: true,&quot;tabBar&quot;: {     &quot;custom&quot;: true,     &quot;color&quot;: &quot;#999&quot;,     &quot;backgroundColor&quot;: &quot;#ffffff&quot;,     &quot;selectedColor">
 <meta property="og:type" content="article">
@@ -453,9 +453,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-vue/token" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-webpack/vue和webpack" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">token</h1>
+        <h1 class="article-title">vue和webpack</h1>
     
     <div class="article-meta">
         
@@ -463,26 +463,26 @@
         
         <span class="book">
             
-                <a  data-rel="vue">vue</a>
+                <a  data-rel="webpack">webpack</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color1">token</a>
+            <a class="color3">webpack</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-03-11 11:39:49'>2020-03-11 11:36</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-30 16:21:48'>2020-03-30 16:02</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:334</span>
+        <span>字数:16</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -501,7 +501,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#存在本地"><span class="toc-text">存在本地</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存在axios"><span class="toc-text">存在axios</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#封装request"><span class="toc-text">封装request</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装vue-cli"><span class="toc-text">安装vue-cli</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初始化"><span class="toc-text">初始化</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -517,111 +517,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="存在本地"><a href="#存在本地" class="headerlink" title="存在本地"></a>存在本地</h1><p>utils/auth.js</p>
-<pre><code>const USER_KEY = &#39;123&#39;
-export const getUser = () =&gt; {
-  return JSON.parse(window.localStorage.getItem(USER_KEY) || &#39;{}&#39;)
-}
-export const setUser = (user) =&gt; {
-  window.localStorage.setItem(USER_KEY, JSON.stringify(user))
-}
-export const delUser = () =&gt; {
-  window.localStorage.removeItem(USER_KEY)
-}
-</code></pre><h1 id="存在axios"><a href="#存在axios" class="headerlink" title="存在axios"></a>存在axios</h1><p>store.js</p>
-<pre><code>import Vue from &#39;vue&#39;
-import Vuex from &#39;vuex&#39;
-import * as auth from &#39;@/utils/auth&#39;
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-  state: {
-    user: auth.getUser()
-  },
-  mutations: {
-    setUser (state, user) {
-      state.user = user
-      auth.setUser(user)
-    },
-    delUser (state) {
-      state.user = {}
-      auth.delUser()
-    }
-  },
-  actions: {
-  }
-})
-</code></pre><h1 id="封装request"><a href="#封装request" class="headerlink" title="封装request"></a>封装request</h1><p>utils/request.js</p>
-<pre><code>import axios from &#39;axios&#39;
-import JSONBIG from &#39;json-bigint&#39;
-import store from &#39;@/store&#39;
-import router from &#39;@/router&#39;
-
-const instance = axios.create({
-  baseURL: &#39;http://ttapi.research.itcast.cn/&#39;,
-  transefromResponse: [(data) =&gt; {
-    try {
-      return JSONBIG.parse(data)
-    } catch (e) {
-      return data
-    }
-  }]
-})
-
-instance.interceptors.request.use(config =&gt; {
-  if (store.state.user.token) {
-    config.headers.Authorization = `Bearer ${store.state.user.token}`
-  }
-  return config
-}, err =&gt; Promise.reject(err))
-
-instance.interceptors.response.use(res =&gt; {
-  try {
-    return res.data.data
-  } catch (e) {
-    return res.data
-  }
-}, async err =&gt; {
-  if (err.response &amp;&amp; err.response.status === 401) {
-    const user = store.state.user
-    const login = { path: &#39;/login&#39;, query: { redirect: router.currentRoute.path } }
-    if (!user.token || !user.refresh_token) {
-      router.push(login)
-      // return
-      return Promise.reject(err)
-    }
-    try {
-      const { data: { data } } = await axios({
-        url: &#39;http://ttapi.research.itcast.cn/app/v1_0/authorizations&#39;,
-        method: &#39;put&#39;,
-        headers: {
-          Authorization: `Bearer ${user.refresh_token}`
-        }
-      })
-      store.commit(&#39;setUser&#39;, {
-        token: data.token,
-        refresh_token: user.refresh_token
-      })
-      return instance(err.config)
-    } catch (e) {
-      store.commit(&#39;delUser&#39;)
-      router.push(login)
-      // 出错，要抛出错误，不抛出不会阻碍程序运行
-      return Promise.reject(err)
-    }
-  }
-  return Promise.reject(err)
-})
-
-export default (url, method, data) =&gt; {
-  return instance({
-    url,
-    method,
-    [method.toLowerCase() === &#39;get&#39; ? &#39;params&#39; : &#39;data&#39;]: data
-  })
-}
-</code></pre>
+        <h1 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h1><pre><code>npm install -g @vue/cli</code></pre><h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code>vue init webpack 项目名</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -630,12 +526,12 @@ export default (url, method, data) =&gt; {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>token</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">334</span></p>
+    <p><span class="copy-title">文章标题:</span>vue和webpack</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">16</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-03-11, 11:36:01</p>
-    <p><span class="copy-title">最后更新:</span>2020-03-11, 11:39:49</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/11/vue/token/" title="token">https://zhangxuet.github.io/2020/03/11/vue/token/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-30, 16:02:02</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-30, 16:21:48</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/30/webpack/vue%E5%92%8Cwebpack/" title="vue和webpack">https://zhangxuet.github.io/2020/03/30/webpack/vue%E5%92%8Cwebpack/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

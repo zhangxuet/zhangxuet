@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>token | Ting</title>
-  <meta name="keywords" content=" token ">
-  <meta name="description" content="token | Ting">
+  <title>小程序自定义tabbar | Ting</title>
+  <meta name="keywords" content=" tabbar ">
+  <meta name="description" content="小程序自定义tabbar | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="app.json配置     “custom”: true,&quot;tabBar&quot;: {     &quot;custom&quot;: true,     &quot;color&quot;: &quot;#999&quot;,     &quot;backgroundColor&quot;: &quot;#ffffff&quot;,     &quot;selectedColor">
 <meta property="og:type" content="article">
@@ -453,9 +453,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-vue/token" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-wxprogram/tabbar" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">token</h1>
+        <h1 class="article-title">小程序自定义tabbar</h1>
     
     <div class="article-meta">
         
@@ -463,26 +463,26 @@
         
         <span class="book">
             
-                <a  data-rel="vue">vue</a>
+                <a  data-rel="小程序">小程序</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color1">token</a>
+            <a class="color2">tabbar</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-03-11 11:39:49'>2020-03-11 11:36</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-02 13:25:51'>2020-04-02 13:04</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:334</span>
+        <span>字数:636</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -501,7 +501,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#存在本地"><span class="toc-text">存在本地</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存在axios"><span class="toc-text">存在axios</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#封装request"><span class="toc-text">封装request</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#app-json配置-“custom”-true"><span class="toc-text">app.json配置     “custom”: true,</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#封装组件"><span class="toc-text">封装组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tabbar-tabbar-vue"><span class="toc-text">tabbar&#x2F;tabbar.vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tabbar-main-json"><span class="toc-text">tabbar&#x2F;main.json</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#index-main-json"><span class="toc-text">index&#x2F;main.json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#index-index-vue"><span class="toc-text">index.index.vue</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#index改变图片和字体不跟随变动"><span class="toc-text">index改变图片和字体不跟随变动</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -517,111 +517,161 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="存在本地"><a href="#存在本地" class="headerlink" title="存在本地"></a>存在本地</h1><p>utils/auth.js</p>
-<pre><code>const USER_KEY = &#39;123&#39;
-export const getUser = () =&gt; {
-  return JSON.parse(window.localStorage.getItem(USER_KEY) || &#39;{}&#39;)
-}
-export const setUser = (user) =&gt; {
-  window.localStorage.setItem(USER_KEY, JSON.stringify(user))
-}
-export const delUser = () =&gt; {
-  window.localStorage.removeItem(USER_KEY)
-}
-</code></pre><h1 id="存在axios"><a href="#存在axios" class="headerlink" title="存在axios"></a>存在axios</h1><p>store.js</p>
-<pre><code>import Vue from &#39;vue&#39;
-import Vuex from &#39;vuex&#39;
-import * as auth from &#39;@/utils/auth&#39;
+        <h1 id="app-json配置-“custom”-true"><a href="#app-json配置-“custom”-true" class="headerlink" title="app.json配置     “custom”: true,"></a>app.json配置     “custom”: true,</h1><pre><code>&quot;tabBar&quot;: {
+    &quot;custom&quot;: true,
+    &quot;color&quot;: &quot;#999&quot;,
+    &quot;backgroundColor&quot;: &quot;#ffffff&quot;,
+    &quot;selectedColor&quot;: &quot;#2a7ffb&quot;,
+    &quot;borderStyle&quot;: &quot;black&quot;,
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-  state: {
-    user: auth.getUser()
-  },
-  mutations: {
-    setUser (state, user) {
-      state.user = user
-      auth.setUser(user)
+    &quot;list&quot;: [{</code></pre><h1 id="封装组件"><a href="#封装组件" class="headerlink" title="封装组件"></a>封装组件</h1><h2 id="tabbar-tabbar-vue"><a href="#tabbar-tabbar-vue" class="headerlink" title="tabbar/tabbar.vue"></a>tabbar/tabbar.vue</h2><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;div class=&quot;tabbar&quot; @click.stop=&quot;handleTabbar&quot;&gt;
+      &lt;div class=&quot;tab-bar-border&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tab-bar-item index&quot; data-index=&quot;1&quot;&gt;
+        &lt;cover-image data-index=&quot;1&quot; :src=&quot;selectedTabbar === 1 ? &#39;/static/tabs/home-active.jpg&#39; : &#39;/static/tabs/home.jpg&#39;&quot; class=&quot;_cover-image&quot;&gt;
+        &lt;/cover-image&gt;
+        &lt;cover-view data-index=&quot;1&quot; :style=&quot;{color: selectedTabbar === 1 ? selectedColor : color}&quot;&gt;首页&lt;/cover-view&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tab-bar-item editText&quot; data-index=&quot;2&quot;&gt;
+        &lt;cover-view data-index=&quot;2&quot; :style=&quot;{color: selectedTabbar === 2 ? selectedColor : color}&quot;&gt;编辑&lt;/cover-view&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tab-bar-item my&quot; data-index=&quot;3&quot;&gt;
+        &lt;cover-image data-index=&quot;3&quot; :src=&quot;selectedTabbar === 3 ? &#39;/static/tabs/my-active.jpg&#39; : &#39;/static/tabs/my.jpg&#39;&quot; class=&quot;_cover-image&quot;&gt;
+        &lt;/cover-image&gt;
+        &lt;cover-view data-index=&quot;3&quot; :style=&quot;{color: selectedTabbar === 3 ? selectedColor : color}&quot;&gt;我的&lt;/cover-view&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;edit&quot; data-index=&quot;2&quot;&gt;
+      &lt;cover-image data-index=&quot;2&quot; :src=&quot;selectedTabbar === 2 ? &#39;/static/tabs/edit-active.jpg&#39; : &#39;/static/tabs/edit.jpg&#39;&quot; class=&quot;_cover-image&quot;&gt;
+      &lt;/cover-image&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  export default {
+    props: [ &#39;selectedTabbar&#39; ],
+    data () {
+      return {
+        color: &#39;#7A7E83&#39;,
+        selectedColor: &#39;#2a7ffb&#39;
+      }
     },
-    delUser (state) {
-      state.user = {}
-      auth.delUser()
-    }
-  },
-  actions: {
-  }
-})
-</code></pre><h1 id="封装request"><a href="#封装request" class="headerlink" title="封装request"></a>封装request</h1><p>utils/request.js</p>
-<pre><code>import axios from &#39;axios&#39;
-import JSONBIG from &#39;json-bigint&#39;
-import store from &#39;@/store&#39;
-import router from &#39;@/router&#39;
-
-const instance = axios.create({
-  baseURL: &#39;http://ttapi.research.itcast.cn/&#39;,
-  transefromResponse: [(data) =&gt; {
-    try {
-      return JSONBIG.parse(data)
-    } catch (e) {
-      return data
-    }
-  }]
-})
-
-instance.interceptors.request.use(config =&gt; {
-  if (store.state.user.token) {
-    config.headers.Authorization = `Bearer ${store.state.user.token}`
-  }
-  return config
-}, err =&gt; Promise.reject(err))
-
-instance.interceptors.response.use(res =&gt; {
-  try {
-    return res.data.data
-  } catch (e) {
-    return res.data
-  }
-}, async err =&gt; {
-  if (err.response &amp;&amp; err.response.status === 401) {
-    const user = store.state.user
-    const login = { path: &#39;/login&#39;, query: { redirect: router.currentRoute.path } }
-    if (!user.token || !user.refresh_token) {
-      router.push(login)
-      // return
-      return Promise.reject(err)
-    }
-    try {
-      const { data: { data } } = await axios({
-        url: &#39;http://ttapi.research.itcast.cn/app/v1_0/authorizations&#39;,
-        method: &#39;put&#39;,
-        headers: {
-          Authorization: `Bearer ${user.refresh_token}`
+    created () {
+    },
+    updated () {
+      // console.log(this.selectedTabbar)
+    },
+    mounted () {
+    },
+    methods: {
+      handleTabbar (e) {
+        this.selectedTabbar = parseInt(e.target.dataset.index)
+        this.$emit(&#39;selectTab&#39;, this.selectedTabbar)
+        if (this.selectedTabbar === 1) {
+          wx.switchTab({
+            url: &#39;/pages/index/main&#39;
+          })
+        } else if (this.selectedTabbar === 2) {
+          wx.switchTab({
+            url: &#39;/pages/edit/main&#39;
+          })
+        } else if (this.selectedTabbar === 3) {
+          wx.switchTab({
+            url: &#39;/pages/my/main&#39;
+          })
         }
-      })
-      store.commit(&#39;setUser&#39;, {
-        token: data.token,
-        refresh_token: user.refresh_token
-      })
-      return instance(err.config)
-    } catch (e) {
-      store.commit(&#39;delUser&#39;)
-      router.push(login)
-      // 出错，要抛出错误，不抛出不会阻碍程序运行
-      return Promise.reject(err)
+      }
+    },
+    computed: {
     }
   }
-  return Promise.reject(err)
-})
-
-export default (url, method, data) =&gt; {
-  return instance({
-    url,
-    method,
-    [method.toLowerCase() === &#39;get&#39; ? &#39;params&#39; : &#39;data&#39;]: data
-  })
+&lt;/script&gt;
+&lt;style scoped lang=&quot;less&quot;&gt;
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: white;
+  // display: flex;
+  // padding-bottom: env(safe-area-inset-bottom);
 }
-</code></pre>
+.tab-bar-border {
+  background-color: rgba(0, 0, 0, 0.33);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleY(0.5);
+}
+
+// .tab-bar-item {
+//   flex: 1;
+//   text-align: center;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+// }
+.index {
+  position: absolute;
+  // top: 15rpx;
+  width: 50rpx;
+  height: 100rpx;
+  padding: 15rpx 100rpx;
+}
+.tab-bar-item cover-image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.tab-bar-item cover-view {
+  margin-top: 8rpx;
+  font-size: 10px;
+}
+.editText {
+  position: absolute;
+  left: 258rpx;
+  padding: 50rpx 100rpx;
+}
+.my {
+  position: absolute;
+  width: 50rpx;
+  left: 500rpx;
+  padding: 15rpx 100rpx;
+}
+.edit {
+  position: fixed;
+  width: 90rpx;
+  height: 90rpx;
+  left: 320rpx;
+  bottom: 40rpx;
+  padding: 10rpx;
+  background: #fff;
+  border: 1rpx solid #fff;
+  border-radius: 50%;
+}
+&lt;/style&gt;</code></pre><h2 id="tabbar-main-json"><a href="#tabbar-main-json" class="headerlink" title="tabbar/main.json"></a>tabbar/main.json</h2><pre><code>{
+    &quot;component&quot;: true
+}</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="index-main-json"><a href="#index-main-json" class="headerlink" title="index/main.json"></a>index/main.json</h2><pre><code>{
+    &quot;usingComponents&quot;: {}
+}
+</code></pre><h2 id="index-index-vue"><a href="#index-index-vue" class="headerlink" title="index.index.vue"></a>index.index.vue</h2><pre><code>import tabBar from &#39;@/components/tabBar/tabbar&#39;
+export default {
+  components: { tabBar },
+  data () {
+    return {
+      selectedTabbar: 1
+    }
+  }
+ }</code></pre><pre><code>&lt;tab-bar :selectedTabbar=&quot;selectedTabbar&quot; @selectTab=&quot;handleTab&quot;&gt;&lt;/tab-bar&gt;</code></pre><pre><code>handleTab (index) {
+    this.selectedTabbar = index
+},</code></pre><h1 id="index改变图片和字体不跟随变动"><a href="#index改变图片和字体不跟随变动" class="headerlink" title="index改变图片和字体不跟随变动"></a>index改变图片和字体不跟随变动</h1><pre><code>updated () {
+    this.selectedTabbar = 1
+},</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -630,12 +680,12 @@ export default (url, method, data) =&gt; {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>token</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">334</span></p>
+    <p><span class="copy-title">文章标题:</span>小程序自定义tabbar</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">636</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-03-11, 11:36:01</p>
-    <p><span class="copy-title">最后更新:</span>2020-03-11, 11:39:49</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/11/vue/token/" title="token">https://zhangxuet.github.io/2020/03/11/vue/token/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-02, 13:04:15</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-02, 13:25:51</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/02/wxprogram/tabbar/" title="小程序自定义tabbar">https://zhangxuet.github.io/2020/04/02/wxprogram/tabbar/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
