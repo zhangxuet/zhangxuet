@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>mpvue框架 | Ting</title>
+  <title>小程序封装通用的接口调用 | Ting</title>
   <meta name="keywords" content=" 小程序 ">
-  <meta name="description" content="mpvue框架 | Ting">
+  <meta name="description" content="小程序封装通用的接口调用 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="第一种方式utils&#x2F;index.js export function formatDateTime (date) {   var y &#x3D; date.getFullYear()   var m &#x3D; date.getMonth() + 1   m &#x3D; m &lt; 10 ? (&#39;0&#39; + m) : m   var d &#x3D; date.getDate()   d &#x3D; d &lt; 10">
 <meta property="og:type" content="article">
@@ -497,9 +497,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-wxprogram/wxprogram" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-wxprogram/request" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">mpvue框架</h1>
+        <h1 class="article-title">小程序封装通用的接口调用</h1>
     
     <div class="article-meta">
         
@@ -521,12 +521,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-03-19 22:12:52'>2020-03-19 10:24</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-10 16:37:41'>2020-04-10 16:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:210</span>
+        <span>字数:115</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -545,7 +545,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于mpvue的实践Tab"><span class="toc-text">基于mpvue的实践Tab</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置less环境"><span class="toc-text">配置less环境</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#封装request-js"><span class="toc-text">封装request.js</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -561,38 +561,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><ul>
-<li>安装Node.js(版本号大于v8.9.0)</li>
-<li>安装vue脚手架<ul>
-<li>npm install -g @vue/cli</li>
-<li>npm install -g @vue/cli-init</li>
-</ul>
-</li>
-<li>初始化项目（最后的项目名称自定义）<ul>
-<li>vue init mpvue/mpvue-quickstart mytest</li>
-</ul>
-</li>
-<li>安装依赖包（进入到项目的目录中进行）<ul>
-<li>npm install</li>
-</ul>
-</li>
-<li>运行项目<ul>
-<li>npm run dev</li>
-</ul>
-</li>
-<li>项目要导入到小程序开发工具中，但是代码通过vscode或者sublime进行开发</li>
-</ul>
-<h1 id="基于mpvue的实践Tab"><a href="#基于mpvue的实践Tab" class="headerlink" title="基于mpvue的实践Tab"></a>基于mpvue的实践Tab</h1><ul>
-<li>如果添加新的文件，命令行需要重启 npm run dev</li>
-<li>如果修改文件的内容，不需要重启</li>
-<li>在vue模板中可以使用小程序内置标签，比如view标签</li>
-</ul>
-<h1 id="配置less环境"><a href="#配置less环境" class="headerlink" title="配置less环境"></a>配置less环境</h1><p>装包</p>
-<pre><code>npm install less less-loader -D
-npm install node-sass sass-loader -D</code></pre><p>样式标签配置less</p>
-<pre><code>&lt;style scoped lang=&#39;less&#39;&gt;
-    @import &#39;main.less&#39;;            //一定要加 ； 号
- &lt;/style&gt;</code></pre>
+        <h1 id="封装request-js"><a href="#封装request-js" class="headerlink" title="封装request.js"></a>封装request.js</h1><pre><code>// 封装通用的接口调用方法
+// const qs = require(&#39;qs&#39;)
+export default (path, param, method, header) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    // let baseUrl = `http://baidu.com:8001/${path}`
+    let defaultMethod = &#39;get&#39;
+    if (method) {
+      // 如果第三个参数传递了就覆盖默认请求方式，否则使用默认值
+      defaultMethod = method
+      // param = qs.stringify(param)
+    }
+    mpvue.request({
+      url: baseUrl,
+      data: param,
+      method: defaultMethod,
+      header: header,
+      success: (res) =&gt; {
+        if (res.data.success) {
+          // 处理响应结果
+          // resolve(res.data.body)
+          resolve(res.data)
+        } else {
+          reject(res.data.errmsg)
+        }
+      }
+    })
+  })
+}
+</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -601,12 +598,12 @@ npm install node-sass sass-loader -D</code></pre><p>样式标签配置less</p>
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>mpvue框架</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">210</span></p>
+    <p><span class="copy-title">文章标题:</span>小程序封装通用的接口调用</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">115</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-03-19, 10:24:18</p>
-    <p><span class="copy-title">最后更新:</span>2020-03-19, 22:12:52</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/19/wxprogram/wxprogram/" title="mpvue框架">https://zhangxuet.github.io/2020/03/19/wxprogram/wxprogram/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-10, 16:34:24</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-10, 16:37:41</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/10/wxprogram/request/" title="小程序封装通用的接口调用">https://zhangxuet.github.io/2020/04/10/wxprogram/request/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

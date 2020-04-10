@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>小程序封装通用的接口调用</title>
+    <url>/2020/04/10/wxprogram/request/</url>
+    <content><![CDATA[<h1 id="封装request-js"><a href="#封装request-js" class="headerlink" title="封装request.js"></a>封装request.js</h1><pre><code>// 封装通用的接口调用方法
+// const qs = require(&#39;qs&#39;)
+export default (path, param, method, header) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    // let baseUrl = `http://baidu.com:8001/${path}`
+    let defaultMethod = &#39;get&#39;
+    if (method) {
+      // 如果第三个参数传递了就覆盖默认请求方式，否则使用默认值
+      defaultMethod = method
+      // param = qs.stringify(param)
+    }
+    mpvue.request({
+      url: baseUrl,
+      data: param,
+      method: defaultMethod,
+      header: header,
+      success: (res) =&gt; {
+        if (res.data.success) {
+          // 处理响应结果
+          // resolve(res.data.body)
+          resolve(res.data)
+        } else {
+          reject(res.data.errmsg)
+        }
+      }
+    })
+  })
+}
+</code></pre>]]></content>
+      <categories>
+        <category>小程序</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>时间格式化</title>
     <url>/2020/04/10/js/js%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96/</url>
     <content><![CDATA[<h1 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h1><p>utils/index.js</p>
