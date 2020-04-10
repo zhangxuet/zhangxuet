@@ -1830,7 +1830,7 @@ import store from &#39;@/store&#39;
 import router from &#39;@/router&#39;
 
 const instance = axios.create({
-  baseURL: &#39;http://ttapi.research.itcast.cn/&#39;,
+  baseURL: &#39;http://ttapi.research.cn/&#39;,
   transefromResponse: [(data) =&gt; {
     try {
       return JSONBIG.parse(data)
