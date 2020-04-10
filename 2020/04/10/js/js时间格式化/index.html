@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>hexo代码高亮 | Ting</title>
-  <meta name="keywords" content=" hexo , markdown ">
-  <meta name="description" content="hexo代码高亮 | Ting">
+  <title>时间格式化 | Ting</title>
+  <meta name="keywords" content=" js ">
+  <meta name="description" content="时间格式化 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="第一种方式utils&#x2F;index.js export function formatDateTime (date) {   var y &#x3D; date.getFullYear()   var m &#x3D; date.getMonth() + 1   m &#x3D; m &lt; 10 ? (&#39;0&#39; + m) : m   var d &#x3D; date.getDate()   d &#x3D; d &lt; 10">
 <meta property="og:type" content="article">
@@ -489,9 +489,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-problem/problem" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-js/js时间格式化" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">hexo代码高亮</h1>
+        <h1 class="article-title">时间格式化</h1>
     
     <div class="article-meta">
         
@@ -499,28 +499,26 @@
         
         <span class="book">
             
-                <a  data-rel="hexo问题">hexo问题</a>
+                <a  data-rel="js">js</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color5">hexo</a>
-            
-            <a class="color4">markdown</a>
+            <a class="color3">js</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-06 22:24:53'>2020-01-06 22:23</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-10 15:51:40'>2020-04-10 15:42</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:43</span>
+        <span>字数:304</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -539,7 +537,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#第一种方式"><span class="toc-text">第一种方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第二种"><span class="toc-text">第二种</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -555,18 +553,62 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>hexo代码高亮</strong></p>
-<ul>
-<li><p>在主题的_config.yml文件中修改highlight为true,可自定义主题</p>
-<pre><code>highlight:
+        <h1 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h1><p>utils/index.js</p>
+<pre><code>export function formatDateTime (date) {
+  var y = date.getFullYear()
+  var m = date.getMonth() + 1
+  m = m &lt; 10 ? (&#39;0&#39; + m) : m
+  var d = date.getDate()
+  d = d &lt; 10 ? (&#39;0&#39; + d) : d
+  var h = date.getHours()
+  h = h &lt; 10 ? (&#39;0&#39; + h) : h
+  var minute = date.getMinutes()
+  minute = minute &lt; 10 ? (&#39;0&#39; + minute) : minute
+  var second = date.getSeconds()
+  second = second &lt; 10 ? (&#39;0&#39; + second) : second
+  return y + &#39;/&#39; + m + &#39;/&#39; + d + &#39; &#39; + h + &#39;:&#39; + minute + &#39;:&#39; + second
+}</code></pre><p><strong>使用</strong></p>
+<pre><code>import { formatDateTime } from &#39;@/utils/index.js</code></pre><p><strong>vue中使用(过滤器</strong></p>
+<pre><code>filter: {
+    formatDateTime(date) {
+        var date = new Date(date)
+        return formatDateTime(date)
+    }
+}</code></pre><pre><code>&lt;span&gt;{{createTime|formatDateTime}}</code></pre><p><strong>mpvue小程序中使用</strong></p>
+<pre><code>import { formatDateTime } from &#39;@/utils/index.js</code></pre><pre><code>this.questionDetails = this.questionDetails.map(item =&gt; {
+   item.TimeSpan = formatDate(new Date(item.TimeSpan), &#39;yyyy-MM-dd hh:mm:ss&#39;)
+        return item
+})</code></pre><h1 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h1><p>utils/index.js</p>
+<pre><code>
+export function formatDate (date, fmt) {
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + &#39;&#39;).substr(4 - RegExp.$1.length))
+  }
+  let o = {
+    &#39;M+&#39;: date.getMonth() + 1,
+    &#39;d+&#39;: date.getDate(),
+    &#39;h+&#39;: date.getHours(),
+    &#39;m+&#39;: date.getMinutes(),
+    &#39;s+&#39;: date.getSeconds()
+  }
+  for (let k in o) {
+    if (new RegExp(`(${k})`).test(fmt)) {
+      let str = o[k] + &#39;&#39;
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str))
+    }
+  }
+  return fmt
+}
 
- on: true # true开启代码高亮
-
- lineNum: true # true显示行号
-
- theme: kimbie-dark</code></pre></li>
-</ul>
-
+function padLeftZero (str) {
+  return (&#39;00&#39; + str).substr(str.length)
+}</code></pre><p><strong>使用 （yyyy-MM-dd hh:mm:ss可自定义）</strong></p>
+<pre><code>import { formatDateTime, formatDate } from &#39;@/utils/index.js</code></pre><pre><code>filter: {
+    formatDateTime(date) {
+        var date = new Date(date)
+        return formatDateTime(date, &#39;yyyy-MM-dd hh:mm:ss&#39;)
+    }
+}</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -575,12 +617,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>hexo代码高亮</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">43</span></p>
+    <p><span class="copy-title">文章标题:</span>时间格式化</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">304</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-01-06, 22:23:34</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-06, 22:24:53</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/06/problem/problem/" title="hexo代码高亮">https://zhangxuet.github.io/2020/01/06/problem/problem/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-10, 15:42:42</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-10, 15:51:40</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/10/js/js%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96/" title="时间格式化">https://zhangxuet.github.io/2020/04/10/js/js%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>hexo代码高亮 | Ting</title>
-  <meta name="keywords" content=" hexo , markdown ">
-  <meta name="description" content="hexo代码高亮 | Ting">
+  <title>小程序 | Ting</title>
+  <meta name="keywords" content=" 小程序 ">
+  <meta name="description" content="小程序 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="第一种方式utils&#x2F;index.js export function formatDateTime (date) {   var y &#x3D; date.getFullYear()   var m &#x3D; date.getMonth() + 1   m &#x3D; m &lt; 10 ? (&#39;0&#39; + m) : m   var d &#x3D; date.getDate()   d &#x3D; d &lt; 10">
 <meta property="og:type" content="article">
@@ -489,9 +489,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-problem/problem" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-wxprogram/基本使用" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">hexo代码高亮</h1>
+        <h1 class="article-title">小程序</h1>
     
     <div class="article-meta">
         
@@ -499,28 +499,26 @@
         
         <span class="book">
             
-                <a  data-rel="hexo问题">hexo问题</a>
+                <a  data-rel="小程序">小程序</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color5">hexo</a>
-            
-            <a class="color4">markdown</a>
+            <a class="color4">小程序</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-06 22:24:53'>2020-01-06 22:23</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-29 12:11:58'>2020-03-28 14:15</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:43</span>
+        <span>字数:1.3k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -539,7 +537,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序吸顶效果"><span class="toc-text">小程序吸顶效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序tab栏切换效果"><span class="toc-text">小程序tab栏切换效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序自定义下拉框"><span class="toc-text">小程序自定义下拉框</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序授权"><span class="toc-text">小程序授权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#页面内的转发分享功能"><span class="toc-text">页面内的转发分享功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图片上传"><span class="toc-text">图片上传</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#视频上传"><span class="toc-text">视频上传</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -555,18 +553,295 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>hexo代码高亮</strong></p>
-<ul>
-<li><p>在主题的_config.yml文件中修改highlight为true,可自定义主题</p>
-<pre><code>highlight:
+        <h1 id="小程序吸顶效果"><a href="#小程序吸顶效果" class="headerlink" title="小程序吸顶效果"></a>小程序吸顶效果</h1><pre><code>&lt;div class=&quot;tabs&quot; :class=&quot;scrollTop &gt; 0 ? &#39;groupPosition&#39; : &#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+    &lt;div data-index=&#39;1&#39; class=&quot;tab all&quot; :class=&quot;currentIndex === 1?&#39;current&#39;:&#39;&#39;&quot;&gt;全部&lt;/div&gt;
+    &lt;div data-index=&#39;2&#39; class=&quot;tab handle&quot; :class=&quot;currentIndex === 2?&#39;current&#39;:&#39;&#39;&quot;&gt;处理中&lt;/div&gt;
+    &lt;div data-index=&#39;3&#39; class=&quot;tab complete&quot; :class=&quot;currentIndex===3?&#39;current&#39;:&#39;&#39;&quot;&gt;已完成&lt;/div&gt;
+&lt;/div&gt;</code></pre><pre><code>mounted () {
+},
+onPageScroll (e) {
+  this.scrollTop = e.scrollTop
+},</code></pre><p>css</p>
+<pre><code>.groupPosition {
+    position: fixed;
+}</code></pre><h1 id="小程序tab栏切换效果"><a href="#小程序tab栏切换效果" class="headerlink" title="小程序tab栏切换效果"></a>小程序tab栏切换效果</h1><p>css</p>
+<pre><code>.tabs {
+    display: flex;
+    flex: 1;
+    z-index: 100;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 50rpx;
+    .tab {
+        padding:20rpx 47rpx;
+    }
+    .current {
+        color: #EF4238;
+        border-bottom: 1px solid #EF4238;
+     }
+}</code></pre><p>js</p>
+<pre><code>changeTab (e) {
+    let index = parseInt(e.target.dataset.index)
+    this.currentIndex = index
+}</code></pre><h1 id="小程序自定义下拉框"><a href="#小程序自定义下拉框" class="headerlink" title="小程序自定义下拉框"></a>小程序自定义下拉框</h1><p>data</p>
+<pre><code>selectItem: &#39;点击选择项目&#39;,
+selectProject: false,
+projectItem: [ &#39;你好1&#39;, &#39;你好2&#39;, &#39;你好3&#39; ],</code></pre><p>html</p>
+<pre><code>&lt;div class=&#39;top&#39;&gt;
+    &lt;div class=&#39;top-text&#39;&gt; 选择项目&lt;/div&gt;
+    &lt;!-- 下拉框 --&gt;
+    &lt;div class=&#39;top-selected&#39; @click=&#39;handleProject&#39;&gt;
+    &lt;span class=&quot;select-top&quot;&gt;{{selectItem}}&lt;/span&gt;
+    &lt;span class=&quot;icon&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;!-- 下拉需要显示的列表 --&gt;
+    &lt;span class=&quot;san&quot; v-if=&quot;selectProject&quot;&gt;&lt;/span&gt;
+    &lt;div class=&quot;select_box&quot; v-if=&quot;selectProject&quot;&gt;
+    &lt;div v-for=&quot;(item, index) in projectItem&quot; :key=&quot;index&quot;&gt;
+    &lt;div class=&quot;select_one&quot; @click=&quot;mySelect&quot; :data-name=&quot;item&quot;&gt;{{item}}&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre><p>js</p>
+<pre><code>handleProject () {
+   this.selectProject = !this.selectProject
+},
+mySelect (e) {
+    var select = e.currentTarget.dataset.name
+    this.selectItem = select
+}</code></pre><p>css</p>
+<pre><code>.top {
+    position: relative;
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 34rpx;
+    border-bottom: 1px solid #000;
+    .top-text {
+        float: left;
+        width: 45%;
+        padding-left: 20rpx;
+    }
+    .top-selected {
+        width: 52%;
+        display: flex;
+        float: right;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        font-size: 30rpx;
+        .select-top {
+            padding-left: 50rpx;
+        }
+        .icon {
+            width: 20rpx;
+            height: 20rpx;
+            margin-right: 50rpx;
+            border-bottom: 2rpx solid #000;
+            border-right: 2rpx solid #000;
+            transform: rotate(45deg);
+        }
+    }
+      /* 下拉内容 */
+    .san {
+        position: absolute;
+        left: 420rpx;
+        top: 118rpx;
+        width: 35rpx;
+        height: 35rpx;
+        margin-right: 50rpx;
+        border-top: 2rpx solid #ddd;
+        border-left: 2rpx solid #ddd;
+        border-bottom: 2rpx solid #fff;
+        box-shadow: 2rpx #eee;
+        background:#fff;
+        transform: rotate(45deg);
+        z-index: 10;
+    }
+    .select_box {
+        background-color: #fff;
+        width: 46%;
+        float: right;
+        position: absolute;
+        right: 10rpx;
+        top: 86rpx;
+        z-index: 1;
+        overflow: hidden;
+        text-align: left;
+        animation: myfirst 0.5s;
+        font-size: 32rpx;
+        border: 5rpx solid #eee;
+        box-shadow: 2rpx #eee;
+        margin-top: 50rpx;
+        padding-left: 20rpx;
+        .select_one {
+            width: 100%;
+            height: 75rpx;
+            line-height: 75rpx;
+        }
+      }
+    }</code></pre><h1 id="小程序授权"><a href="#小程序授权" class="headerlink" title="小程序授权"></a>小程序授权</h1><p>app.vue</p>
+<pre><code>onLaunch () {
+    wx.login({
+      success: res =&gt; {
+        //       // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          this.code = res.code
+          this.wxGetUserInfo()
+        }
+      }
+    })
+    // 获取用户信息
+    wx.getSetting({
+      success: res =&gt; {
+        // console.log(res)
+        if (res.authSetting[&#39;scope.userInfo&#39;]) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res =&gt; {
+              // 可以将 res 发送给后台解码出 unionId
+              this.userInfo = res.userInfo
+              wx.setStorageSync(&#39;userInfo&#39;, res.userInfo)
+              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+              // 所以此处加入 callback 以防止这种情况
+              if (this.userInfoReadyCallback) {
+                this.userInfoReadyCallback(res)
+              }
+            }
+          })
+        }
+      }
+    })
+  },</code></pre><pre><code>wxGetUserInfo () {
+      wx.request({
+        url: `http://39.107.35.106:8001/api/Auth`,
+        method: &#39;get&#39;,
+        data: {
+          code: this.code
+        },
+        header: {
+          &#39;content-type&#39;: &#39;application/json&#39;
+        },
+        success: (res) =&gt; {
+          // console.log(res.data)
+        }
+      })
+    }</code></pre><p>user/index.vue</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;!--index.wxml--&gt;
+    &lt;view class=&quot;container&quot;&gt;
+      &lt;view class=&quot;userinfo&quot;&gt;
+        &lt;button v-if=&quot;!hasUserInfo &amp;&amp; canIUse&quot; open-type=&quot;getUserInfo&quot; @getuserinfo=&quot;getUserInfo&quot;&gt; 获取头像昵称 &lt;/button&gt;
+        &lt;block wx:else&gt;
+          &lt;image @click=&quot;bindViewTap&quot; class=&quot;userinfo-avatar&quot; :src=&quot;userInfo.avatarUrl&quot; mode=&quot;cover&quot;&gt;&lt;/image&gt;
+          &lt;text class=&quot;userinfo-nickname&quot;&gt;{{userInfo.nickName}}&lt;/text&gt;
+        &lt;/block&gt;
+      &lt;/view&gt; 
+    &lt;/view&gt;
 
- on: true # true开启代码高亮
+  &lt;/div&gt;
+&lt;/template&gt;
 
- lineNum: true # true显示行号
+&lt;script&gt;
+export default {
+  data () {
+    return {
+      userInfo: {},
+      hasUserInfo: false,
+      canIUse: mpvue.canIUse(&#39;button.open-type.getUserInfo&#39;)
+    }
+  },
+  methods: {
+    bindViewTap () {
+      wx.getSetting({
+        success (res) {
+          if (!res.authSetting[&#39;scope.record&#39;]) {
+            wx.switchTab({
+              url: &#39;/pages/index/main&#39;
+            })
+            // mpvue.authorize({
+            //   scope: &#39;scope.record&#39;,
+            //   success () {
+            //   // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+            //     wx.startRecord()
+            //   }
+            // })
+          }
+        }
+      })
+    },
+    getUserInfo () {
+      // 调用登录接口
+      mpvue.getUserInfo({// 当已授权getUserInfo时
+        success: res =&gt; {
+          // console.log(res.userInfo)
+          this.userInfo = res.userInfo
+          wx.setStorageSync(&#39;userInfo&#39;, res.userInfo)
+          this.hasUserInfo = true
+          wx.switchTab({
+            url: &#39;/pages/index/main&#39;
+          })
+        },
+        fail: (err) =&gt; {
+          console.log(err)
+        }
+      })
+    }
+  }
+}
+&lt;/script&gt;
 
- theme: kimbie-dark</code></pre></li>
-</ul>
-
+&lt;style scoped lang=&quot;less&quot;&gt;
+  @import &#39;./main.less&#39;;
+&lt;/style&gt;
+</code></pre><h1 id="页面内的转发分享功能"><a href="#页面内的转发分享功能" class="headerlink" title="页面内的转发分享功能"></a>页面内的转发分享功能</h1><pre><code>onShareAppMessage () {
+    return {
+      title: &#39;转发&#39;,
+      path: &#39;/pages/index/index&#39;,
+      success: function (res) {}
+    }
+  },
+  created () {}</code></pre><h1 id="图片上传"><a href="#图片上传" class="headerlink" title="图片上传"></a>图片上传</h1><pre><code>&lt;div class=&quot;addImg&quot;&gt;
+    &lt;span class=&quot;ImgTitle&quot;&gt;添加图片&lt;/span&gt;
+    &lt;span class=&quot;addIcon&quot; @click=&quot;handleImg&quot;&gt;+&lt;/span&gt;
+    &lt;div class=&quot;img&quot; v-if=&quot;ImgFilePaths&quot;&gt;
+        &lt;span v-for=&quot;(item, index) in ImgFilePaths&quot; :key=&quot;index&quot;&gt;
+            &lt;img :src=&quot;item&quot; alt=&quot;&quot;&gt;
+        &lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre><pre><code>handleImg () {
+      wx.chooseImage({
+        count: 9,
+        sizeType: [&#39;original&#39;, &#39;compressed&#39;],
+        sourceType: [&#39;album&#39;, &#39;camera&#39;],
+        success: (res) =&gt; {
+          // tempFilePath可以作为img标签的src属性显示图片
+          this.ImgFilePaths = res.tempFilePaths
+          console.log(this.ImgFilePaths)
+        }
+      })
+    },</code></pre><h1 id="视频上传"><a href="#视频上传" class="headerlink" title="视频上传"></a>视频上传</h1><pre><code>&lt;div class=&quot;addVedio&quot;&gt;
+    &lt;span class=&quot;vedioTitle&quot;&gt;添加视频&lt;/span&gt;
+    &lt;sapn class=&quot;addIcon&quot; @click=&quot;handleVedio&quot;&gt;+&lt;/sapn&gt;
+    &lt;div class=&quot;vedio&quot; v-if=&quot;VedioFilePaths&quot;&gt;
+        &lt;video class=&quot;vedioFile&quot; :src=&quot;VedioFilePaths&quot; alt=&quot;&quot;/&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre><pre><code>handleVedio () {
+      wx.chooseVideo({
+        sourceType: [&#39;album&#39;, &#39;camera&#39;],
+        maxDuration: 60,
+        camera: &#39;back&#39;,
+        success: (res) =&gt; {
+          this.VedioFilePaths = res.tempFilePath
+          console.log(this.VedioFilePaths)
+        },
+        fail: (err) =&gt; {
+          console.log(err)
+        }
+      })
+    },</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -575,12 +850,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>hexo代码高亮</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">43</span></p>
+    <p><span class="copy-title">文章标题:</span>小程序</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.3k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-01-06, 22:23:34</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-06, 22:24:53</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/06/problem/problem/" title="hexo代码高亮">https://zhangxuet.github.io/2020/01/06/problem/problem/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-28, 14:15:14</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-29, 12:11:58</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/28/wxprogram/%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="小程序">https://zhangxuet.github.io/2020/03/28/wxprogram/%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
