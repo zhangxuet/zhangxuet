@@ -1,6 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>vue基础知识</title>
+    <url>/2020/04/12/vue/vue%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<h1 id="created和mounted"><a href="#created和mounted" class="headerlink" title="created和mounted"></a>created和mounted</h1><p><strong>created</strong>: 用于首屏页面数据的初始化操作</p>
+<p><strong>mounted</strong>: 页面以及渲染完毕，可以操作dom</p>
+<h1 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h1><p>​    <strong>计算属性可以进行复杂的逻辑运算，使用时当成变量使用，计算属性本身有缓存，在关联的data没有变化的情况下，多次使用节省资源，methods方法没有缓存，每次使用都要重新加载。计算属性需要通过return关键字返回</strong></p>
+<h1 id="为什么组件的data必须是一个function"><a href="#为什么组件的data必须是一个function" class="headerlink" title="为什么组件的data必须是一个function"></a>为什么组件的data必须是一个function</h1><p>​    <strong>data可被使用多次，function的特点是每次使用时都会亲自执行，并给当前对象分配一个独立的数据对象，多个组件的data是独立的，没有影响</strong></p>
+<p>​    <strong>若直接通过{}给data复制，多次使用组件会造成data共享，就是一份数据，一个组件修改data后所有的组件都受影响，一并被修改了</strong></p>
+<h1 id="Vue-set"><a href="#Vue-set" class="headerlink" title="Vue.set()"></a>Vue.set()</h1><p>​    <strong>对于已经创建的实例，vue不允许动态增加根级别的响应式属性，但是可以使用Vue.set(obj, propertyName, value)方法向嵌套对象添加响应式属性</strong></p>
+<p>​    <strong>实例化（new vue)时，把data中的数据设置为响应式数据，set方法不能给vue实例或$data的根位置添加响应式数据，可以给data中的成员添加属性</strong></p>
+<h1 id="vue不直接操作dom"><a href="#vue不直接操作dom" class="headerlink" title="vue不直接操作dom"></a>vue不直接操作dom</h1><p>​    <strong>网页加载后，会在浏览器内存帮我们维护一个dom树，修改数据，浏览器会监视DOM树，dom树内容发生变化，浏览器会渲染页面，重新渲染会导致重排和重绘</strong></p>
+<p>​    <strong>vue在更新数据时不会直接更新dom树，更新虚拟dom，虚拟dom相当于一个中间层，能够跨平台移植</strong></p>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mvvm</title>
+    <url>/2020/04/12/vue/mvvm/</url>
+    <content><![CDATA[<h1 id="MVVM-数据驱动视图"><a href="#MVVM-数据驱动视图" class="headerlink" title="MVVM(数据驱动视图)"></a>MVVM(数据驱动视图)</h1><p>M:model    (普通javascript对象，普通数据)</p>
+<p>V:view    (视图,HTML、DOM模板)</p>
+<p>VM:    负责数据和视图的更新，是model和view通信的一个桥梁</p>
+<h1 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h1><p><strong>Object.defineProperty(obj, prop, description)</strong></p>
+<p>obj: 要在其上定义属性的对象</p>
+<p>prop: 要定义或修改的属性的名称</p>
+<p>description: 被定义或被修改的属性描述符</p>
+<p><strong>属性描述符分为数据描述符和存取描述符</strong>：</p>
+<p>​    数据描述符：是一个具有值的属性（可写/只读）</p>
+<p>​        可被修改：configurable: true</p>
+<p>​        可枚举(遍历)：enumerable: true</p>
+<p>​        可写：writable: true</p>
+<p>​    存取描述符：</p>
+<p>​        get:  给属性提供getter的方法，没有getter为undefined,方法执行时没有参数传入，但会传入this对象</p>
+<p>​        set:  给属性提供setter的方法，没有setter为undefined,属性值修改时触发该方法，接收唯一参数，该属</p>
+<p>​            性新的参数值</p>
+<h1 id="如何实现双向MVVM绑定"><a href="#如何实现双向MVVM绑定" class="headerlink" title="如何实现双向MVVM绑定"></a>如何实现双向MVVM绑定</h1><p><strong>1、实现双向绑定的方法</strong></p>
+<p>​    &lt;1&gt;    发布-订阅者模式：一般通过sub、pub方式实现数据和视图的监听绑定，通常Vue.set(‘property’, value)</p>
+<p>​    &lt;2&gt;    脏值检查：如angular.js</p>
+<p>​    &lt;3&gt;    数据劫持：vue.js采用数据劫持结合发布者-订阅者的模式，通过object.defineproperty()来劫持各个属性的getter、setter在数据变动时发布消息给订阅者，触发相应的监听回调</p>
+<p><strong>2、实现mvvm模式的方法</strong></p>
+<p>​    &lt;1&gt;    实现一个数据监听器Observer,能够对所有数据对象的属性进行监听，如有变动可拿到最新值通知给订阅者</p>
+<p>​    &lt;2&gt;    实现一个指令解析器Compiler，对每个元素的节点进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数</p>
+<p>​    &lt;3&gt;    实现一个Watcher，连接Observer和Compiler，能够订阅并收到每个属性变动的通知，执行指令绑定的相应的回调函数，从而更新视图</p>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+        <tag>mvvm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git</title>
+    <url>/2020/04/12/git/git/</url>
+    <content><![CDATA[<h1 id="git命令"><a href="#git命令" class="headerlink" title="git命令"></a>git命令</h1><p><strong>克隆</strong>：git clone 远程仓库地址</p>
+<p><strong>初始化</strong>：git init</p>
+<p><strong>第一次提交</strong>：git remote add origin 远程仓库地址</p>
+<p>​            git push -u origin master</p>
+<p><strong>添加到暂存区</strong>： git add .</p>
+<p><strong>将暂存区的文件提交到仓库</strong>： git commit -m ‘描述’</p>
+<p><strong>将本地仓库的文件提交到远程仓库</strong>：git push</p>
+<p><strong>从远程仓库下载文件</strong>： git pull</p>
+<p><strong>创建分支</strong>： git branch dev(分支名)</p>
+<p><strong>查看分支</strong>： git branch</p>
+<p><strong>切换分支</strong>： git checkout dev</p>
+<p><strong>创建并切换分支</strong>： git checkout -b dev</p>
+<p><strong>删除分支</strong>： git branch -d dev</p>
+<p><strong>查看日志</strong>： git log</p>
+<p><strong>查看日志（一行显示）</strong>： git log –oneline</p>
+<p><strong>查看文件状态</strong>： git status</p>
+<p><strong>重置暂存区</strong>： git reset 文件名</p>
+<p><strong>重置暂存区、工作区</strong>： git reset –hard</p>
+<p><strong>合并分支</strong>: git merge 分支名     出错，左下角   :q!   强制退出</p>
+<p><strong>将add的文件从暂存区删除</strong>： git rm -cashed 文件名</p>
+<p><strong>删除文件夹所有文件</strong>： git rm r -cashed 文件名</p>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ajax</title>
+    <url>/2020/04/12/ajax/ajax/</url>
+    <content><![CDATA[<h1 id="get和post区别"><a href="#get和post区别" class="headerlink" title="get和post区别"></a>get和post区别</h1><p><strong>get</strong>:</p>
+<p>获取内容</p>
+<p>浏览器对长度有限制（2kb）</p>
+<p>可以在url上携带少量数据</p>
+<p>不要携带隐私数据</p>
+<p>参数写在url上</p>
+<p><strong>post</strong>:</p>
+<p>提交数据</p>
+<p>登录时携带隐私数据</p>
+<p>可以发送大量数据</p>
+<p>可以发送文件</p>
+<p>参数放在请求体中</p>
+<h1 id="ajax发送请求"><a href="#ajax发送请求" class="headerlink" title="ajax发送请求"></a>ajax发送请求</h1><p><strong>1、创建XMLHTTPRequest对象</strong></p>
+<p><strong>2、调用xhr的open方法，设置请求方式和请求的url</strong></p>
+<p><strong>3、调用xhr对象的send方法，发送请求</strong></p>
+<p><strong>4、当请求响应整个过程结束，才接受服务器返回的数据</strong></p>
+<p><strong>get请求</strong></p>
+<pre><code>var xhr = new XMLHttpRequest()
+xhr.open(&#39;get&#39;, &#39;/time&#39;)
+xhr.send()
+xhr.onload = function() {
+    console.log(xhr.response)
+}</code></pre><p><strong>post请求</strong></p>
+<pre><code>var xhr = new XMLHttpRequest()
+xhr.open(&#39;post&#39;, &#39;/query-post&#39;)
+xhr.setRequestHeader(&#39;Content-Type&#39;, &#39;application/x-www-form-urlencoded&#39;)
+xhr.send(&#39;name=zxt&amp;age=18&#39;)
+xhr.onload = function() {
+    console.log(this.responseText)
+}</code></pre><h1 id="readyState（ajax请求过程中的几个状态）"><a href="#readyState（ajax请求过程中的几个状态）" class="headerlink" title="readyState（ajax请求过程中的几个状态）"></a>readyState（ajax请求过程中的几个状态）</h1><p><strong>服务器如果返回的数据非常大，会分块返回，当返回的数据发生变化时会触发onreadystatechange事件</strong></p>
+<p>readystate有5个状态</p>
+<p>0    UNSEND    代理xhr被创建，但尚未调用open方法</p>
+<p>1    OPENED        open()方法以及被调用，建立了连接</p>
+<p>2    HEADERS_RECEIVED    send()方法已经调用，且能获取状态行和响应头</p>
+<p>3    LOADING    响应体下载中，responseText属性可能已经包含部分数据</p>
+<p>4    DONE    响应体下载完成，可以直接使用responseText</p>
+<p>0-4    初始化-建立连接-接收响应头-响应体下载中-加载完成</p>
+]]></content>
+      <categories>
+        <category>ajax</category>
+      </categories>
+      <tags>
+        <tag>ajax</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>闭包</title>
+    <url>/2020/04/12/js/%E9%97%AD%E5%8C%85/</url>
+    <content><![CDATA[<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p><strong>闭包</strong>：能够读取其它函数内部变量的函数（将函数内部和函数外部连接起来的桥梁）</p>
+<p><strong>闭包的作用</strong>：延长局部变量的生命周期</p>
+<h1 id="检测闭包"><a href="#检测闭包" class="headerlink" title="检测闭包"></a>检测闭包</h1><p><strong>1、外层函数和内层函数</strong></p>
+<p><strong>2、外层函数必须有局部变量</strong></p>
+<p><strong>3、子函数能够操作外层函数的局部变量</strong></p>
+<p><strong>4、子函数和外部产生关联</strong></p>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><p><strong>1、变量的生命周期</strong>：生：变量何时在内存中开辟一块空间。死：变量何时从内存中释放</p>
+<p><strong>2、全局变量的生命周期</strong>：生：程序打开时。死：程序关闭时</p>
+<p><strong>3、局部变量的生命周期</strong>：生：函数调用执行时。死：函数调用执行结束后</p>
+<h1 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h1><p><strong>本质</strong>：变量的查找过程（从内向外）</p>
+<p><strong>全局变量：在全局作用域中，通过var关键字创建的变量</strong></p>
+<p><strong>全局作用域</strong>：函数之外的执行环境</p>
+<p><strong>局部作用域</strong>：函数内部的执行环境</p>
+<h1 id="闭包的使用"><a href="#闭包的使用" class="headerlink" title="闭包的使用"></a>闭包的使用</h1><p><strong>函数调用结束后局部变量不会释放，容易造成内存泄漏</strong></p>
+<pre><code>function father() {
+    var a = &#39;123&#39;
+    function son() {
+        console.log(a)
+    }
+    return son
+}
+var abc = father()
+abc()</code></pre>]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>闭包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>原型</title>
+    <url>/2020/04/12/js/%E5%8E%9F%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p><strong>原型</strong>：就是对象</p>
+<h1 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h1><p><strong>对象中的属性值是变化的，方法的值是不变的</strong></p>
+<p><strong>原因</strong>：对象中的成员越多，越消耗内存（对象中的方法重复，代码冗余）</p>
+<p><strong>方案</strong>：把不变的方法放到一个地方，让所有实例对象共享（放到原型里）</p>
+<h1 id="构造函数和原型的关系"><a href="#构造函数和原型的关系" class="headerlink" title="构造函数和原型的关系"></a>构造函数和原型的关系</h1><p><strong>构造函数可以通过prototype获取到原型</strong></p>
+<p><strong>原型可以通过constructor找到构造函数</strong></p>
+<h1 id="实例对象和原型的关系（原型链）"><a href="#实例对象和原型的关系（原型链）" class="headerlink" title="实例对象和原型的关系（原型链）"></a>实例对象和原型的关系（原型链）</h1><p><strong>原型顶级祖宗Object</strong>(任何实例对象都属于Object)</p>
+<p><strong>1、实例对象先从自身查找</strong></p>
+<p><strong>2、若找不到，则通过系统分配的_ <em>proto</em> _提供的原型地址进入到原型中查找，以此类推</strong></p>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h2><p><strong>1、先更改子类的原型prototype指向一个父类对象</strong></p>
+<p><strong>2、在原型中添加一个constructor保证关系的完整性</strong></p>
+<p><strong>优缺点</strong>：可以完美继承方法，无法完美继承属性</p>
+<pre><code> // 人类 → 父类
+    function Person() {
+      this.name = &#39;名字&#39;;
+      this.age = 10;
+      this.gender = &#39;男&#39;;
+    }
+    Person.prototype.sayHi = function () { console.log(&#39;你好&#39;); };
+    Person.prototype.eat = function () { console.log(&#39;我会吃。。。&#39;); };
+    Person.prototype.play = function () { console.log(&#39;我会玩&#39;); };
+
+
+    // 学生类 → 子类
+    function Student() {
+      this.stuId = 1000;
+    }
+    // 子类的原型prototyp指向父类的一个实例对象
+    Student.prototype = new Person();
+    // 添加一个constructor成员
+    Student.prototype.constructor = Student;
+
+    // 如何实现原型继承：
+    // 给子类的原型prototype重新赋值为父类的一个实例对象。
+    // 利用了原型链上属性或方法的查找规则。
+
+
+    // 创建一个学生对象
+    var stu1 = new Student();
+    console.log(stu1.constructor)</code></pre><h2 id="借用继承"><a href="#借用继承" class="headerlink" title="借用继承"></a>借用继承</h2><p><strong>通过call方法</strong></p>
+<p>函数名.call（调用者，实参1，实参2…)</p>
+<p><strong>优缺点</strong>：可以完美继承属性，无法完美继承方法</p>
+<pre><code>    // 人类 → 父类
+    function Person(name,age,gender) {
+      this.name = name;
+      this.age = age;
+      this.gender = gender;
+    }
+    Person.prototype.sayHi = function () { console.log(&#39;你好&#39;); };
+    Person.prototype.eat = function () { console.log(&#39;我会吃。。。&#39;); };
+    Person.prototype.play = function () { console.log(&#39;我会玩&#39;); };
+
+
+    // 学生类 → 子类
+    function Student(name,age,gender,stuId) {
+      // this关键字代表谁,代表的是一个学生对象，当前创建的对象 stu1 ,stu2
+      // var obj = this;
+      //【借用继承】
+      // Person.call(obj,name,age,gender);
+      Person.call(this,name,age,gender);
+      this.stuId = stuId;
+    }
+
+
+    // 创建第一个学生对象
+    var stu1 = new Student(&#39;张三&#39;,10,&#39;男&#39;,10086);
+    // 创建第二个学生对象
+    var stu2 = new Student(&#39;李四&#39;,11,&#39;女&#39;,10010);</code></pre><h2 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h2><p><strong>原型继承+借用继承</strong></p>
+<pre><code>    // 人类 → 父类
+    function Person(name,age,gender) {
+      this.name = name;
+      this.age = age;
+      this.gender = gender;
+    }
+    Person.prototype.sayHi = function () { console.log(&#39;你好&#39;); };
+    Person.prototype.eat = function () { console.log(&#39;我会吃。。。&#39;); };
+    Person.prototype.play = function () { console.log(&#39;我会玩&#39;); };
+
+
+    // 学生类 → 子类
+    function Student(name,age,gender,stuId) {
+      //【借用继承】
+      Person.call(this,name,age,gender);
+      this.stuId = stuId;
+    }
+
+    // 【原型继承】
+    Student.prototype = new Person();
+    Student.prototype.constructor = Student;
+
+
+    // 创建第一个学生对象
+    var stu1 = new Student(&#39;张三&#39;,10,&#39;男&#39;,10086);
+    // 创建第二个学生对象
+    var stu2 = new Student(&#39;李四&#39;,11,&#39;女&#39;,10010);</code></pre>]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>原型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>this指向</title>
+    <url>/2020/04/12/js/this%E6%8C%87%E5%90%91/</url>
+    <content><![CDATA[<h1 id="this指向"><a href="#this指向" class="headerlink" title="this指向"></a>this指向</h1><p><strong>普通函数</strong>: this指向window（直接调用）</p>
+<p><strong>定时器</strong>:  this指向window</p>
+<p><strong>方法中的this</strong>:  指向调用者</p>
+<p><strong>构造函数</strong>:  this指向当前创建的对象（当前开辟的空间）</p>
+<p><strong>事件处理程序</strong>:  this指向事件源</p>
+<h1 id="构造函数和普通函数区别"><a href="#构造函数和普通函数区别" class="headerlink" title="构造函数和普通函数区别"></a>构造函数和普通函数区别</h1><p><strong>普通函数</strong>:  直接调用</p>
+<p><strong>构造函数</strong>:  new关键字调用</p>
+<h1 id="new关键字的执行过程"><a href="#new关键字的执行过程" class="headerlink" title="new关键字的执行过程"></a>new关键字的执行过程</h1><p><strong>1、向内存中申请一块空间用来存放对象（此时对象中没有属性和方法）</strong></p>
+<p><strong>2、进入构造函数中，this关键字指向当前开辟的空间</strong></p>
+<p><strong>3、通过this关键字，向内存空间中的对象添加属性和方法</strong></p>
+<p><strong>4、把this返回给外部接收的变量（将new关键字创建好的对象赋值给变量）</strong></p>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>小程序封装通用的接口调用</title>
     <url>/2020/04/10/wxprogram/request/</url>
     <content><![CDATA[<h1 id="封装request-js"><a href="#封装request-js" class="headerlink" title="封装request.js"></a>封装request.js</h1><pre><code>// 封装通用的接口调用方法
