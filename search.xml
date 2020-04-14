@@ -1,6 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>websocket</title>
+    <url>/2020/04/14/websocket/websocket/</url>
+    <content><![CDATA[<h1 id="使用websocket"><a href="#使用websocket" class="headerlink" title="使用websocket"></a>使用websocket</h1><p>​    <strong>通信模型</strong></p>
+<ul>
+<li><p>拨号：建立连接</p>
+</li>
+<li><p>通话：双向通信</p>
+</li>
+<li><p>结束通话：关闭连接</p>
+<pre><code>// 原生
+// 创建连接
+var ws = new WebSoket(&#39;wss://echo.websocket.org&#39;)
+// 连接成功
+ws.onopen = function (evt) {
+    console.log(&#39;Connection open...&#39;)
+    // 发消息
+    ws.send(&#39;Hello&#39;)
+}
+// 接消息
+ws.onmessage = function(evt) {
+    console.log(&#39;received Message&#39; + evt.data)
+    // 关闭连接
+    wx.close()
+}
+wx.onclose = function (evt) {
+    console.log(&#39;connection closed&#39;)
+}</code></pre></li>
+</ul>
+<h1 id="使用socket-io"><a href="#使用socket-io" class="headerlink" title="使用socket.io"></a>使用socket.io</h1><p>​    <a href="https://socket.io/" target="_blank" rel="noopener">https://socket.io/</a></p>
+<p>​    <a href="https://github.com/socketio/socket.io" target="_blank" rel="noopener">https://github.com/socketio/socket.io</a></p>
+<p>服务端</p>
+<pre><code>var app = require(&#39;express&#39;)()
+var http = require(&#39;http&#39;).createServer(app)
+var io = require(&#39;socket.io&#39;)(http)
+
+app.get(&#39;/&#39;, function(req, res) {
+    res.sendFile(__dirname + &#39;/index.html&#39;)
+})
+
+io.on(&#39;connection&#39;, function(socket) {
+    socket.on(&#39;disconnect&#39;, function() {
+        console.log(&#39;user disconnect&#39;)
+    })
+
+    socket.on(&#39;chat message&#39;, function(msg) {
+        io.emit(&#39;chat message&#39;, msg)
+    })
+})
+
+http.listen(3000, &#39;0.0.0.0&#39;, function(){
+    console.log(&#39;listening on *: 3000&#39;)
+})</code></pre><p>客服端代码</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Socket.IO chat&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot; &gt;                  
+    &lt;style&gt;
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- 消息列表 --&gt;
+    &lt;ul id=&quot;messages&quot;&gt;&lt;/ul&gt;
+
+    &lt;!-- 发送消息的表单 --&gt;
+    &lt;form action=&quot;&quot;&gt;
+      &lt;input id=&quot;m&quot; autocomplete=&quot;off&quot; /&gt;&lt;button&gt;Send&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;!-- SocketIO 提供了一个客户端实现：socket.io.js --&gt;
+    &lt;script src=&quot;/socket.io/socket.io.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-1.11.1.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      // 建立连接，得到 socket 通信对象
+      var socket = io()
+
+      socket.on(&#39;connect&#39;, () =&gt; {
+        console.log(&#39;成功建立连接&#39;)
+      })
+
+      $(&#39;form&#39;).submit(function(e){
+        e.preventDefault();
+        socket.emit(&#39;chat message&#39;, $(&#39;#m&#39;).val());
+        $(&#39;#m&#39;).val(&#39;&#39;);
+        return false;
+      });
+
+      socket.on(&#39;chat message&#39;, function(msg){
+        $(&#39;#messages&#39;).append($(&#39;&lt;li&gt;&#39;).text(msg));
+      });
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><h1 id="实际应用-vue"><a href="#实际应用-vue" class="headerlink" title="实际应用(vue)"></a>实际应用(vue)</h1><pre><code>npm i socket.io-client</code></pre><pre><code>&lt;template&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;van-nav-bar fixed left-arrow @click-left=&quot;$router.back()&quot; title=&quot;小智同学&quot;&gt;&lt;/van-nav-bar&gt;
+    &lt;div class=&quot;chat-list&quot; ref=&quot;list&quot;&gt;
+      &lt;div class=&quot;chat-item&quot; :class=&quot;{left: item.name===&#39;xz&#39;, right: item.name===&#39;zj&#39;}&quot; v-for=&quot;(item,i) in list&quot; :key=&quot;i&quot;&gt;
+        &lt;van-image v-if=&quot;item.name===&#39;xz&#39;&quot; fit=&quot;cover&quot; round :src=&quot;xzAvatar&quot; /&gt;
+        &lt;div class=&quot;chat-pao&quot;&gt;{{item.msg}}&lt;/div&gt;
+        &lt;van-image  v-if=&quot;item.name===&#39;zj&#39;&quot; fit=&quot;cover&quot; round :src=&quot;zjAvatar&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;reply-container van-hairline--top&quot;&gt;
+      &lt;van-field v-model=&quot;value&quot; placeholder=&quot;说点什么...&quot;&gt;
+        &lt;van-loading v-if=&quot;commentLoading&quot; slot=&quot;button&quot; type=&quot;spinner&quot; size=&quot;16px&quot;&gt;&lt;/van-loading&gt;
+        &lt;span v-else @click=&quot;send()&quot; slot=&quot;button&quot; style=&quot;font-size:12px;color:#999&quot;&gt;提交&lt;/span&gt;
+      &lt;/van-field&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import io from &#39;socket.io-client&#39;
+import xzAvatar from &#39;../../assets/images/7.jpg&#39;
+export default {
+  data () {
+    return {
+      value: &#39;&#39;,
+      commentLoading: false,
+      xzAvatar,
+      zjAvatar: this.$route.query.photo,
+      list: []
+    }
+  },
+  created () {
+    this.socket = io(&#39;http://ttapi.research.cn&#39;)
+    this.socket.on(&#39;connect&#39;, () =&gt; {
+      // 默认发消息
+      this.list.push({ name: &#39;xz&#39;, msg: &#39;您有什么问题呢？&#39; })
+    })
+    // 收消息
+    this.socket.on(&#39;message&#39;, data =&gt; {
+      // 回消息
+      this.list.push({ name: &#39;xz&#39;, msg: data.msg })
+      this.scrollBottom()
+    })
+  },
+  beforeDestroy () { 
+    this.socket.close()
+  },
+  methods: {
+    send () {
+      // 和后端约定好消息的名字（message)
+      if (!this.value) return false
+      // 发消息
+      this.socket.emit(&#39;message&#39;, { msg: this.value, timestamp: Date.now() })
+      this.list.push({ name: &#39;zj&#39;, msg: this.value })
+      this.value = &#39;&#39;
+      this.scrollBottom()
+    },
+    // 每发一条消息都要滚动到最底部
+    scrollBottom () {
+      this.$nextTick(() =&gt; {
+        this.$refs.list.scrollTop = this.$refs.list.scrollHeight
+      })
+    }
+  }
+}
+&lt;/script&gt;
+
+&lt;style lang=&quot;less&quot; scoped&gt;
+.container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  background:#fafafa;
+  padding: 46px 0 50px 0;
+  .chat-list {
+    height: 100%;
+    overflow-y: scroll;
+    .chat-item{
+      padding: 10px;
+      .van-image{
+        vertical-align: top;
+        width: 40px;
+        height: 40px;
+      }
+      .chat-pao{
+        vertical-align: top;
+        display: inline-block;
+        min-width: 40px;
+        max-width: 70%;
+        min-height: 40px;
+        line-height: 38px;
+        border: 0.5px solid #c2d9ea;
+        border-radius: 4px;
+        position: relative;
+        padding: 0 10px;
+        background-color: #e0effb;
+        word-break: break-all;
+        font-size: 14px;
+        color: #333;
+        &amp;::before{
+          content: &quot;&quot;;
+          width: 10px;
+          height: 10px;
+          position: absolute;
+          top: 12px;
+          border-top:0.5px solid #c2d9ea;
+          border-right:0.5px solid #c2d9ea;
+          background: #e0effb;
+        }
+      }
+    }
+  }
+}
+.chat-item.right{
+  text-align: right;
+  .chat-pao{
+    margin-left: 0;
+    margin-right: 15px;
+    &amp;::before{
+      right: -6px;
+      transform: rotate(45deg);
+    }
+  }
+}
+.chat-item.left{
+  text-align: left;
+  .chat-pao{
+    margin-left: 15px;
+    margin-right: 0;
+    &amp;::before{
+      left: -5px;
+      transform: rotate(-135deg);
+    }
+  }
+}
+.reply-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 44px;
+  width: 100%;
+  background: #f5f5f5;
+  z-index: 9999;
+}
+&lt;/style&gt;
+</code></pre>]]></content>
+      <categories>
+        <category>websocket</category>
+      </categories>
+      <tags>
+        <tag>websocket</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue基础知识</title>
     <url>/2020/04/12/vue/vue%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h1 id="created和mounted"><a href="#created和mounted" class="headerlink" title="created和mounted"></a>created和mounted</h1><p><strong>created</strong>: 用于首屏页面数据的初始化操作</p>
@@ -47,6 +305,7 @@
 <p>​    &lt;1&gt;    实现一个数据监听器Observer,能够对所有数据对象的属性进行监听，如有变动可拿到最新值通知给订阅者</p>
 <p>​    &lt;2&gt;    实现一个指令解析器Compiler，对每个元素的节点进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数</p>
 <p>​    &lt;3&gt;    实现一个Watcher，连接Observer和Compiler，能够订阅并收到每个属性变动的通知，执行指令绑定的相应的回调函数，从而更新视图</p>
+<p>​    &lt;4&gt;    MVVM入口函数，整合以上三者</p>
 ]]></content>
       <categories>
         <category>vue</category>
@@ -596,6 +855,28 @@ export default {
       </tags>
   </entry>
   <entry>
+    <title>小程序吸顶效果</title>
+    <url>/2020/03/28/wxprogram/%E5%90%B8%E9%A1%B6/</url>
+    <content><![CDATA[<h1 id="小程序吸顶效果"><a href="#小程序吸顶效果" class="headerlink" title="小程序吸顶效果"></a>小程序吸顶效果</h1><pre><code>&lt;div class=&quot;tabs&quot; :class=&quot;scrollTop &gt; 0 ? &#39;groupPosition&#39; : &#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+    &lt;div data-index=&#39;1&#39; class=&quot;tab all&quot; :class=&quot;currentIndex === 1?&#39;current&#39;:&#39;&#39;&quot;&gt;全部&lt;/div&gt;
+    &lt;div data-index=&#39;2&#39; class=&quot;tab handle&quot; :class=&quot;currentIndex === 2?&#39;current&#39;:&#39;&#39;&quot;&gt;处理中&lt;/div&gt;
+    &lt;div data-index=&#39;3&#39; class=&quot;tab complete&quot; :class=&quot;currentIndex===3?&#39;current&#39;:&#39;&#39;&quot;&gt;已完成&lt;/div&gt;
+&lt;/div&gt;</code></pre><pre><code>mounted () {
+},
+onPageScroll (e) {
+  this.scrollTop = e.scrollTop
+},</code></pre><p>css</p>
+<pre><code>.groupPosition {
+    position: fixed;
+}</code></pre>]]></content>
+      <categories>
+        <category>小程序</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>小程序基本使用</title>
     <url>/2020/03/28/wxprogram/%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h1 id="小程序吸顶效果"><a href="#小程序吸顶效果" class="headerlink" title="小程序吸顶效果"></a>小程序吸顶效果</h1><pre><code>&lt;div class=&quot;tabs&quot; :class=&quot;scrollTop &gt; 0 ? &#39;groupPosition&#39; : &#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
@@ -1034,28 +1315,6 @@ export default {
 })</code></pre><h1 id="页面跳转传参"><a href="#页面跳转传参" class="headerlink" title="页面跳转传参"></a>页面跳转传参</h1><pre><code>mpvue.navigateTo({
      url: &#39;/pages/question_detail/main?questionid=&#39; + item.QuestionID +&#39;&amp;userid=&#39; + userid
 })</code></pre>]]></content>
-      <categories>
-        <category>小程序</category>
-      </categories>
-      <tags>
-        <tag>小程序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>小程序吸顶效果</title>
-    <url>/2020/03/28/wxprogram/%E5%90%B8%E9%A1%B6/</url>
-    <content><![CDATA[<h1 id="小程序吸顶效果"><a href="#小程序吸顶效果" class="headerlink" title="小程序吸顶效果"></a>小程序吸顶效果</h1><pre><code>&lt;div class=&quot;tabs&quot; :class=&quot;scrollTop &gt; 0 ? &#39;groupPosition&#39; : &#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
-    &lt;div data-index=&#39;1&#39; class=&quot;tab all&quot; :class=&quot;currentIndex === 1?&#39;current&#39;:&#39;&#39;&quot;&gt;全部&lt;/div&gt;
-    &lt;div data-index=&#39;2&#39; class=&quot;tab handle&quot; :class=&quot;currentIndex === 2?&#39;current&#39;:&#39;&#39;&quot;&gt;处理中&lt;/div&gt;
-    &lt;div data-index=&#39;3&#39; class=&quot;tab complete&quot; :class=&quot;currentIndex===3?&#39;current&#39;:&#39;&#39;&quot;&gt;已完成&lt;/div&gt;
-&lt;/div&gt;</code></pre><pre><code>mounted () {
-},
-onPageScroll (e) {
-  this.scrollTop = e.scrollTop
-},</code></pre><p>css</p>
-<pre><code>.groupPosition {
-    position: fixed;
-}</code></pre>]]></content>
       <categories>
         <category>小程序</category>
       </categories>

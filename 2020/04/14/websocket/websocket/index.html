@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>node写接口 | Ting</title>
-  <meta name="keywords" content=" node ">
-  <meta name="description" content="node写接口 | Ting">
+  <title>websocket | Ting</title>
+  <meta name="keywords" content=" websocket ">
+  <meta name="description" content="websocket | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="created和mountedcreated: 用于首屏页面数据的初始化操作 mounted: 页面以及渲染完毕，可以操作dom computed​    计算属性可以进行复杂的逻辑运算，使用时当成变量使用，计算属性本身有缓存，在关联的data没有变化的情况下，多次使用节省资源，methods方法没有缓存，每次使用都要重新加载。计算属性需要通过return关键字返回 为什么组件的data必须是一个">
 <meta property="og:type" content="article">
@@ -609,9 +609,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-node/node" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-websocket/websocket" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">node写接口</h1>
+        <h1 class="article-title">websocket</h1>
     
     <div class="article-meta">
         
@@ -619,26 +619,26 @@
         
         <span class="book">
             
-                <a  data-rel="node">node</a>
+                <a  data-rel="websocket">websocket</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color5">node</a>
+            <a class="color5">websocket</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-03-13 10:06:43'>2020-03-13 09:54</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-14 23:03:26'>2020-04-14 22:02</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:755</span>
+        <span>字数:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -657,7 +657,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装express-mysql-body-parser"><span class="toc-text">安装express  mysql  body-parser</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建db-js"><span class="toc-text">创建db.js</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建app-js"><span class="toc-text">创建app.js</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用websocket"><span class="toc-text">使用websocket</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用socket-io"><span class="toc-text">使用socket.io</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实际应用-vue"><span class="toc-text">实际应用(vue)</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -673,149 +673,254 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="安装express-mysql-body-parser"><a href="#安装express-mysql-body-parser" class="headerlink" title="安装express  mysql  body-parser"></a>安装express  mysql  body-parser</h1><pre><code>npm i express mysql body-parser</code></pre><h1 id="创建db-js"><a href="#创建db-js" class="headerlink" title="创建db.js"></a>创建db.js</h1><pre><code>module.exports = (sql, values, cb) =&gt; {
-    const mysql = require(&#39;mysql&#39;)
-    const conn = mysql.createConnection({
-        host: &#39;localhost&#39;,
-        port: &#39;3306&#39;,
-        user: &#39;root&#39;,
-        password: &#39;&#39;,
-        database: &#39;hero&#39;,
-        multipleStatements: true
+        <h1 id="使用websocket"><a href="#使用websocket" class="headerlink" title="使用websocket"></a>使用websocket</h1><p>​    <strong>通信模型</strong></p>
+<ul>
+<li><p>拨号：建立连接</p>
+</li>
+<li><p>通话：双向通信</p>
+</li>
+<li><p>结束通话：关闭连接</p>
+<pre><code>// 原生
+// 创建连接
+var ws = new WebSoket(&#39;wss://echo.websocket.org&#39;)
+// 连接成功
+ws.onopen = function (evt) {
+    console.log(&#39;Connection open...&#39;)
+    // 发消息
+    ws.send(&#39;Hello&#39;)
+}
+// 接消息
+ws.onmessage = function(evt) {
+    console.log(&#39;received Message&#39; + evt.data)
+    // 关闭连接
+    wx.close()
+}
+wx.onclose = function (evt) {
+    console.log(&#39;connection closed&#39;)
+}</code></pre></li>
+</ul>
+<h1 id="使用socket-io"><a href="#使用socket-io" class="headerlink" title="使用socket.io"></a>使用socket.io</h1><p>​    <a href="https://socket.io/" target="_blank" rel="noopener">https://socket.io/</a></p>
+<p>​    <a href="https://github.com/socketio/socket.io" target="_blank" rel="noopener">https://github.com/socketio/socket.io</a></p>
+<p>服务端</p>
+<pre><code>var app = require(&#39;express&#39;)()
+var http = require(&#39;http&#39;).createServer(app)
+var io = require(&#39;socket.io&#39;)(http)
+
+app.get(&#39;/&#39;, function(req, res) {
+    res.sendFile(__dirname + &#39;/index.html&#39;)
+})
+
+io.on(&#39;connection&#39;, function(socket) {
+    socket.on(&#39;disconnect&#39;, function() {
+        console.log(&#39;user disconnect&#39;)
     })
-    conn.connect()
-    conn.query(sql, values, cb)
-    conn.end()
-}</code></pre><h1 id="创建app-js"><a href="#创建app-js" class="headerlink" title="创建app.js"></a>创建app.js</h1><pre><code>// 创建web服务器
-const express = require(&#39;express&#39;);
-const app = express();
-app.listen(3000, () =&gt; console.log(&#39;服务器启动了&#39;));
 
-// 使用中间件，处理文件资源
-app.use(express.static(&#39;manager&#39;));
-app.use(&#39;/uploads&#39;, express.static(__dirname + &#39;/uploads&#39;));
+    socket.on(&#39;chat message&#39;, function(msg) {
+        io.emit(&#39;chat message&#39;, msg)
+    })
+})
 
-// 处理 ‘x-www-form-urlencoded’ 编码格式的POST请求体 （把浏览器提交的数据放到 req.body中）
-const bodyParser = require(&#39;body-parser&#39;);
-app.use(bodyParser.urlencoded({extended: false}));
+http.listen(3000, &#39;0.0.0.0&#39;, function(){
+    console.log(&#39;listening on *: 3000&#39;)
+})</code></pre><p>客服端代码</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Socket.IO chat&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot; &gt;                  
+    &lt;style&gt;
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- 消息列表 --&gt;
+    &lt;ul id=&quot;messages&quot;&gt;&lt;/ul&gt;
 
-const db = require(&#39;./db.js&#39;);
-///////////////////////////// 下面是接口 ////////////////////////////////////////
-// app.get(&#39;/time&#39;, (req, res) =&gt; {
-//     res.send(Date.now() + &#39;&#39;);
-// });
+    &lt;!-- 发送消息的表单 --&gt;
+    &lt;form action=&quot;&quot;&gt;
+      &lt;input id=&quot;m&quot; autocomplete=&quot;off&quot; /&gt;&lt;button&gt;Send&lt;/button&gt;
+    &lt;/form&gt;
 
-// 1. 完成获取英雄的接口
-app.get(&#39;/getHeroes&#39;, (req, res) =&gt; {
-    // 接收前端传递过来的page
-    let page = req.query.page || 1; // page表示页码
-    let pageNum = 5; // 表示每页显示多少条
-    let sql = &#39;select * from heroes limit &#39; + (page-1) * pageNum + &#39;,&#39; + pageNum;
-    sql += &#39;;select count(*) c from heroes&#39;;
-    db(sql, null, (err, result) =&gt; {
-        if (err) throw err;
-        console.log(result);
-        res.send({
-            data: result[0],
-            pageTotal: Math.ceil(result[1][0].c / pageNum)
-        });
-        // res.send(result);
-    });
-});
+    &lt;!-- SocketIO 提供了一个客户端实现：socket.io.js --&gt;
+    &lt;script src=&quot;/socket.io/socket.io.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-1.11.1.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      // 建立连接，得到 socket 通信对象
+      var socket = io()
 
+      socket.on(&#39;connect&#39;, () =&gt; {
+        console.log(&#39;成功建立连接&#39;)
+      })
 
-// 2. 完成添加英雄的接口
-// 加载multer
-const multer = require(&#39;multer&#39;);
-// 配置multer
-const upload = multer({ dest: &#39;uploads/&#39;});
+      $(&#39;form&#39;).submit(function(e){
+        e.preventDefault();
+        socket.emit(&#39;chat message&#39;, $(&#39;#m&#39;).val());
+        $(&#39;#m&#39;).val(&#39;&#39;);
+        return false;
+      });
 
-app.post(&#39;/addHero&#39;, upload.single(&#39;heroIcon&#39;), (req, res) =&gt; {
-    // console.log(req.body); 
-    // console.log(req.file);
-    // 写SQL，完成添加入库
-    let sql = &#39;insert into heroes set ?&#39;;
-    let values = {
-        // 字段： 值
-        name: req.body.heroName,
-        nickname: req.body.heroNickName,
-        skill: req.body.skillName,
-        file: req.file.path
-    };
-    db(sql, values, (err, result) =&gt; {
-        if (err) {
-            // send方法，它会将对象自动转成json格式并响应
-            res.send({code: 201, message: &#39;添加失败&#39;});
-        } else {
-            res.send({code: 200, message: &#39;添加成功&#39;});
-        }
-    });
-});
+      socket.on(&#39;chat message&#39;, function(msg){
+        $(&#39;#messages&#39;).append($(&#39;&lt;li&gt;&#39;).text(msg));
+      });
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><h1 id="实际应用-vue"><a href="#实际应用-vue" class="headerlink" title="实际应用(vue)"></a>实际应用(vue)</h1><pre><code>npm i socket.io-client</code></pre><pre><code>&lt;template&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;van-nav-bar fixed left-arrow @click-left=&quot;$router.back()&quot; title=&quot;小智同学&quot;&gt;&lt;/van-nav-bar&gt;
+    &lt;div class=&quot;chat-list&quot; ref=&quot;list&quot;&gt;
+      &lt;div class=&quot;chat-item&quot; :class=&quot;{left: item.name===&#39;xz&#39;, right: item.name===&#39;zj&#39;}&quot; v-for=&quot;(item,i) in list&quot; :key=&quot;i&quot;&gt;
+        &lt;van-image v-if=&quot;item.name===&#39;xz&#39;&quot; fit=&quot;cover&quot; round :src=&quot;xzAvatar&quot; /&gt;
+        &lt;div class=&quot;chat-pao&quot;&gt;{{item.msg}}&lt;/div&gt;
+        &lt;van-image  v-if=&quot;item.name===&#39;zj&#39;&quot; fit=&quot;cover&quot; round :src=&quot;zjAvatar&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;reply-container van-hairline--top&quot;&gt;
+      &lt;van-field v-model=&quot;value&quot; placeholder=&quot;说点什么...&quot;&gt;
+        &lt;van-loading v-if=&quot;commentLoading&quot; slot=&quot;button&quot; type=&quot;spinner&quot; size=&quot;16px&quot;&gt;&lt;/van-loading&gt;
+        &lt;span v-else @click=&quot;send()&quot; slot=&quot;button&quot; style=&quot;font-size:12px;color:#999&quot;&gt;提交&lt;/span&gt;
+      &lt;/van-field&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-
-// 3. 根据id，获取一个英雄
-app.get(&#39;/getHeroById&#39;, (req, res) =&gt; {
-    // 获取url上的id参数
-    // req.query -- 可以获取到url上所有的参数。这是express提供的一个属性
-    let id = req.query.id;
-    if (id == &#39;&#39; || isNaN(id)) {
-        res.send(&#39;参数错误&#39;);
-        return;
+&lt;script&gt;
+import io from &#39;socket.io-client&#39;
+import xzAvatar from &#39;../../assets/images/7.jpg&#39;
+export default {
+  data () {
+    return {
+      value: &#39;&#39;,
+      commentLoading: false,
+      xzAvatar,
+      zjAvatar: this.$route.query.photo,
+      list: []
     }
-    db(&#39;select * from heroes where id=?&#39;, id, (err, result) =&gt; {
-        if (err) throw err;
-        res.send(result[0]);
-    });
-});
-
-// 4. 更新的接口
-app.post(&#39;/updateHero&#39;, upload.single(&#39;heroIcon&#39;), (req, res) =&gt; {
-    // console.log(req.body); 
-    // console.log(req.file);
-    // 写SQL，完成添加入库
-    let sql = &#39;update heroes set ? where id = ?&#39;;
-    let values = {
-        // 字段： 值
-        name: req.body.heroName,
-        nickname: req.body.heroNickName,
-        skill: req.body.skillName
-    };
-    // 单独设置文件
-    // console.log(req.file); // 如果没有选择图片，req.file为undefined
-    if (req.file !== undefined) {
-        // 说明此次更新了头像
-        values.file = req.file.path;
+  },
+  created () {
+    this.socket = io(&#39;http://ttapi.research.cn&#39;)
+    this.socket.on(&#39;connect&#39;, () =&gt; {
+      // 默认发消息
+      this.list.push({ name: &#39;xz&#39;, msg: &#39;您有什么问题呢？&#39; })
+    })
+    // 收消息
+    this.socket.on(&#39;message&#39;, data =&gt; {
+      // 回消息
+      this.list.push({ name: &#39;xz&#39;, msg: data.msg })
+      this.scrollBottom()
+    })
+  },
+  beforeDestroy () { 
+    this.socket.close()
+  },
+  methods: {
+    send () {
+      // 和后端约定好消息的名字（message)
+      if (!this.value) return false
+      // 发消息
+      this.socket.emit(&#39;message&#39;, { msg: this.value, timestamp: Date.now() })
+      this.list.push({ name: &#39;zj&#39;, msg: this.value })
+      this.value = &#39;&#39;
+      this.scrollBottom()
+    },
+    // 每发一条消息都要滚动到最底部
+    scrollBottom () {
+      this.$nextTick(() =&gt; {
+        this.$refs.list.scrollTop = this.$refs.list.scrollHeight
+      })
     }
-    // return;
-    db(sql, [values, req.body.id], (err, result) =&gt; {
-        if (err) {
-            // send方法，它会将对象自动转成json格式并响应
-            res.send({code: 201, message: &#39;更新失败&#39;});
-        } else {
-            res.send({code: 200, message: &#39;更新成功&#39;});
+  }
+}
+&lt;/script&gt;
+
+&lt;style lang=&quot;less&quot; scoped&gt;
+.container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  background:#fafafa;
+  padding: 46px 0 50px 0;
+  .chat-list {
+    height: 100%;
+    overflow-y: scroll;
+    .chat-item{
+      padding: 10px;
+      .van-image{
+        vertical-align: top;
+        width: 40px;
+        height: 40px;
+      }
+      .chat-pao{
+        vertical-align: top;
+        display: inline-block;
+        min-width: 40px;
+        max-width: 70%;
+        min-height: 40px;
+        line-height: 38px;
+        border: 0.5px solid #c2d9ea;
+        border-radius: 4px;
+        position: relative;
+        padding: 0 10px;
+        background-color: #e0effb;
+        word-break: break-all;
+        font-size: 14px;
+        color: #333;
+        &amp;::before{
+          content: &quot;&quot;;
+          width: 10px;
+          height: 10px;
+          position: absolute;
+          top: 12px;
+          border-top:0.5px solid #c2d9ea;
+          border-right:0.5px solid #c2d9ea;
+          background: #e0effb;
         }
-    });
-});
-
-
-// 5. 删除英雄的接口
-app.get(&#39;/deleteHero&#39;, (req, res) =&gt; {
-    // 获取url上的id
-    // console.log(req.query);
-    let id = req.query.id;
-    if (id == &#39;&#39; || isNaN(id)) {
-        res.send(&#39;参数错误&#39;);
-        return;
+      }
     }
-    // 完成删除
-    db(&#39;delete from heroes where id = ?&#39;, id, (err, result) =&gt; {
-        if (err) {
-            res.send({code: 201, message: &#39;删除失败&#39;});
-        } else {
-            res.send({code: 200, message: &#39;删除成功&#39;});
-        }
-    });
-});</code></pre>
+  }
+}
+.chat-item.right{
+  text-align: right;
+  .chat-pao{
+    margin-left: 0;
+    margin-right: 15px;
+    &amp;::before{
+      right: -6px;
+      transform: rotate(45deg);
+    }
+  }
+}
+.chat-item.left{
+  text-align: left;
+  .chat-pao{
+    margin-left: 15px;
+    margin-right: 0;
+    &amp;::before{
+      left: -5px;
+      transform: rotate(-135deg);
+    }
+  }
+}
+.reply-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 44px;
+  width: 100%;
+  background: #f5f5f5;
+  z-index: 9999;
+}
+&lt;/style&gt;
+</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -824,12 +929,12 @@ app.get(&#39;/deleteHero&#39;, (req, res) =&gt; {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>node写接口</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">755</span></p>
+    <p><span class="copy-title">文章标题:</span>websocket</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.1k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-03-13, 09:54:42</p>
-    <p><span class="copy-title">最后更新:</span>2020-03-13, 10:06:43</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/13/node/node/" title="node写接口">https://zhangxuet.github.io/2020/03/13/node/node/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-14, 22:02:01</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-14, 23:03:26</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/14/websocket/websocket/" title="websocket">https://zhangxuet.github.io/2020/04/14/websocket/websocket/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
