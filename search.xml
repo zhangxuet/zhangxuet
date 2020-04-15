@@ -1,6 +1,734 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>频道管理</title>
+    <url>/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h1 id="准备组件"><a href="#准备组件" class="headerlink" title="准备组件"></a>准备组件</h1><p>使用组件：<code>src/views/home/index.vue</code></p>
+<pre><code class="js">showEditChannel: false</code></pre>
+<pre><code class="html">&lt;channel-edit v-model=&quot;showEditChannel&quot;&gt;&lt;/channel-edit&gt;</code></pre>
+<p>组件结构：<code>src/views/home/components/channel-edit.vue</code></p>
+<p>数据：</p>
+<pre><code class="js"> props: {
+    value: {
+      type: Boolean,
+      default: false
+    }
+ }            </code></pre>
+<pre><code class="js">  data () {
+    return {
+      // 正在编辑我的频道
+      editing: false
+    }
+</code></pre>
+<h1 id="渲染我的频道"><a href="#渲染我的频道" class="headerlink" title="渲染我的频道"></a>渲染我的频道</h1><ul>
+<li>使用父组件数据  <code>src/views/home/index.vue</code><ul>
+<li>我的频道列表</li>
+<li>当前激活频道</li>
+</ul>
+</li>
+</ul>
+<pre><code class="html">&lt;channel-edit :channels=&quot;channels&quot; :activeIndex=&quot;activeIndex&quot;&gt;&lt;/channel-edit&gt;</code></pre>
+<pre><code class="js">data () {
+  return {
+     activeIndex: 0,
+     channels: []
+  }
+}  </code></pre>
+<ul>
+<li>接收父组件数据  <code>src/views/home/components/channel-edit.vue</code></li>
+</ul>
+<pre><code class="js">    // 复杂数据类型
+    channels: {
+      type: Array,
+      // 语法规范：通过一个函数的返回值来指定默认值
+      default: () =&gt; []
+    },
+    // 激活频道索引
+    activeIndex: {
+      type: Number,
+      default: 0
+    }</code></pre>
+<h1 id="渲染可选频道"><a href="#渲染可选频道" class="headerlink" title="渲染可选频道"></a>渲染可选频道</h1><ul>
+<li>获取所有频道API <code>src/api/channel.js</code></li>
+</ul>
+<pre><code class="js">/**
+ * 获取全部频道
+ */
+export const getAllChannels = () =&gt; {
+  return request(&#39;/app/v1_0/channels&#39;, &#39;get&#39;)
+}
+</code></pre>
+<ul>
+<li>调用API</li>
+</ul>
+<pre><code class="js">methods: {
+  async getAllChannels () {
+    const data = await getAllChannels()
+    this.allChannels = data.channels
+  }                    
+}</code></pre>
+<pre><code class="js">  created () {
+    this.getAllChannels()
+  },</code></pre>
+<ul>
+<li>可选频道 = 全部频道 - 我的频道</li>
+</ul>
+<pre><code class="js">computed: {
+    optionalChannels () {
+      // 可选频道 = 全部频道 - 我的频道
+      // 可选频道:遍历全部频道，拿着每一项去我的频道当中去对比，如果一样忽略，如果不一样，放到可选频道中。
+      // Array.filter() 数组提供的遍历函数，当条件（回调函数的返回值）为真时候，把对应遍历的选项，放在新数组中。
+      // 如果没找呢  findIndex()值  -1
+      return this.allChannels.filter(item =&gt; this.channels.findIndex(myItem =&gt; myItem.id === item.id) === -1)
+    }
+  },</code></pre>
+<h1 id="点击进入频道"><a href="#点击进入频道" class="headerlink" title="点击进入频道"></a>点击进入频道</h1><pre><code class="html">&lt;span class=&quot;f12&quot; @click=&quot;enterChannel(i)&quot; </code></pre>
+<pre><code class="js">    enterChannel (index) {
+      // 关闭 当前组件                                    
+      this.$emit(&#39;input&#39;, false)
+      // 把现在的index设置给父组件activeIndex即可
+      // 给自己绑定一个自定义事件  触发这个事件传递index 让父组件来改                           
+      this.$emit(&#39;update&#39;, index)
+    },</code></pre>
+<pre><code class="html">    &lt;edit-channel
+      v-model=&quot;showEditChannel&quot;
+      :channels=&quot;channels&quot;
+      @update=&quot;activeIndex=$event&quot;
+      :activeIndex=&quot;activeIndex&quot;&gt;
+    &lt;/edit-channel&gt;</code></pre>
+<p>可以简写：sync 修饰符</p>
+<pre><code class="diff">    enterChannel (index) {
+      this.$emit(&#39;input&#39;, false)
+-     this.$emit(&#39;update&#39;, index)
++     this.$emit(&#39;update:activeIndex&#39;, index)
+    },</code></pre>
+<pre><code class="diff">    &lt;edit-channel
+      v-model=&quot;showEditChannel&quot;
+      :channels=&quot;channels&quot;
+-      @update=&quot;activeIndex=$event&quot;
+-      :activeIndex=&quot;activeIndex&quot;&gt;
++      :activeIndex.sync=&quot;activeIndex&quot;&gt;
+    &lt;/edit-channel&gt;</code></pre>
+<ul>
+<li>sync 背后绑定的是 update 事件</li>
+</ul>
+<h1 id="重构我的频道API"><a href="#重构我的频道API" class="headerlink" title="重构我的频道API"></a>重构我的频道API</h1><ul>
+<li>兼容本地存储</li>
+</ul>
+<pre><code class="js">const CHANNEL_KEY = &#39;channels&#39;
+ * 获取我的频道信息（如果没登录，获取的是后台设置的默认频道列表）
+ */
+// 3.1 未登录 且  已存储  业务：获取本地存储数据
+// 3.2 未登录 且  未存储  业务：获取默认数据，且进行本地存储。
+// 4. 约定（不管任何情况，返回值是一个promise对象，获取我的频道（数据格式一致和后台返回的））
+export const getMyChannels = () =&gt; {
+  return new Promise(async (resolve, reject) =&gt; {
+    const { user } = store.state
+    if (user.token) {
+      // 登录
+      const data = await request(&#39;/app/v1_0/user/channels&#39;, &#39;get&#39;)
+      resolve(data)
+    } else {
+      // 未登录
+      const channelsStr = window.localStorage.getItem(CHANNEL_KEY)
+      if (channelsStr) {
+        // 已存储
+        const channelsJson = JSON.parse(channelsStr)
+        resolve({ channels: channelsJson })
+      } else {
+        // 未存储
+        const data = await request(&#39;/app/v1_0/user/channels&#39;, &#39;get&#39;)
+        // 存储
+        window.localStorage.setItem(CHANNEL_KEY, JSON.stringify(data.channels))
+        resolve(data)
+      }
+    }
+  })
+}</code></pre>
+<ul>
+<li><p>注意：</p>
+<ul>
+<li>本地存储，返回数据格式，和后端保存一致。</li>
+</ul>
+</li>
+</ul>
+<h1 id="删除我的频道API"><a href="#删除我的频道API" class="headerlink" title="删除我的频道API"></a>删除我的频道API</h1><pre><code class="js">export const delChannel = (channelId) =&gt; {
+  return new Promise(async (resolve, reject) =&gt; {
+    try {
+      const { user } = store.state
+      if (user.token) {
+      // 登录
+        await request(`/app/v1_0/user/channels/${channelId}`, &#39;DELETE&#39;)
+        // 成功
+        resolve()
+      } else {
+      // 未登录
+      // 1. 获取本地的频道  数组
+        const localChannels = JSON.parse(window.localStorage.getItem(CHANNEL_KEY))
+        // 2. 根据ID获取索引
+        const index = localChannels.findIndex(item =&gt; item.id === channelId)
+        // 3. 使用splice进行删除
+        localChannels.splice(index, 1)
+        // 4. 更新本地存储
+        window.localStorage.setItem(CHANNEL_KEY, JSON.stringify(localChannels))
+        // 5. 调用成功
+        resolve()
+      }
+    } catch (e) {
+      reject(e)
+    }
+  })
+}</code></pre>
+<h1 id="删除我的频道功能"><a href="#删除我的频道功能" class="headerlink" title="删除我的频道功能"></a>删除我的频道功能</h1><ul>
+<li>绑定事件，进行删除</li>
+</ul>
+<pre><code class="html">&lt;van-icon @click=&quot;delChannel(i,item.id)&quot;&gt;&lt;/van-icon&gt;</code></pre>
+<pre><code class="js"> // 删除频道
+    async delChannel (index, channelId) {
+      try {
+        // 1. 调用接口删除频道
+        await delChannel(channelId)
+        // 2. 提示  &#39;删除成功&#39;
+        this.$toast({ type: &#39;success&#39;, message: &#39;删除成功&#39; })
+        // 3. 移除频道 （当前组件，父组件）
+        // 当父组件传递的数据为简单数据类型的时候，不能修改，此时的修改是赋值，改变引用。
+        // 当父组件传递的数据为复杂数据类型的时候，可以修改，在保证引用不被修改的情况，修改数据。
+        // 4. 有情况：
+        // 4.1 当激活的频道是最后一个频道，删除当前激活的频道， 当前激活的频道往前推一位
+        // 4.2 当前你删除的频道是当前激活频道的前面的频道，当前激活的频道往前推一位
+        if (index &lt;= this.activeIndex) {
+        // 让activeIndex往前推一位
+        // 通知父组件修改 activeIndex
+          this.$emit(&#39;update:activeIndex&#39;, this.activeIndex - 1)
+        }
+        this.channels.splice(index, 1)
+      } catch (e) {
+        this.$toast({ type: &#39;fail&#39;, message: &#39;删除失败&#39; })
+      }
+    },</code></pre>
+<ul>
+<li>通知父组件，删除成功，需要判断激活的频道是否有数据，没有需要加载。<ul>
+<li>移动到的频道没有数据，需要主动的去加载数据</li>
+<li>下面代码 请忽略。</li>
+</ul>
+</li>
+</ul>
+<pre><code class="diff">   &lt;edit-channel
+      v-model=&quot;showEditChannel&quot;
+      :channels=&quot;channels&quot;
++     @on-delete=&quot;changeChannel&quot;
+      :activeIndex.sync=&quot;activeIndex&quot;&gt;
+    &lt;/edit-channel&gt;</code></pre>
+<h1 id="添加我的频道API参数设置"><a href="#添加我的频道API参数设置" class="headerlink" title="添加我的频道API参数设置"></a>添加我的频道API参数设置</h1><ul>
+<li>绑定事件，提供（添加频道）数据。</li>
+</ul>
+<pre><code class="html">&lt;van-icon name=&quot;plus&quot; @click=&quot;addChannel(item)&quot; class=&quot;btn&quot;&gt;&lt;/van-icon&gt;</code></pre>
+<ul>
+<li>接口需要实现  调用后台接口与本地存储功能<ul>
+<li>后台需要排序  [{id:’频道ID’,seq,’排序’}]</li>
+<li>本地需要 {id:’频道ID’,name:’频道名称’}</li>
+</ul>
+</li>
+</ul>
+<pre><code class="js"> addChannel ({ id, name }) {
+      // 后端：对应频道是有排序的，｛频道1，序号 3｝｛频道2，序号 1｝
+      // 后端：返回频道数据的时候，并没有返回序号，想往最后追加数据，需要知道最大序号。
+      // 采用：是覆盖式修改，在传递频道数据的同时，在前端排好序提交数据给后端
+      // 数据：[{id:&#39;频道ID&#39;,seq:1},...]
+      const newChannels = this.channels.map((item, i) =&gt; ({
+        id: item.id,
+        name: item.name,
+        seq: i
+      }))
+      // 不包含推荐
+      newChannels.splice(0, 1)
+      newChannels.push({ id, name, seq: newChannels.length + 1 })
+    },</code></pre>
+<h1 id="添加我的频道API"><a href="#添加我的频道API" class="headerlink" title="添加我的频道API"></a>添加我的频道API</h1><pre><code class="js">/**
+ * 添加频道
+ * @param {Array} orderChannels - 排序好的频道数据 [{id:&#39;频道ID&#39;,seq:1,name:&#39;频道名称&#39;},...]
+ */
+export const addChannel = (orderChannels) =&gt; {
+  // 实现添加频道  登录状态（调用接口）  未登录状态（使用本地存储）
+  return new Promise(async (resolve, reject) =&gt; {
+    try {
+      const { user } = store.state
+      if (user.token) {
+        // 登录状态（调用接口）
+        await request(&#39;/app/v1_0/user/channels&#39;, &#39;put&#39;, {
+          // orderChannels 内包含name字段，没关系
+          channels: orderChannels
+        })
+        // 处理成功
+        resolve()
+      } else {
+        // 未登录状态（使用本地存储）
+        // 1. 获取本地的频道
+        const jsonStr = window.localStorage.getItem(CHANNEL_KEY)
+        const localChannels = JSON.parse(jsonStr)
+        // 2. 插入添加的频道
+        const { id, name } = orderChannels[orderChannels.length - 1]
+        localChannels.push({ id, name })
+        // 3. 再次的存储在本地
+        window.localStorage.setItem(CHANNEL_KEY, JSON.stringify(localChannels))
+        // 4. 处理成功
+        resolve()
+      }
+    } catch (e) {
+      reject(e)
+    }
+  })
+}</code></pre>
+<h1 id="添加我的频道功能"><a href="#添加我的频道功能" class="headerlink" title="添加我的频道功能"></a>添加我的频道功能</h1><pre><code class="js">    // 添加频道
+    async addChannel ({ id, name }) {
+      // 调用封装好的Api (支持两种方式)
+      // 后端数据格式
+      // 后端：对应频道是有排序的，｛频道1，序号 3｝｛频道2，序号 1｝
+      // 后端：返回频道数据的时候，并没有返回序号，想往最后追加数据，需要知道最大序号。
+      // 采用：是覆盖式修改，在传递频道数据的同时，在前端排好序提交数据给后端
+      // 注意：后端需要的数据，不包含推荐，是默认频道 永远是第一。
+      // 数据：[{id:&#39;频道ID&#39;,seq:1},...]
+      // 本地存储数据格式
+      // 数据：{id:&#39;频道ID&#39;,name:&#39;频道名称&#39;}
+      // 需求：把两个数据合并在一起，在API中才能实现两个逻辑。
+      // 数据：[{id:&#39;频道ID&#39;,seq:1,name:&#39;频道名称&#39;},....最后一个本地需要的对象]
+      const newChannels = this.channels.map((item, i) =&gt; ({
+        id: item.id,
+        name: item.name,
+        seq: i
+      }))
+      newChannels.splice(0, 1)
+      newChannels.push({ id, name, seq: newChannels.length + 1 })
+      try {
+        // 调用接口实现  添加频道
+        await addChannel(newChannels)
+        // 添加成功
+        // 1. 提示  添加成功
+        this.$toast({ type: &#39;success&#39;, message: &#39;添加成功&#39; })
+        // 2. 更新组件界面，往channels中加入一个频道即可
+        // 2.1 注意：频道编辑  文章列表 都有频道。 但是 复杂数据类型，没有修改引用地址，允许修改
+        this.channels.push({
+          id,
+          name,
+          // 是否正在上拉加载中
+          upLoading: false,
+          // 是否正在下拉刷新中
+          downLoading: false,
+          // 是否加载了所有的数据
+          finished: false,
+          // 文章列表
+          articles: [],
+          // 获取数据的时间戳
+          timestamp: Date.now(),
+          // 阅读位置
+          scrollTop: 0
+        })
+      } catch (e) {
+        this.$toast({ type: &#39;fail&#39;, message: &#39;添加失败&#39; })
+      }
+    },</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue移动端</title>
+    <url>/2020/04/14/vue/vue%E7%A7%BB%E5%8A%A8%E7%AB%AF/</url>
+    <content><![CDATA[<h1 id="使用vant"><a href="#使用vant" class="headerlink" title="使用vant"></a>使用vant</h1><pre><code>npm i vant -S
+
+import Vue from &#39;vue&#39;;
+import Vant from &#39;vant&#39;;
+import &#39;vant/lib/index.css&#39;;
+
+Vue.use(Vant);</code></pre><h1 id="移动端rem适配"><a href="#移动端rem适配" class="headerlink" title="移动端rem适配"></a>移动端rem适配</h1><pre><code># 后处理器 开发阶段使用
+npm i postcss-pxtorem -D
+# 修改rem基准值的js插件   需要在打包后需要使用
+npm i amfe-flexible -S</code></pre><p> postcss 配置（postcss.config.js）</p>
+<pre><code>module.exports = {
+  plugins: {
+    &#39;autoprefixer&#39;: {},
+     &#39;postcss-pxtorem&#39;: {
+      rootValue: 37.5,
+      propList: [&#39;*&#39;]
+    }
+  }
+}</code></pre><p>入口文件main.js导入 amfe-flexible </p>
+<pre><code>import &#39;amfe-flexible&#39;</code></pre><ul>
+<li>rootValue 是转换px的基准值，参考设备iPhone6，设备宽度375px。</li>
+<li>flexible 在iPhone6设备设置的  html—&gt;font-size 也为37.5px 。</li>
+</ul>
+<h1 id="表单校验"><a href="#表单校验" class="headerlink" title="表单校验"></a>表单校验</h1><pre><code>&lt;van-cell-group&gt;
+    &lt;van-field @blur=&quot;checkMobile&quot; 
+               :error-message=&quot;errMsg.mobile&quot; 
+               v-model.trim=&quot;loginForm.mobile&quot;  
+               label=&quot;手机号&quot; placeholder=&quot;请输入手机号&quot; /&gt;
+    &lt;van-field @blur=&quot;checkCode&quot; 
+               :error-message=&quot;errMsg.code&quot; 
+               v-model.trim=&quot;loginForm.code&quot;  
+               label=&quot;验证码&quot; placeholder=&quot;请输入验证码&quot;&gt;
+        &lt;van-button class=&quot;p10&quot; slot=&quot;button&quot; size=&quot;mini&quot; type=&quot;primary&quot;&gt;
+            发送验证码
+        &lt;/van-button&gt;
+    &lt;/van-field&gt;
+&lt;/van-cell-group&gt;
+&lt;div class=&quot;btn_box&quot;&gt;
+    &lt;van-button type=&quot;info&quot; @click=&quot;login&quot; block round&gt;登 录&lt;/van-button&gt;
+&lt;/div&gt;</code></pre><pre><code>// error-message    底部错误提示文案，为空时不展示
+// 监听失去焦点事件  获取当前表单元素的数据 进行校验
+// 点击登录的时候，全部表单元素校验一次
+export default {
+  name: &#39;user-login&#39;,
+  data () {
+    return {
+      // 错误提示
+      errMsg: {
+        mobile: &#39;&#39;,
+        code: &#39;&#39;
+      },
+      // 表单数据
+      loginForm: {
+        mobile: &#39;&#39;,
+        code: &#39;&#39;
+      }
+    }
+  },
+  methods: {
+    checkMobile () {
+      // 校验手机号
+      // 1. 非空
+      if (!this.loginForm.mobile) {
+        this.errMsg.mobile = &#39;请输入手机号&#39;
+        return false
+      }
+      // 2. 格式
+      if (!/^1[3-9]\d{9}$/.test(this.loginForm.mobile)) {
+        this.errMsg.mobile = &#39;手机号格式错误&#39;
+        return false
+      }
+      this.errMsg.mobile = &#39;&#39;
+    },
+    checkCode () {
+      // 校验验证码
+      // 1. 非空
+      if (!this.loginForm.code) {
+        this.errMsg.code = &#39;请输入验证码&#39;
+        return false
+      }
+      // 2. 格式
+      if (!/^\d{6}$/.test(this.loginForm.code)) {
+        this.errMsg.code = &#39;验证码为6个数字&#39;
+        return false
+      }
+      this.errMsg.code = &#39;&#39;
+    },
+    ...mapMutations([&#39;setUser&#39;]),
+   async login () {
+      // 整个表单进行校验
+      this.checkMobile()
+      this.checkCode()
+      // 判断校验结果
+      if (this.errMsg.mobile || this.errMsg.code) {
+        // 校验失败
+        return false
+      }
+      try {
+        // 校验成功  （进行登录）
+        const data = await login(this.loginForm)
+        // 登录成功
+        // 1. 提示
+        this.$toast({ type: &#39;success&#39;, message: &#39;登录成功&#39; })
+        // 2. 保存token
+        this.setUser(data)
+        // 3. 根据地址栏是否有回跳的地址  如果有 回调即可  如果没  个人中心 /user
+        const url = this.$route.query.redirect || &#39;/user&#39;
+        this.$router.push(url)
+      } catch (e) {
+        // 4. 错误提示
+        this.$toast({ type: &#39;fail&#39;, message: &#39;登录失败&#39; })
+      }
+    }
+  }</code></pre><h1 id="时间格式处理"><a href="#时间格式处理" class="headerlink" title="时间格式处理"></a>时间格式处理</h1><pre><code>import dayjs from &#39;dayjs&#39;
+import relativeTime from &#39;dayjs/plugin/relativeTime&#39;
+import &#39;dayjs/locale/zh-cn&#39;
+dayjs.extend(relativeTime)</code></pre><p>utils/plugin.js</p>
+<pre><code>// 工具函数、过滤器、自定义指令
+import dayjs from &#39;dayjs&#39;
+import relativeTime from &#39;dayjs/plugin/relativeTime&#39;
+import &#39;dayjs/locale/zh-cn&#39;
+dayjs.extend(relativeTime)
+
+const $sleep = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    window.setTimeout(() =&gt; {
+      resolve()
+    }, 1000)
+  })
+}
+
+const relTime = (strDate) =&gt; {
+  return dayjs().locale(&#39;zh-cn&#39;).from(strDate)
+}
+// 过滤器函数
+export default {
+  install (Vue) {
+    Vue.prototype.$sleep = $sleep
+    Vue.filter(&#39;relTime&#39;, relTime)
+  }
+}
+</code></pre><p>使用</p>
+<pre><code>&lt;span&gt;{{article.pubdate|relTime}}&lt;/span&gt;</code></pre><h1 id="组件缓存"><a href="#组件缓存" class="headerlink" title="组件缓存"></a>组件缓存</h1><p><strong><keep-alive></keep-alive></strong>缓存组件实例，组件切回来还在原位置</p>
+<ul>
+<li>激活组件的时候，是不会触发 created 钩子。</li>
+<li>激活组件钩子 <a href="https://cn.vuejs.org/v2/api/#activated" target="_blank" rel="noopener">activated</a></li>
+<li>失活组件钩子<a href="https://cn.vuejs.org/v2/api/#deactivated" target="_blank" rel="noopener">deactivated</a></li>
+</ul>
+<p>路由中</p>
+<pre><code>{ path: &#39;/article/:id&#39;, name: &#39;article&#39;, component: Article, meta: { keepAlive: true } }</code></pre><p>src/app.vue</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;keep-alive&gt;
+    &lt;router-view v-if=&quot;$route.meta.keepAlive&quot;&gt;&lt;/router-view&gt;
+  &lt;/keep-alive&gt;
+  &lt;router-view v-if=&quot;!$route.meta.keepAlive&quot;&gt;&lt;/router-view&gt;
+&lt;/div&gt;</code></pre><h1 id="阅读记忆"><a href="#阅读记忆" class="headerlink" title="阅读记忆"></a>阅读记忆</h1><p><van-tab>默认是懒加载，渲染内容的时候，延时渲染内容。关闭懒加载，lazy-render  属性的值  false</van-tab></p>
+<ul>
+<li><p>切换tab组件的时候，主动的去加载文章列表数据。</p>
+<ul>
+<li>如果之前没有加载过数据，开启上拉加载效果，调用加载函数。</li>
+<li>如果有数据，不需要做任何事情。</li>
+</ul>
+</li>
+<li><p>绑定滚动事件，记录阅读位置，使用scrollTop</p>
+</li>
+<li><p>激活组件的时候，操作当前列表，滚动到阅读位置</p>
+</li>
+<li><p>当激活组件的时候，切换到其他频道：</p>
+<ul>
+<li><p>默认滚动到了顶部，tab组件干的。</p>
+</li>
+<li><p>使用 nextTick 中  根据记录的位置去设置滚动位置</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>&lt;van-tabs :lazy-render=&quot;false&quot;&gt;&lt;/van-tabs&gt;</code></pre><pre><code>&lt;div  @scroll=&quot;remember($event)&quot;&gt;&lt;/div&gt;
+
+// scrollTop: 0  默认
+remember (e) {
+    // 在当前频道下记录  目前滚动的位置
+    this.activeChannel.scrollTop = e.target.scrollTop
+},</code></pre><p>激活组件时跳转到阅读位置</p>
+<pre><code>activated () {
+    // ref=&quot;scroll-wrapper&quot;  遍历后有很多个容器拥有属性 [dom0,dom1,dom2,...]
+    const domArr = this.$refs[&#39;scroll-wrapper&#39;]
+    if (domArr) {
+      const scrollWrapper = domArr[this.activeIndex]
+      const scrollTop = this.activeChannel.scrollTop
+      // 设置滚动的容器 的scrollTop属性为阅读位置  即可
+      scrollWrapper.scrollTop = scrollTop
+    }
+  },</code></pre><p>切换组件</p>
+<pre><code>changeChannel () {
+      if (!this.activeChannel.articles.length) {
+        // 开启当前频道的上拉加载效果
+        this.activeChannel.upLoading = true
+        // 主动加载当前频道的数据
+        this.onLoad()
+      } else {
+        // window.setTimeout(() =&gt; {
+        //   const domArr = this.$refs[&#39;scroll-wrapper&#39;][this.activeIndex]
+        //   domArr.scrollTop = this.activeChannel.scrollTop
+        // }, 0)
+        // vue 提供了上述类似的功能  $nextTick()   下一帧后执行（延时一些时间）
+        // $nextTick   使用场景：改变数据，驱动视图更新，马上去操作dom（获取不到dom）,在$nextTick中操作dom
+        this.$nextTick(() =&gt; {
+          const domArr = this.$refs[&#39;scroll-wrapper&#39;][this.activeIndex]
+          domArr.scrollTop = this.activeChannel.scrollTop
+        })
+      }
+    },</code></pre><h1 id="图片懒加载"><a href="#图片懒加载" class="headerlink" title="图片懒加载"></a>图片懒加载</h1><p><strong>当图片进入可视区域内再进行加载</strong></p>
+<h2 id="1-vant内置的插件"><a href="#1-vant内置的插件" class="headerlink" title="1 vant内置的插件"></a>1 vant内置的插件</h2><pre><code>import Vant, { Lazyload } from &#39;vant&#39;
+Vue.use(Lazyload)</code></pre><pre><code>&lt;van-image lazy-load&gt;&lt;/van-image&gt;</code></pre><h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><pre><code>npm i vue-lazyload
+
+import VueLazyload from &#39;vue-lazyload&#39;
+Vue.use(VueLazyload)</code></pre><pre><code>&lt;van-image lazy-load&gt;&lt;/van-image&gt;</code></pre><p>需要依赖 v-lazy 指令</p>
+<pre><code>&lt;img v-lazy=&quot;img.src&quot; &gt;</code></pre>]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js数组的方法</title>
+    <url>/2020/04/14/js/js%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="js数组方法总结"><a href="#js数组方法总结" class="headerlink" title="js数组方法总结"></a>js数组方法总结</h1><h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><pre><code>this.questionDetails = this.questionDetails.filter(item =&gt; {
+   item.TimeSpan = formatDate(new Date(item.TimeSpan), &#39;yyyy-MM-dd hh:mm:ss&#39;)
+        return item
+})</code></pre><h1 id="findIndex-splice"><a href="#findIndex-splice" class="headerlink" title="findIndex+splice"></a>findIndex+splice</h1><pre><code>// findIndex 找到下标
+const index = this.historyList.findIndex(item =&gt; item === text)
+// 删除下标为index的数据
+this.historyList.splice(index, 1)
+window.localStorage.setItem(KEY, JSON.stringify(this.historyList))</code></pre><h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><pre><code>const data = await suggestion(this.q)
+this.suggestList = data.options.map(
+    item =&gt; item.toLowerCase().replace(this.q, `&lt;span&gt;${this.q}&lt;/span&gt;`)
+)</code></pre><pre><code>this.channels = data.channels.map(item =&gt; ({
+        id: item.id,
+        name: item.name,
+        upLoading: false,
+        downLoading: false,
+        finished: false,
+        articles: [],
+        timestamp: Date.now(),
+        scrollTop: 0
+      }))</code></pre><h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><pre><code>// ES6的 Set  是构造函数  const set = new Set(数组)  set是一个集合，不能拥护重复数据
+// 去重
+const set = new Set(this.historyList)
+set.add(text)
+this.historyList = Array.from(set)</code></pre>]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搜索记录</title>
+    <url>/2020/04/14/vue/%E6%90%9C%E7%B4%A2%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h1 id="搜素记录"><a href="#搜素记录" class="headerlink" title="搜素记录"></a>搜素记录</h1><pre><code>&lt;template&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;van-nav-bar title=&quot;搜索中心&quot; left-arrow @click-left=&quot;$router.back()&quot; /&gt;
+    &lt;!-- 去掉输入框内首尾空格 --&gt;
+    &lt;van-search v-model.trim=&quot;q&quot; placeholder=&quot;请输入搜索关键词&quot; shape=&quot;round&quot; @search=&quot;onSearch&quot;/&gt;
+    &lt;van-cell-group class=&quot;suggest-box&quot; v-if=&quot;q&quot;&gt;
+      &lt;van-cell @click=&quot;onSearch(sug.replace(`&lt;span&gt;${q}&lt;/span&gt;`, q))&quot; icon=&quot;search&quot; v-for=&quot;sug in suggestList&quot; :key=&quot;sug&quot;&gt;&lt;p v-html=&quot;sug&quot;&gt;&lt;/p&gt;&lt;/van-cell&gt;
+    &lt;/van-cell-group&gt;
+    &lt;div class=&quot;history-box&quot; v-else-if=&quot;historyList.length&quot;&gt;
+      &lt;div class=&quot;head&quot;&gt;
+        &lt;span&gt;历史记录&lt;/span&gt;
+        &lt;van-icon name=&quot;delete&quot; @click=&quot;clearSuggest&quot;&gt;&lt;/van-icon&gt;
+      &lt;/div&gt;
+      &lt;van-cell-group&gt;
+        &lt;van-cell v-for=&quot;item in historyList&quot; :key=&quot;item&quot;&gt;
+          &lt;a class=&quot;word_btn&quot; @click=&quot;toSearch(item)&quot;&gt;{{item}}&lt;/a&gt;
+          &lt;van-icon @click=&quot;delSuggest(item)&quot; class=&quot;close_btn&quot; slot=&quot;right-icon&quot; name=&quot;cross&quot;/&gt;
+        &lt;/van-cell&gt;
+      &lt;/van-cell-group&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { suggestion } from &#39;@/api/articles&#39;
+const KEY = &#39;searchKeywors&#39;
+export default {
+  data () {
+    return {
+      q: &#39;&#39;,
+      timer: null,
+      historyList: [],
+      suggestList: []
+    }
+  },
+  created () {
+    this.historyList = JSON.parse(window.localStorage.getItem(KEY) || &#39;[]&#39;)
+  },
+  watch: {
+    q () {
+       // 函数防抖
+       // 函数防抖：在规定时间内，再次执行，清除上一次执行，重新执行。
+        // 运用场景：搜索提示，在开销较大操作需要频繁执行的时候（页面尺寸改变，滚动条滚动）
+        // 函数节流：在规定时间内，再次执行，必须等上一次执行完毕，才能执行。
+      // 运用场景: 轮播图
+      window.clearTimeout(this.timer)
+      this.timer = window.setTimeout(async () =&gt; {
+        if (!this.q) {
+          this.suggestList = []
+          return false
+        }
+        const data = await suggestion(this.q)
+        this.suggestList = data.options.map(
+          item =&gt; item.toLowerCase().replace(this.q, `&lt;span&gt;${this.q}&lt;/span&gt;`)
+        )
+      }, 200)
+    }
+  },
+  methods: {
+    toSearch (text) {
+      this.$router.push({ path: &#39;/search/result&#39;, query: { q: text } })
+    },
+    clearSuggest () {
+      this.historyList = []
+      window.localStorage.setItem(KEY, JSON.stringify(this.historyList))
+    },
+    delSuggest (text) {
+      // findIndex 找到下标
+      const index = this.historyList.findIndex(item =&gt; item === text)
+      // 删除下标为index的数据
+      this.historyList.splice(index, 1)
+      window.localStorage.setItem(KEY, JSON.stringify(this.historyList))
+    },
+    onSearch (text) {
+      if (!this.q) return false
+      const set = new Set(this.historyList)
+      set.add(text)
+      this.historyList = Array.from(set)
+      window.localStorage.setItem(KEY, JSON.stringify(this.historyList))
+      this.$router.push({ path: &#39;/search/result&#39;, query: { q: text } })
+    }
+  }
+}
+&lt;/script&gt;
+
+&lt;style lang=&quot;less&quot; scoped&gt;
+.history-box {
+  padding: 0 20px;
+  .head{
+    line-height: 36px;
+    color: #999;
+    .van-icon{
+      font-size: 16px;
+      float: right;
+      margin-top: 10px;;
+    }
+  }
+  .van-cell{
+    padding: 10px 0;
+  }
+  .word_btn{
+    color:#3296fa;
+  }
+  .close_btn{
+    margin-top:5px;
+    color: #999;
+  }
+}
+.suggest-box{
+  /deep/ .van-cell{
+    padding: 10px 20px;
+    color: #999;
+    p{
+      span{
+        color: red;
+      }
+    }
+  }
+}
+&lt;/style&gt;
+</code></pre>]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>websocket</title>
     <url>/2020/04/14/websocket/websocket/</url>
     <content><![CDATA[<h1 id="使用websocket"><a href="#使用websocket" class="headerlink" title="使用websocket"></a>使用websocket</h1><p>​    <strong>通信模型</strong></p>

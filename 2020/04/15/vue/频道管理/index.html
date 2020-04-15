@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>频道管理 | Ting</title>
+  <meta name="keywords" content=" vue ">
+  <meta name="description" content="频道管理 | Ting">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="准备组件使用组件：src&#x2F;views&#x2F;home&#x2F;index.vue showEditChannel: false &lt;channel-edit v-model&#x3D;&quot;showEditChannel&quot;&gt;&lt;&#x2F;channel-edit&gt; 组件结构：src&#x2F;views&#x2F;home&#x2F;components&#x2F;channel-edit.vue 数据：  props: {">
+<meta property="og:type" content="article">
+<meta property="og:title" content="频道管理">
+<meta property="og:url" content="https://zhangxuet.github.io/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Ting">
+<meta property="og:description" content="准备组件使用组件：src&#x2F;views&#x2F;home&#x2F;index.vue showEditChannel: false &lt;channel-edit v-model&#x3D;&quot;showEditChannel&quot;&gt;&lt;&#x2F;channel-edit&gt; 组件结构：src&#x2F;views&#x2F;home&#x2F;components&#x2F;channel-edit.vue 数据：  props: {">
+<meta property="article:published_time" content="2020-04-15T03:12:07.000Z">
+<meta property="article:modified_time" content="2020-04-15T03:28:49.578Z">
+<meta property="article:author" content="Ting">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/kimbie-dark.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>Ting</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="github" href="https://zhangxuet.github.io/" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(38)</small></div></li>
+    
+        
+            
+            <li><div data-rel="工具">工具<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="技术">技术<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="hexo问题">hexo问题<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="echarts">echarts<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="node">node<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="vue">vue<small>(10)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="正则">正则<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="webpack">webpack<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="小程序">小程序<small>(6)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="css">css<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="js">js<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="ajax">ajax<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="git">git<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="websocket">websocket<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a class="about  site_url"  href="javascript:void(0)">关于</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="38">
+<input type="hidden" id="yelog_site_word_count" value="20k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode==13){return false;}">
+        <input class="search" type="text" placeholder="search..." autocomplete="off"id="local-search-input" >
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color3">工具</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">markdown</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">echarts</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">node-sass</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">vue</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">正则</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">token</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">node</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">webpack</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">小程序</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">css</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">tabbar</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">js</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">ajax</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">git</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">原型</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">闭包</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">mvvm</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">websocket</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2019/12/31/First/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="First">First</span>
+            <span class="post-date" title="2019-12-31 16:49:20">2019/12/31</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/12/31/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2019-12-31 08:37:56">2019/12/31</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2020/01/02/resources/index/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="工具">工具</span>
+            <span class="post-date" title="2020-01-02 10:06:54">2020/01/02</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/01/02/blog/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="blog搭建">blog搭建</span>
+            <span class="post-date" title="2020-01-02 22:59:41">2020/01/02</span>
+        </a>
+        
+        <a  class="hexo问题 "
+           href="/2020/01/06/problem/hexoImg/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="hexo引用本地图片无法显示">hexo引用本地图片无法显示</span>
+            <span class="post-date" title="2020-01-06 22:23:53">2020/01/06</span>
+        </a>
+        
+        <a  class="hexo问题 "
+           href="/2020/01/06/problem/problem/"
+           data-tag="hexo,markdown"
+           data-author="" >
+            <span class="post-title" title="hexo代码高亮">hexo代码高亮</span>
+            <span class="post-date" title="2020-01-06 22:23:34">2020/01/06</span>
+        </a>
+        
+        <a  class="echarts "
+           href="/2020/01/06/echarts/echarts/"
+           data-tag="echarts"
+           data-author="" >
+            <span class="post-title" title="echarts">echarts</span>
+            <span class="post-date" title="2020-01-06 22:27:11">2020/01/06</span>
+        </a>
+        
+        <a  class="正则 "
+           href="/2020/03/09/problem/%E6%AD%A3%E5%88%99/"
+           data-tag="正则"
+           data-author="" >
+            <span class="post-title" title="正则">正则</span>
+            <span class="post-date" title="2020-03-09 14:56:03">2020/03/09</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/27/vue/vue-print/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="VUE打印功能">VUE打印功能</span>
+            <span class="post-date" title="2020-02-27 20:28:51">2020/02/27</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/27/vue/elemenet-print/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="element表格导出功能">element表格导出功能</span>
+            <span class="post-date" title="2020-02-27 17:52:22">2020/02/27</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/03/11/vue/token/"
+           data-tag="token"
+           data-author="" >
+            <span class="post-title" title="token">token</span>
+            <span class="post-date" title="2020-03-11 11:36:01">2020/03/11</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/03/13/vue/i18n/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="Element使用i18n国际化">Element使用i18n国际化</span>
+            <span class="post-date" title="2020-03-13 09:05:24">2020/03/13</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/21/vue/node-sass/"
+           data-tag="node-sass"
+           data-author="" >
+            <span class="post-title" title="离线安装node-sass">离线安装node-sass</span>
+            <span class="post-date" title="2020-02-21 12:18:27">2020/02/21</span>
+        </a>
+        
+        <a  class="node "
+           href="/2020/03/13/node/node/"
+           data-tag="node"
+           data-author="" >
+            <span class="post-title" title="node写接口">node写接口</span>
+            <span class="post-date" title="2020-03-13 09:54:42">2020/03/13</span>
+        </a>
+        
+        <a  class="webpack "
+           href="/2020/03/13/webpack/"
+           data-tag="webpack"
+           data-author="" >
+            <span class="post-title" title="webpack4打包vue文件">webpack4打包vue文件</span>
+            <span class="post-date" title="2020-03-13 19:03:46">2020/03/13</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/03/17/echarts/vue-echarts/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="vue-echarts">vue-echarts</span>
+            <span class="post-date" title="2020-03-17 17:44:49">2020/03/17</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/03/20/wxprogram/i18n/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序国际化">小程序国际化</span>
+            <span class="post-date" title="2020-03-20 10:24:27">2020/03/20</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/03/28/wxprogram/%E5%90%B8%E9%A1%B6/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序吸顶效果">小程序吸顶效果</span>
+            <span class="post-date" title="2020-03-28 14:15:14">2020/03/28</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/03/19/wxprogram/wxprogram/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="mpvue框架">mpvue框架</span>
+            <span class="post-date" title="2020-03-19 10:24:18">2020/03/19</span>
+        </a>
+        
+        <a  class="css "
+           href="/2020/03/28/css/css/"
+           data-tag="css"
+           data-author="" >
+            <span class="post-title" title="css选三角形">css选三角形</span>
+            <span class="post-date" title="2020-03-28 14:04:11">2020/03/28</span>
+        </a>
+        
+        <a  class="webpack "
+           href="/2020/03/30/webpack/vue%E5%92%8Cwebpack/"
+           data-tag="webpack"
+           data-author="" >
+            <span class="post-title" title="vue和webpack">vue和webpack</span>
+            <span class="post-date" title="2020-03-30 16:02:02">2020/03/30</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/04/02/wxprogram/tabbar/"
+           data-tag="tabbar"
+           data-author="" >
+            <span class="post-title" title="小程序自定义tabbar">小程序自定义tabbar</span>
+            <span class="post-date" title="2020-04-02 13:04:15">2020/04/02</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/10/js/js%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="时间格式化">时间格式化</span>
+            <span class="post-date" title="2020-04-10 15:42:42">2020/04/10</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/04/02/css/css%E5%8D%8A%E5%9C%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="css半圆">css半圆</span>
+            <span class="post-date" title="2020-04-02 15:36:56">2020/04/02</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/03/28/wxprogram/%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序基本使用">小程序基本使用</span>
+            <span class="post-date" title="2020-03-28 14:15:14">2020/03/28</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/04/10/wxprogram/request/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序封装通用的接口调用">小程序封装通用的接口调用</span>
+            <span class="post-date" title="2020-04-10 16:34:24">2020/04/10</span>
+        </a>
+        
+        <a  class="ajax "
+           href="/2020/04/12/ajax/ajax/"
+           data-tag="ajax"
+           data-author="" >
+            <span class="post-title" title="ajax">ajax</span>
+            <span class="post-date" title="2020-04-12 14:53:10">2020/04/12</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/12/js/this%E6%8C%87%E5%90%91/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="this指向">this指向</span>
+            <span class="post-date" title="2020-04-12 13:24:59">2020/04/12</span>
+        </a>
+        
+        <a  class="git "
+           href="/2020/04/12/git/git/"
+           data-tag="git"
+           data-author="" >
+            <span class="post-title" title="git">git</span>
+            <span class="post-date" title="2020-04-12 15:21:29">2020/04/12</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/12/js/%E5%8E%9F%E5%9E%8B/"
+           data-tag="原型"
+           data-author="" >
+            <span class="post-title" title="原型">原型</span>
+            <span class="post-date" title="2020-04-12 13:55:16">2020/04/12</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/04/12/js/%E9%97%AD%E5%8C%85/"
+           data-tag="闭包"
+           data-author="" >
+            <span class="post-title" title="闭包">闭包</span>
+            <span class="post-date" title="2020-04-12 14:28:51">2020/04/12</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/12/vue/mvvm/"
+           data-tag="vue,mvvm"
+           data-author="" >
+            <span class="post-title" title="mvvm">mvvm</span>
+            <span class="post-date" title="2020-04-12 15:45:22">2020/04/12</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/12/vue/vue%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue基础知识">vue基础知识</span>
+            <span class="post-date" title="2020-04-12 15:48:26">2020/04/12</span>
+        </a>
+        
+        <a  class="websocket "
+           href="/2020/04/14/websocket/websocket/"
+           data-tag="websocket"
+           data-author="" >
+            <span class="post-title" title="websocket">websocket</span>
+            <span class="post-date" title="2020-04-14 22:02:01">2020/04/14</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/14/vue/vue%E7%A7%BB%E5%8A%A8%E7%AB%AF/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue移动端">vue移动端</span>
+            <span class="post-date" title="2020-04-14 23:40:54">2020/04/14</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="频道管理">频道管理</span>
+            <span class="post-date" title="2020-04-15 11:12:07">2020/04/15</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/14/vue/%E6%90%9C%E7%B4%A2%E8%AE%B0%E5%BD%95/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="搜索记录">搜索记录</span>
+            <span class="post-date" title="2020-04-14 23:20:29">2020/04/14</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/14/js/js%E6%96%B9%E6%B3%95/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="js数组的方法">js数组的方法</span>
+            <span class="post-date" title="2020-04-14 23:22:16">2020/04/14</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-vue/频道管理" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">频道管理</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="vue">vue</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">vue</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-04-15 11:28:49'>2020-04-15 11:12</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:2.1k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备组件"><span class="toc-text">准备组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#渲染我的频道"><span class="toc-text">渲染我的频道</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#渲染可选频道"><span class="toc-text">渲染可选频道</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#点击进入频道"><span class="toc-text">点击进入频道</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#重构我的频道API"><span class="toc-text">重构我的频道API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#删除我的频道API"><span class="toc-text">删除我的频道API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#删除我的频道功能"><span class="toc-text">删除我的频道功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加我的频道API参数设置"><span class="toc-text">添加我的频道API参数设置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加我的频道API"><span class="toc-text">添加我的频道API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加我的频道功能"><span class="toc-text">添加我的频道功能</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="准备组件"><a href="#准备组件" class="headerlink" title="准备组件"></a>准备组件</h1><p>使用组件：<code>src/views/home/index.vue</code></p>
+<pre><code class="js">showEditChannel: false</code></pre>
+<pre><code class="html">&lt;channel-edit v-model=&quot;showEditChannel&quot;&gt;&lt;/channel-edit&gt;</code></pre>
+<p>组件结构：<code>src/views/home/components/channel-edit.vue</code></p>
+<p>数据：</p>
+<pre><code class="js"> props: {
+    value: {
+      type: Boolean,
+      default: false
+    }
+ }            </code></pre>
+<pre><code class="js">  data () {
+    return {
+      // 正在编辑我的频道
+      editing: false
+    }
+</code></pre>
+<h1 id="渲染我的频道"><a href="#渲染我的频道" class="headerlink" title="渲染我的频道"></a>渲染我的频道</h1><ul>
+<li>使用父组件数据  <code>src/views/home/index.vue</code><ul>
+<li>我的频道列表</li>
+<li>当前激活频道</li>
+</ul>
+</li>
+</ul>
+<pre><code class="html">&lt;channel-edit :channels=&quot;channels&quot; :activeIndex=&quot;activeIndex&quot;&gt;&lt;/channel-edit&gt;</code></pre>
+<pre><code class="js">data () {
+  return {
+     activeIndex: 0,
+     channels: []
+  }
+}  </code></pre>
+<ul>
+<li>接收父组件数据  <code>src/views/home/components/channel-edit.vue</code></li>
+</ul>
+<pre><code class="js">    // 复杂数据类型
+    channels: {
+      type: Array,
+      // 语法规范：通过一个函数的返回值来指定默认值
+      default: () =&gt; []
+    },
+    // 激活频道索引
+    activeIndex: {
+      type: Number,
+      default: 0
+    }</code></pre>
+<h1 id="渲染可选频道"><a href="#渲染可选频道" class="headerlink" title="渲染可选频道"></a>渲染可选频道</h1><ul>
+<li>获取所有频道API <code>src/api/channel.js</code></li>
+</ul>
+<pre><code class="js">/**
+ * 获取全部频道
+ */
+export const getAllChannels = () =&gt; {
+  return request(&#39;/app/v1_0/channels&#39;, &#39;get&#39;)
+}
+</code></pre>
+<ul>
+<li>调用API</li>
+</ul>
+<pre><code class="js">methods: {
+  async getAllChannels () {
+    const data = await getAllChannels()
+    this.allChannels = data.channels
+  }                    
+}</code></pre>
+<pre><code class="js">  created () {
+    this.getAllChannels()
+  },</code></pre>
+<ul>
+<li>可选频道 = 全部频道 - 我的频道</li>
+</ul>
+<pre><code class="js">computed: {
+    optionalChannels () {
+      // 可选频道 = 全部频道 - 我的频道
+      // 可选频道:遍历全部频道，拿着每一项去我的频道当中去对比，如果一样忽略，如果不一样，放到可选频道中。
+      // Array.filter() 数组提供的遍历函数，当条件（回调函数的返回值）为真时候，把对应遍历的选项，放在新数组中。
+      // 如果没找呢  findIndex()值  -1
+      return this.allChannels.filter(item =&gt; this.channels.findIndex(myItem =&gt; myItem.id === item.id) === -1)
+    }
+  },</code></pre>
+<h1 id="点击进入频道"><a href="#点击进入频道" class="headerlink" title="点击进入频道"></a>点击进入频道</h1><pre><code class="html">&lt;span class=&quot;f12&quot; @click=&quot;enterChannel(i)&quot; </code></pre>
+<pre><code class="js">    enterChannel (index) {
+      // 关闭 当前组件                                    
+      this.$emit(&#39;input&#39;, false)
+      // 把现在的index设置给父组件activeIndex即可
+      // 给自己绑定一个自定义事件  触发这个事件传递index 让父组件来改                           
+      this.$emit(&#39;update&#39;, index)
+    },</code></pre>
+<pre><code class="html">    &lt;edit-channel
+      v-model=&quot;showEditChannel&quot;
+      :channels=&quot;channels&quot;
+      @update=&quot;activeIndex=$event&quot;
+      :activeIndex=&quot;activeIndex&quot;&gt;
+    &lt;/edit-channel&gt;</code></pre>
+<p>可以简写：sync 修饰符</p>
+<pre><code class="diff">    enterChannel (index) {
+      this.$emit(&#39;input&#39;, false)
+-     this.$emit(&#39;update&#39;, index)
++     this.$emit(&#39;update:activeIndex&#39;, index)
+    },</code></pre>
+<pre><code class="diff">    &lt;edit-channel
+      v-model=&quot;showEditChannel&quot;
+      :channels=&quot;channels&quot;
+-      @update=&quot;activeIndex=$event&quot;
+-      :activeIndex=&quot;activeIndex&quot;&gt;
++      :activeIndex.sync=&quot;activeIndex&quot;&gt;
+    &lt;/edit-channel&gt;</code></pre>
+<ul>
+<li>sync 背后绑定的是 update 事件</li>
+</ul>
+<h1 id="重构我的频道API"><a href="#重构我的频道API" class="headerlink" title="重构我的频道API"></a>重构我的频道API</h1><ul>
+<li>兼容本地存储</li>
+</ul>
+<pre><code class="js">const CHANNEL_KEY = &#39;channels&#39;
+ * 获取我的频道信息（如果没登录，获取的是后台设置的默认频道列表）
+ */
+// 3.1 未登录 且  已存储  业务：获取本地存储数据
+// 3.2 未登录 且  未存储  业务：获取默认数据，且进行本地存储。
+// 4. 约定（不管任何情况，返回值是一个promise对象，获取我的频道（数据格式一致和后台返回的））
+export const getMyChannels = () =&gt; {
+  return new Promise(async (resolve, reject) =&gt; {
+    const { user } = store.state
+    if (user.token) {
+      // 登录
+      const data = await request(&#39;/app/v1_0/user/channels&#39;, &#39;get&#39;)
+      resolve(data)
+    } else {
+      // 未登录
+      const channelsStr = window.localStorage.getItem(CHANNEL_KEY)
+      if (channelsStr) {
+        // 已存储
+        const channelsJson = JSON.parse(channelsStr)
+        resolve({ channels: channelsJson })
+      } else {
+        // 未存储
+        const data = await request(&#39;/app/v1_0/user/channels&#39;, &#39;get&#39;)
+        // 存储
+        window.localStorage.setItem(CHANNEL_KEY, JSON.stringify(data.channels))
+        resolve(data)
+      }
+    }
+  })
+}</code></pre>
+<ul>
+<li><p>注意：</p>
+<ul>
+<li>本地存储，返回数据格式，和后端保存一致。</li>
+</ul>
+</li>
+</ul>
+<h1 id="删除我的频道API"><a href="#删除我的频道API" class="headerlink" title="删除我的频道API"></a>删除我的频道API</h1><pre><code class="js">export const delChannel = (channelId) =&gt; {
+  return new Promise(async (resolve, reject) =&gt; {
+    try {
+      const { user } = store.state
+      if (user.token) {
+      // 登录
+        await request(`/app/v1_0/user/channels/${channelId}`, &#39;DELETE&#39;)
+        // 成功
+        resolve()
+      } else {
+      // 未登录
+      // 1. 获取本地的频道  数组
+        const localChannels = JSON.parse(window.localStorage.getItem(CHANNEL_KEY))
+        // 2. 根据ID获取索引
+        const index = localChannels.findIndex(item =&gt; item.id === channelId)
+        // 3. 使用splice进行删除
+        localChannels.splice(index, 1)
+        // 4. 更新本地存储
+        window.localStorage.setItem(CHANNEL_KEY, JSON.stringify(localChannels))
+        // 5. 调用成功
+        resolve()
+      }
+    } catch (e) {
+      reject(e)
+    }
+  })
+}</code></pre>
+<h1 id="删除我的频道功能"><a href="#删除我的频道功能" class="headerlink" title="删除我的频道功能"></a>删除我的频道功能</h1><ul>
+<li>绑定事件，进行删除</li>
+</ul>
+<pre><code class="html">&lt;van-icon @click=&quot;delChannel(i,item.id)&quot;&gt;&lt;/van-icon&gt;</code></pre>
+<pre><code class="js"> // 删除频道
+    async delChannel (index, channelId) {
+      try {
+        // 1. 调用接口删除频道
+        await delChannel(channelId)
+        // 2. 提示  &#39;删除成功&#39;
+        this.$toast({ type: &#39;success&#39;, message: &#39;删除成功&#39; })
+        // 3. 移除频道 （当前组件，父组件）
+        // 当父组件传递的数据为简单数据类型的时候，不能修改，此时的修改是赋值，改变引用。
+        // 当父组件传递的数据为复杂数据类型的时候，可以修改，在保证引用不被修改的情况，修改数据。
+        // 4. 有情况：
+        // 4.1 当激活的频道是最后一个频道，删除当前激活的频道， 当前激活的频道往前推一位
+        // 4.2 当前你删除的频道是当前激活频道的前面的频道，当前激活的频道往前推一位
+        if (index &lt;= this.activeIndex) {
+        // 让activeIndex往前推一位
+        // 通知父组件修改 activeIndex
+          this.$emit(&#39;update:activeIndex&#39;, this.activeIndex - 1)
+        }
+        this.channels.splice(index, 1)
+      } catch (e) {
+        this.$toast({ type: &#39;fail&#39;, message: &#39;删除失败&#39; })
+      }
+    },</code></pre>
+<ul>
+<li>通知父组件，删除成功，需要判断激活的频道是否有数据，没有需要加载。<ul>
+<li>移动到的频道没有数据，需要主动的去加载数据</li>
+<li>下面代码 请忽略。</li>
+</ul>
+</li>
+</ul>
+<pre><code class="diff">   &lt;edit-channel
+      v-model=&quot;showEditChannel&quot;
+      :channels=&quot;channels&quot;
++     @on-delete=&quot;changeChannel&quot;
+      :activeIndex.sync=&quot;activeIndex&quot;&gt;
+    &lt;/edit-channel&gt;</code></pre>
+<h1 id="添加我的频道API参数设置"><a href="#添加我的频道API参数设置" class="headerlink" title="添加我的频道API参数设置"></a>添加我的频道API参数设置</h1><ul>
+<li>绑定事件，提供（添加频道）数据。</li>
+</ul>
+<pre><code class="html">&lt;van-icon name=&quot;plus&quot; @click=&quot;addChannel(item)&quot; class=&quot;btn&quot;&gt;&lt;/van-icon&gt;</code></pre>
+<ul>
+<li>接口需要实现  调用后台接口与本地存储功能<ul>
+<li>后台需要排序  [{id:’频道ID’,seq,’排序’}]</li>
+<li>本地需要 {id:’频道ID’,name:’频道名称’}</li>
+</ul>
+</li>
+</ul>
+<pre><code class="js"> addChannel ({ id, name }) {
+      // 后端：对应频道是有排序的，｛频道1，序号 3｝｛频道2，序号 1｝
+      // 后端：返回频道数据的时候，并没有返回序号，想往最后追加数据，需要知道最大序号。
+      // 采用：是覆盖式修改，在传递频道数据的同时，在前端排好序提交数据给后端
+      // 数据：[{id:&#39;频道ID&#39;,seq:1},...]
+      const newChannels = this.channels.map((item, i) =&gt; ({
+        id: item.id,
+        name: item.name,
+        seq: i
+      }))
+      // 不包含推荐
+      newChannels.splice(0, 1)
+      newChannels.push({ id, name, seq: newChannels.length + 1 })
+    },</code></pre>
+<h1 id="添加我的频道API"><a href="#添加我的频道API" class="headerlink" title="添加我的频道API"></a>添加我的频道API</h1><pre><code class="js">/**
+ * 添加频道
+ * @param {Array} orderChannels - 排序好的频道数据 [{id:&#39;频道ID&#39;,seq:1,name:&#39;频道名称&#39;},...]
+ */
+export const addChannel = (orderChannels) =&gt; {
+  // 实现添加频道  登录状态（调用接口）  未登录状态（使用本地存储）
+  return new Promise(async (resolve, reject) =&gt; {
+    try {
+      const { user } = store.state
+      if (user.token) {
+        // 登录状态（调用接口）
+        await request(&#39;/app/v1_0/user/channels&#39;, &#39;put&#39;, {
+          // orderChannels 内包含name字段，没关系
+          channels: orderChannels
+        })
+        // 处理成功
+        resolve()
+      } else {
+        // 未登录状态（使用本地存储）
+        // 1. 获取本地的频道
+        const jsonStr = window.localStorage.getItem(CHANNEL_KEY)
+        const localChannels = JSON.parse(jsonStr)
+        // 2. 插入添加的频道
+        const { id, name } = orderChannels[orderChannels.length - 1]
+        localChannels.push({ id, name })
+        // 3. 再次的存储在本地
+        window.localStorage.setItem(CHANNEL_KEY, JSON.stringify(localChannels))
+        // 4. 处理成功
+        resolve()
+      }
+    } catch (e) {
+      reject(e)
+    }
+  })
+}</code></pre>
+<h1 id="添加我的频道功能"><a href="#添加我的频道功能" class="headerlink" title="添加我的频道功能"></a>添加我的频道功能</h1><pre><code class="js">    // 添加频道
+    async addChannel ({ id, name }) {
+      // 调用封装好的Api (支持两种方式)
+      // 后端数据格式
+      // 后端：对应频道是有排序的，｛频道1，序号 3｝｛频道2，序号 1｝
+      // 后端：返回频道数据的时候，并没有返回序号，想往最后追加数据，需要知道最大序号。
+      // 采用：是覆盖式修改，在传递频道数据的同时，在前端排好序提交数据给后端
+      // 注意：后端需要的数据，不包含推荐，是默认频道 永远是第一。
+      // 数据：[{id:&#39;频道ID&#39;,seq:1},...]
+      // 本地存储数据格式
+      // 数据：{id:&#39;频道ID&#39;,name:&#39;频道名称&#39;}
+      // 需求：把两个数据合并在一起，在API中才能实现两个逻辑。
+      // 数据：[{id:&#39;频道ID&#39;,seq:1,name:&#39;频道名称&#39;},....最后一个本地需要的对象]
+      const newChannels = this.channels.map((item, i) =&gt; ({
+        id: item.id,
+        name: item.name,
+        seq: i
+      }))
+      newChannels.splice(0, 1)
+      newChannels.push({ id, name, seq: newChannels.length + 1 })
+      try {
+        // 调用接口实现  添加频道
+        await addChannel(newChannels)
+        // 添加成功
+        // 1. 提示  添加成功
+        this.$toast({ type: &#39;success&#39;, message: &#39;添加成功&#39; })
+        // 2. 更新组件界面，往channels中加入一个频道即可
+        // 2.1 注意：频道编辑  文章列表 都有频道。 但是 复杂数据类型，没有修改引用地址，允许修改
+        this.channels.push({
+          id,
+          name,
+          // 是否正在上拉加载中
+          upLoading: false,
+          // 是否正在下拉刷新中
+          downLoading: false,
+          // 是否加载了所有的数据
+          finished: false,
+          // 文章列表
+          articles: [],
+          // 获取数据的时间戳
+          timestamp: Date.now(),
+          // 阅读位置
+          scrollTop: 0
+        })
+      } catch (e) {
+        this.$toast({ type: &#39;fail&#39;, message: &#39;添加失败&#39; })
+      }
+    },</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>频道管理</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">2.1k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-04-15, 11:12:07</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-15, 11:28:49</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/" title="频道管理">https://zhangxuet.github.io/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2019-2020 Ting</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#工具','#hexo','#markdown','#echarts','#node-sass','#vue','#正则','#token','#node','#webpack','#小程序','#css','#tabbar','#js','#ajax','#git','#原型','#闭包','#mvvm','#websocket',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+
+</html>
