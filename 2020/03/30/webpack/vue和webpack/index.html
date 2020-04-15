@@ -6,14 +6,14 @@
   <meta name="keywords" content=" webpack ">
   <meta name="description" content="vue和webpack | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="准备组件使用组件：src&#x2F;views&#x2F;home&#x2F;index.vue showEditChannel: false &lt;channel-edit v-model&#x3D;&quot;showEditChannel&quot;&gt;&lt;&#x2F;channel-edit&gt; 组件结构：src&#x2F;views&#x2F;home&#x2F;components&#x2F;channel-edit.vue 数据：  props: {">
+<meta name="description" content="使用vantnpm i vant -S  import Vue from &#39;vue&#39;; import Vant from &#39;vant&#39;; import &#39;vant&#x2F;lib&#x2F;index.css&#39;;  Vue.use(Vant);移动端rem适配# 后处理器 开发阶段使用 npm i postcss-pxtorem -D # 修改rem基准值的js插件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="频道管理">
-<meta property="og:url" content="https://zhangxuet.github.io/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:title" content="vue移动端">
+<meta property="og:url" content="https://zhangxuet.github.io/2020/04/14/vue/vue%E7%A7%BB%E5%8A%A8%E7%AB%AF/index.html">
 <meta property="og:site_name" content="Ting">
-<meta property="og:description" content="准备组件使用组件：src&#x2F;views&#x2F;home&#x2F;index.vue showEditChannel: false &lt;channel-edit v-model&#x3D;&quot;showEditChannel&quot;&gt;&lt;&#x2F;channel-edit&gt; 组件结构：src&#x2F;views&#x2F;home&#x2F;components&#x2F;channel-edit.vue 数据：  props: {">
-<meta property="article:published_time" content="2020-04-15T03:12:07.000Z">
-<meta property="article:modified_time" content="2020-04-15T03:28:49.578Z">
+<meta property="og:description" content="使用vantnpm i vant -S  import Vue from &#39;vue&#39;; import Vant from &#39;vant&#39;; import &#39;vant&#x2F;lib&#x2F;index.css&#39;;  Vue.use(Vant);移动端rem适配# 后处理器 开发阶段使用 npm i postcss-pxtorem -D # 修改rem基准值的js插件">
+<meta property="article:published_time" content="2020-04-14T15:40:54.000Z">
+<meta property="article:modified_time" content="2020-04-15T02:12:28.279Z">
 <meta property="article:author" content="Ting">
 <meta property="article:tag" content="vue">
 <meta name="twitter:card" content="summary">
@@ -665,12 +665,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-03-30 16:21:48'>2020-03-30 16:02</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-15 13:13:30'>2020-03-30 16:02</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:16</span>
+        <span>字数:51</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -689,7 +689,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装vue-cli"><span class="toc-text">安装vue-cli</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初始化"><span class="toc-text">初始化</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装vue-cli"><span class="toc-text">安装vue-cli</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初始化"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置node-sass"><span class="toc-text">配置node-sass</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -705,7 +705,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h1><pre><code>npm install -g @vue/cli</code></pre><h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code>vue init webpack 项目名</code></pre>
+        <h1 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h1><pre><code>npm install -g @vue/cli</code></pre><h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code>vue init webpack 项目名</code></pre><h1 id="配置node-sass"><a href="#配置node-sass" class="headerlink" title="配置node-sass"></a>配置node-sass</h1><pre><code>npm i node-sass style-loader --save-dev
+npm install sass-loader@7.3.1 --save-dev</code></pre><p>webpack.base.config.js</p>
+<pre><code>{
+    test: /\.sass$/,
+    loaders: [&#39;style&#39;, &#39;css&#39;, &#39;sass&#39;]
+}</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
     </div>
@@ -715,10 +720,10 @@
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>vue和webpack</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">16</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">51</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
     <p><span class="copy-title">发布时间:</span>2020-03-30, 16:02:02</p>
-    <p><span class="copy-title">最后更新:</span>2020-03-30, 16:21:48</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-15, 13:13:30</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/30/webpack/vue%E5%92%8Cwebpack/" title="vue和webpack">https://zhangxuet.github.io/2020/03/30/webpack/vue%E5%92%8Cwebpack/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。

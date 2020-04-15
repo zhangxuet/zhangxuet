@@ -1574,7 +1574,12 @@ export default {
   <entry>
     <title>vue和webpack</title>
     <url>/2020/03/30/webpack/vue%E5%92%8Cwebpack/</url>
-    <content><![CDATA[<h1 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h1><pre><code>npm install -g @vue/cli</code></pre><h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code>vue init webpack 项目名</code></pre>]]></content>
+    <content><![CDATA[<h1 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h1><pre><code>npm install -g @vue/cli</code></pre><h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code>vue init webpack 项目名</code></pre><h1 id="配置node-sass"><a href="#配置node-sass" class="headerlink" title="配置node-sass"></a>配置node-sass</h1><pre><code>npm i node-sass style-loader --save-dev
+npm install sass-loader@7.3.1 --save-dev</code></pre><p>webpack.base.config.js</p>
+<pre><code>{
+    test: /\.sass$/,
+    loaders: [&#39;style&#39;, &#39;css&#39;, &#39;sass&#39;]
+}</code></pre>]]></content>
       <categories>
         <category>webpack</category>
       </categories>
@@ -2976,7 +2981,7 @@ app.get(&#39;/deleteHero&#39;, (req, res) =&gt; {
   <entry>
     <title>Element使用i18n国际化</title>
     <url>/2020/03/13/vue/i18n/</url>
-    <content><![CDATA[<h1 id="安装i18n-elementUI"><a href="#安装i18n-elementUI" class="headerlink" title="安装i18n+elementUI"></a>安装i18n+elementUI</h1><pre><code>npm i i18n element-ui</code></pre><h1 id="在main-js中导入"><a href="#在main-js中导入" class="headerlink" title="在main.js中导入"></a>在main.js中导入</h1><pre><code>import ElementUI from &#39;element-ui&#39;
+    <content><![CDATA[<h1 id="安装i18n-elementUI"><a href="#安装i18n-elementUI" class="headerlink" title="安装i18n+elementUI"></a>安装i18n+elementUI</h1><pre><code>npm i vue-i18n element-ui</code></pre><h1 id="在main-js中导入"><a href="#在main-js中导入" class="headerlink" title="在main.js中导入"></a>在main.js中导入</h1><pre><code>import ElementUI from &#39;element-ui&#39;
 import &#39;element-ui/lib/theme-chalk/index.css&#39;
 import i18n from &#39;./i18n.js&#39;
 

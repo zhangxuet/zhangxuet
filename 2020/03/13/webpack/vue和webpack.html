@@ -1,4 +1,9 @@
 <hr>
 <p>title: vue和webpack<br>categories: webpack<br>date: 2020-03-30 16:02:02<br>tags: webpack<br>series:</p>
 <hr>
-<h1 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h1><pre><code>npm install -g @vue/cli</code></pre><h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code>vue init webpack 项目名</code></pre>
+<h1 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h1><pre><code>npm install -g @vue/cli</code></pre><h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code>vue init webpack 项目名</code></pre><h1 id="配置node-sass"><a href="#配置node-sass" class="headerlink" title="配置node-sass"></a>配置node-sass</h1><pre><code>npm i node-sass style-loader --save-dev
+npm install sass-loader@7.3.1 --save-dev</code></pre><p>webpack.base.config.js</p>
+<pre><code>{
+    test: /\.sass$/,
+    loaders: [&apos;style&apos;, &apos;css&apos;, &apos;sass&apos;]
+}</code></pre>
