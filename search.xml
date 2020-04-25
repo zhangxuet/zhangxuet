@@ -1,6 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>小程序使用vant-weapp</title>
+    <url>/2020/04/22/wxprogram/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8vant-weapp/</url>
+    <content><![CDATA[<h1 id="小程序使用vant-weapp"><a href="#小程序使用vant-weapp" class="headerlink" title="小程序使用vant-weapp"></a>小程序使用vant-weapp</h1><h2 id="原生使用-例如checkbox"><a href="#原生使用-例如checkbox" class="headerlink" title="原生使用(例如checkbox)"></a>原生使用(例如checkbox)</h2><p>官网下载vant到本地</p>
+<pre><code>npm i vant-weapp -S --production</code></pre><p>将node-modules中的vant/dist文件下的内容copy到static/vant(static/vant/dist)里面</p>
+<pre><code>  &quot;usingComponents&quot;: {
+    &quot;van-button&quot;: &quot;/static/vant/dist/button/index&quot;, 
+    &quot;van-rate&quot;:&quot;/static/vant/dist/rate/index&quot;,
+    &quot;van-cell&quot;: &quot;/static/vant/dist/cell/index&quot;,
+    &quot;van-cell-group&quot;: &quot;/static/vant/dist/cell-group/index&quot;,
+    &quot;van-checkbox&quot;: &quot;/static/vant/dist/checkbox/index&quot;,
+    &quot;van-checkbox-group&quot;: &quot;/static/vant/dist/checkbox-group/index&quot;
+  }</code></pre><pre><code class="html">&lt;van-checkbox-group value=&quot;{{ result }}&quot; bind:change=&quot;onChange&quot;&gt;
+  &lt;van-cell-group &gt;
+    &lt;van-cell
+      wx:for=&quot;{{ list }}&quot;
+      wx:key=&quot;index&quot;
+      title=&quot;复选框 {{ item }}&quot;
+      value-class=&quot;value-class&quot;
+      clickable
+      data-index=&quot;{{ index }}&quot;
+      bind:click=&quot;toggle&quot;
+    &gt;
+      &lt;van-checkbox catch:tap=&quot;noop&quot; class=&quot;checkboxes-{{ index }}&quot; name=&quot;{{ item }}&quot; /&gt;
+    &lt;/van-cell&gt;
+  &lt;/van-cell-group&gt;
+&lt;/van-checkbox-group&gt;
+
+.value-class {
+  flex: none !important;
+}</code></pre>
+<pre><code class="js">Page({
+  data: {
+    list: [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;],
+    result: [&#39;a&#39;, &#39;b&#39;]
+  },
+  onChange(event) {
+    this.setData({
+      result: event.detail    /////////////////////////////////////////
+    });
+  },
+  toggle(event) {
+    const { index } = event.currentTarget.dataset; 
+    const checkbox = this.selectComponent(`.checkboxes-${index}`);  ///////////////////////////
+    checkbox.toggle();
+  },
+
+  noop() {}
+});</code></pre>
+<h2 id="mpvue使用"><a href="#mpvue使用" class="headerlink" title="mpvue使用"></a>mpvue使用</h2><pre><code class="html">&lt;van-checkbox-group :value=&quot;result&quot; @change=&quot;onChange&quot;&gt;
+  &lt;van-cell-group &gt;
+    &lt;van-cell
+        v-for=&quot;(item, index) in list&quot;
+        :key=&quot;index&quot;
+        :title=&quot;&#39;复选框&#39;+item&quot;
+        value-class=&quot;value-class&quot;
+        clickable
+        :data-index=&quot;index&quot;
+        @click=&quot;toggle($event, item)&quot;
+        &gt;
+        &lt;van-checkbox @tap=&quot;noop&quot; :class=&quot;&#39;checkboxes-&#39;+index&quot; :name=&quot;item&quot; /&gt;
+    &lt;/van-cell&gt;
+  &lt;/van-cell-group&gt;
+&lt;/van-checkbox-group&gt;</code></pre>
+<pre><code>data () {
+    return: {
+        list: [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;],
+          result: [&#39;a&#39;, &#39;b&#39;],
+    }
+}</code></pre><pre><code class="js">onChange (event) {
+    this.result = event.mp.detail     //////////////////////////////////////////////
+},
+toggle (event, item) {
+    const { index } = event.currentTarget.dataset
+    const checkbox = this.$mp.page.selectComponent(`.checkboxes-${index}`)    ///////////////
+    checkbox.toggle()
+    console.log(item)
+},
+noop () {}</code></pre>
+]]></content>
+      <categories>
+        <category>小程序</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element</title>
+    <url>/2020/04/20/vue/element/</url>
+    <content><![CDATA[<h1 id="element弹窗关闭清除表单验证内容"><a href="#element弹窗关闭清除表单验证内容" class="headerlink" title="element弹窗关闭清除表单验证内容"></a>element弹窗关闭清除表单验证内容</h1><pre><code class="js">&lt;el-dialog
+    title=&quot;国家&quot;
+    :visible.sync=&quot;DialogVisible&quot;
+    width=&quot;50%&quot;
+    class=&quot;dialog&quot;
+    @close=&quot;handleCloseNew&quot;         //  关闭触发事件
+    center&gt;
+    &lt;el-form :rules=&quot;ruleForm&quot; :model=&quot;countryForm&quot; ref=&quot;countryForm&quot;&gt;  // 一定要有ref
+</code></pre>
+<pre><code class="js">// 关闭新增弹窗
+handleCloseNew () {
+    if(this.$refs.countryForm){
+        this.$refs.countryForm.clearValidate()   // 清除验证内容
+    }
+},</code></pre>
+<h1 id="表格居中"><a href="#表格居中" class="headerlink" title="表格居中"></a>表格居中</h1><pre><code>&lt;el-table
+    :data=&quot;countryMsg&quot;
+    style=&quot;width: 98.5%&quot;
+    border
+    :cell-style=&quot;cellStyle&quot;
+    :header-cell-style=&quot;rowClass&quot;
+    &gt;</code></pre><pre><code>// 居中
+rowClass () {
+    return &#39;text-align: center; background: #017fba; color: #fff&#39;
+},
+cellStyle () {
+    return &quot;text-align: center&quot;
+}</code></pre>]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>频道管理</title>
     <url>/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<h1 id="准备组件"><a href="#准备组件" class="headerlink" title="准备组件"></a>准备组件</h1><p>使用组件：<code>src/views/home/index.vue</code></p>
@@ -569,27 +694,94 @@ Vue.use(VueLazyload)</code></pre><pre><code>&lt;van-image lazy-load&gt;&lt;/van-
     <content><![CDATA[<h1 id="js数组方法总结"><a href="#js数组方法总结" class="headerlink" title="js数组方法总结"></a>js数组方法总结</h1><h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><pre><code>this.questionDetails = this.questionDetails.filter(item =&gt; {
    item.TimeSpan = formatDate(new Date(item.TimeSpan), &#39;yyyy-MM-dd hh:mm:ss&#39;)
         return item
-})</code></pre><h1 id="findIndex-splice"><a href="#findIndex-splice" class="headerlink" title="findIndex+splice"></a>findIndex+splice</h1><pre><code>// findIndex 找到下标
+})</code></pre><h2 id="findIndex-splice"><a href="#findIndex-splice" class="headerlink" title="findIndex+splice"></a>findIndex+splice</h2><pre><code>// findIndex 找到下标
 const index = this.historyList.findIndex(item =&gt; item === text)
 // 删除下标为index的数据
 this.historyList.splice(index, 1)
 window.localStorage.setItem(KEY, JSON.stringify(this.historyList))</code></pre><h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><pre><code>const data = await suggestion(this.q)
 this.suggestList = data.options.map(
     item =&gt; item.toLowerCase().replace(this.q, `&lt;span&gt;${this.q}&lt;/span&gt;`)
-)</code></pre><pre><code>this.channels = data.channels.map(item =&gt; ({
-        id: item.id,
-        name: item.name,
-        upLoading: false,
-        downLoading: false,
-        finished: false,
-        articles: [],
-        timestamp: Date.now(),
-        scrollTop: 0
-      }))</code></pre><h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><pre><code>// ES6的 Set  是构造函数  const set = new Set(数组)  set是一个集合，不能拥护重复数据
+)</code></pre><p><strong>重组数组, 用大括号包裹可不用return</strong></p>
+<pre><code class="js">this.channels = data.channels.map(item =&gt; ({
+    id: item.id,
+    name: item.name,
+    upLoading: false,
+    downLoading: false,
+    finished: false,
+    articles: [],
+    timestamp: Date.now(),
+    scrollTop: 0
+}))</code></pre>
+<p><strong>不改变原数组</strong></p>
+<pre><code class="js">var a = [1,2,2,2,3,4,5]
+var b = []
+b = a.map(item =&gt; {
+    return item + 3
+})
+console.log(a)  // [1,2,2,2,3,4,5]
+console.log(b)  // [4,5,5,5,6,7,8]</code></pre>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><pre><code>// ES6的 Set  是构造函数  const set = new Set(数组)  set是一个集合，不能拥护重复数据
 // 去重
 const set = new Set(this.historyList)
 set.add(text)
-this.historyList = Array.from(set)</code></pre>]]></content>
+this.historyList = Array.from(set)</code></pre><h2 id="find"><a href="#find" class="headerlink" title="find"></a>find</h2><p><strong>找到第一个满足条件的元素</strong></p>
+<pre><code class="js">var a = [1,2,3,4,5]
+var a = [1,2,3,4,5]
+var b = a.find(item =&gt; {
+    return item &gt; 3
+})
+console.log(b)   // 4</code></pre>
+<h2 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h2><p><strong>遍历数组，不改变原数组</strong></p>
+<pre><code class="js">var a = [1,2,2,2,3,4,5]
+a.forEach(item =&gt; {
+    item = item + 3
+    console.log(item)   // 4,5,5,5,6,7,8
+})
+console.log(a)  //[1,2,2,2,3,4,5]
+
+var a = [1,2,2,2,3,4,5]
+var b = []
+a.forEach(item =&gt; {
+    item = item + 3
+    b.push(item)
+})
+console.log(b)   // b = [4,5,5,5,6,7,8]</code></pre>
+<h2 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h2><p><strong>查找第一个满足条件的索引,找不到返回-1</strong></p>
+<pre><code class="js">var a = [1,2,2,2,3,4,5]
+var b = a.indexOf(2)
+console.log(b)   // 1
+
+var a = [1,2,2,2,3,4,5]
+var b = a.indexOf(10)
+console.log(b)   // -1</code></pre>
+<h2 id="lastIndexOf"><a href="#lastIndexOf" class="headerlink" title="lastIndexOf"></a>lastIndexOf</h2><p><strong>从后往前找，找到第一个满足条件的索引,找不到返回-1**</strong></p>
+<pre><code class="js">var a = [1,2,2,2,3,4,5]
+var b = a.lastIndexOf(2)
+console.log(b)  // 3
+
+var a = [1,2,2,2,3,4,5]
+var b = a.lastIndexOf(10)
+console.log(b)   // -1</code></pre>
+<h2 id="some"><a href="#some" class="headerlink" title="some"></a>some</h2><p><strong>数组中有一个满足条件就返回true</strong></p>
+<pre><code class="js">var a = [1,2,2,2,3,4,5]
+var b = a.some(item =&gt; {
+    return item &gt; 3
+})
+console.log(b)  // true</code></pre>
+<h2 id="every"><a href="#every" class="headerlink" title="every"></a>every</h2><p><strong>数组中全部满足条件返回true</strong></p>
+<pre><code class="js">var a = [1,2,2,2,3,4,5]
+var b = a.every(item =&gt; {
+    return item &gt; 3
+})
+console.log(b)   // false</code></pre>
+<h2 id="includes"><a href="#includes" class="headerlink" title="includes"></a>includes</h2><p><strong>是否含有某元素</strong></p>
+<pre><code class="js">var a = [1,2,2,2,3,4,5]
+var b = a.includes(2)
+console.log(b)   // true</code></pre>
+<pre><code class="js">var a = [1,2,2,2,3,4,5]
+var b = a.includes(10)
+console.log(b)   // false</code></pre>
+]]></content>
       <categories>
         <category>js</category>
       </categories>
@@ -992,6 +1184,47 @@ export default {
     <content><![CDATA[<h1 id="created和mounted"><a href="#created和mounted" class="headerlink" title="created和mounted"></a>created和mounted</h1><p><strong>created</strong>: 用于首屏页面数据的初始化操作</p>
 <p><strong>mounted</strong>: 页面以及渲染完毕，可以操作dom</p>
 <h1 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h1><p>​    <strong>计算属性可以进行复杂的逻辑运算，使用时当成变量使用，计算属性本身有缓存，在关联的data没有变化的情况下，多次使用节省资源，methods方法没有缓存，每次使用都要重新加载。计算属性需要通过return关键字返回</strong></p>
+<p><strong>computed只做值的拼接，最好不要修改，因为可能导致无限循环</strong></p>
+<h1 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h1><p>​    <strong>watch侦听器，监听元素的变化，做一些操作</strong></p>
+<pre><code class="js,html">&lt;p&gt;FullName: {{fullName}}&lt;/p&gt;
+
+// lastName: &#39;JACK&#39;, firstName: &#39;AMY&#39;, fullName: &#39;&#39;
+// watch最初绑定时是不会执行的。下次变化时才会执行(不适合显示数据)
+// 要立马执行可绑定handler(), immediate设置为true
+watch: {
+    firstName (newName, oldName) {
+        this.fullName = newName + &#39;&#39; + this.lastName
+        console.log(newName, oldName)
+    }
+}</code></pre>
+<pre><code class="js">data () {
+    return {
+        obj: {
+            a: &#39;123&#39;
+        }
+    }
+}
+// 对象中有很多个属性，handle默认只监听obj属性的引用的变化（只有给obj赋值时才会触发),  // 改变内部的属性不会触发
+// deep用来深入观察，把obj里面的所有属性遍历一遍，一层一层所有都加上监听事件（内存消耗大）
+watch: {
+    obj: {
+        handle () {
+            console.log(&#39;obj.a changed&#39;)
+        },
+        immediate: true,
+        deep: true
+    }
+}
+
+// 可改为
+watch: {
+    &#39;obj.a&#39;: {
+        handle () {
+            console.log(&#39;obj.a changed&#39;)
+        },
+        immediate: true
+    }
+}</code></pre>
 <h1 id="为什么组件的data必须是一个function"><a href="#为什么组件的data必须是一个function" class="headerlink" title="为什么组件的data必须是一个function"></a>为什么组件的data必须是一个function</h1><p>​    <strong>data可被使用多次，function的特点是每次使用时都会亲自执行，并给当前对象分配一个独立的数据对象，多个组件的data是独立的，没有影响</strong></p>
 <p>​    <strong>若直接通过{}给data复制，多次使用组件会造成data共享，就是一份数据，一个组件修改data后所有的组件都受影响，一并被修改了</strong></p>
 <h1 id="Vue-set"><a href="#Vue-set" class="headerlink" title="Vue.set()"></a>Vue.set()</h1><p>​    <strong>对于已经创建的实例，vue不允许动态增加根级别的响应式属性，但是可以使用Vue.set(obj, propertyName, value)方法向嵌套对象添加响应式属性</strong></p>
@@ -2047,7 +2280,155 @@ export default {
     return item
 })</code></pre><h1 id="页面跳转传参"><a href="#页面跳转传参" class="headerlink" title="页面跳转传参"></a>页面跳转传参</h1><pre><code>mpvue.navigateTo({
      url: &#39;/pages/question_detail/main?questionid=&#39; + item.QuestionID +&#39;&amp;userid=&#39; + userid
-})</code></pre>]]></content>
+})</code></pre><h1 id="input"><a href="#input" class="headerlink" title="input"></a>input</h1><pre><code>&lt;input :value=&quot;searchKeywords&quot; class=&quot;search_input&quot; type=&quot;text&quot; placeholder=&quot;请输入搜索内容&quot; @input=&quot;handleSearch&quot;&gt;</code></pre><p><strong>不能直接获取到value</strong></p>
+<p>mpvue中</p>
+<pre><code class="js">async handleSearch (e) {
+    this.Keywords = e.target.value       // searchKeywords传给接口
+},</code></pre>
+<p>搜索使用函数防抖</p>
+<pre><code class="js">async handleSearch (e) {
+    const userid = mpvue.getStorageSync(&#39;UserInfo&#39;).UserID
+    clearTimeout(this.timer)
+    this.timer = setTimeout(async () =&gt; {
+        if (this.searchKeywords !== &#39;&#39;) {
+            let res = await request(&#39;/api/Question/Projects&#39;, {userid: userid, projectName: this.searchKeywords})
+            if (res.success) {
+                this.searchDetail = res.body
+            }
+        } else {
+            this.searchDetail = []
+        }
+    }, 300)
+},</code></pre>
+<p>原生</p>
+<pre><code class="js">async handleSearch (e) {
+    this.searchKeywords = e.detail.value
+},</code></pre>
+<h1 id="防止快速点击触发多次调用"><a href="#防止快速点击触发多次调用" class="headerlink" title="防止快速点击触发多次调用"></a>防止快速点击触发多次调用</h1><pre><code>editFlag: true</code></pre><p>请求中</p>
+<pre><code class="js">if (editFlag) {
+    this.editFlag = false
+    let res = await updateQuestion(&#39;/api/updateQuestion&#39;, param)
+    if (res.success) {
+        mpvue.showToast({
+            title: &#39;提交成功&#39;,
+            icon: &#39;none&#39;
+        })
+        this.editFlag = true
+    } else {
+        //  
+    }
+} </code></pre>
+<h1 id="小程序转义换行"><a href="#小程序转义换行" class="headerlink" title="小程序转义换行"></a>小程序转义换行</h1><p><strong>使用text组件</strong></p>
+<pre><code>&lt;text class=&quot;pro_detai_con descripbe_con&quot;&gt;{{description}}&lt;/text&gt;</code></pre><p><strong>接收到后台的数据进行处理，后台传json格式\n，前端接收到实际上是\ \n，要处理数据</strong></p>
+<pre><code>this.description = res.body.Description.replace(/\\n/g, &#39;\n&#39;)</code></pre><h1 id="使用scroll-view"><a href="#使用scroll-view" class="headerlink" title="使用scroll-view"></a>使用scroll-view</h1><p><strong>注意事项</strong></p>
+<p>:scroll-left=”scrollLeft”   设置横向滚动条位置</p>
+<p>item的id开头不能为数字</p>
+<pre><code class="html">&lt;scroll-view 
+  class=&quot;scroll_top&quot; 
+  scroll-x=&quot;true&quot; 
+  :scroll-left=&quot;scrollLeft&quot; 
+  scroll-with-animation=&quot;true&quot;
+  &gt;
+  &lt;div :id=&quot;&#39;scroll-item-&#39; + -1&quot; data-index=&#39;-1&#39; class=&quot;tab all&quot; :class=&quot;currentIndex === -1?&#39;current&#39;:&#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+    全部&lt;span data-index=&#39;-1&#39; class=&quot;totalCount&quot;&gt;({{total}})&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div :id=&quot;&#39;scroll-item-&#39; + 0&quot; data-index=&#39;0&#39; class=&quot;tab all&quot; :class=&quot;currentIndex === 0?&#39;current&#39;:&#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+   新建&lt;span data-index=&#39;0&#39; class=&quot;totalCount&quot;&gt;({{count0}})&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div :id=&quot;&#39;scroll-item-&#39; + 1&quot; v-if=&quot;GroupType === 2&quot; data-index=&#39;1&#39; class=&quot;tab all&quot; :class=&quot;currentIndex === 1?&#39;current&#39;:&#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+   已接收&lt;span data-index=&#39;1&#39; class=&quot;totalCount&quot;&gt;({{count1}})&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div :id=&quot;&#39;scroll-item-&#39; + 2&quot; data-index=&#39;2&#39; class=&quot;tab all&quot; :class=&quot;currentIndex === 2?&#39;current&#39;:&#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+   已处理&lt;span data-index=&#39;2&#39; class=&quot;totalCount&quot;&gt;({{count2}})&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div :id=&quot;&#39;scroll-item-&#39; + 3&quot; data-index=&#39;3&#39; class=&quot;tab handle&quot; :class=&quot;currentIndex === 3?&#39;current&#39;:&#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+   已反馈&lt;span data-index=&#39;3&#39; class=&quot;totalCount&quot;&gt;({{count3}})&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div :id=&quot;&#39;scroll-item-&#39; + 4&quot; data-index=&#39;4&#39; class=&quot;tab complete&quot; :class=&quot;currentIndex === 4?&#39;current&#39;:&#39;&#39;&quot; @click=&quot;changeTab&quot;&gt;
+   已关闭&lt;span data-index=&#39;4&#39; class=&quot;totalCount&quot;&gt;({{count4}})&lt;/span&gt;
+ &lt;/div&gt;
+&lt;/scroll-view&gt;</code></pre>
+<p>css</p>
+<p>隐藏滚动条，scrollview的高度大于父元素高度</p>
+<p>scrollview的每一项使用display: inline-block</p>
+<pre><code class="CSS">.tabs {
+    position: relative;
+    display: flex;
+    flex: 1;
+    z-index: 100;
+    border-bottom: 1rpx solid #ddd;
+    background: #fff;
+    height: 100rpx;      //////////父元素高度
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 20rpx;
+    .scroll_top {
+        width: 100%;
+        height: 120rpx;     //////////////// scrollview高度
+        overflow: hidden;
+        white-space: nowrap;
+        z-index: 200;
+    }
+    .tab {
+        padding: 8rpx 20rpx;
+        font-size: 30rpx;
+        margin-top: 21rpx;
+        text-align: center;
+        display: inline-block;
+        .totalCount {
+            font-size: 28rpx;
+        }
+    }
+    .current {
+        // color: #2a7efb;
+        color: #fff;
+        background: #2a7efb;
+        border-radius: 30rpx;
+    }
+ }</code></pre>
+<p>data</p>
+<pre><code>moveParams: {
+    scrollLeft: 0
+},
+scrollLeft: 0,</code></pre><p>js</p>
+<pre><code class="js">// 顶部筛选
+async changeTab (e) {
+    let index = parseInt(e.target.dataset.index)
+    this.currentIndex = index
+    this.status = this.currentIndex
+    this.pageIndex = 1
+    this.pageSize = 5
+    this.searchLoading = true
+    this.searchLoadingComplete = false
+    this.getQuestionDetails()
+    let ele = &#39;scroll-item-&#39; + e.target.dataset.index
+    this.getRect(&#39;#&#39; + ele)
+},
+// 点击scrollview的列表项使之移动到页面中间
+getRect (ele) {
+    var that = this
+    var query = wx.createSelectorQuery().select(ele)
+    query.boundingClientRect(function (rect) {
+        // let moveParams = that.moveParams
+        that.moveParams.subLeft = rect.left
+        that.moveParams.subHalfWidth = rect.width / 2
+        that.moveTo()
+    }).exec()
+},
+moveTo () {
+    wx.getSystemInfo({
+        success: (res) =&gt; {
+            this.moveParams.screenHalfWidth = res.windowWidth / 2
+        }
+    })
+    let subLeft = this.moveParams.subLeft
+    let screenHalfWidth = this.moveParams.screenHalfWidth
+    let subHalfWidth = this.moveParams.subHalfWidth
+    let scrollLeft = this.moveParams.scrollLeft
+    let distance = subLeft - screenHalfWidth + subHalfWidth
+    this.scrollLeft = scrollLeft + distance
+}</code></pre>
+]]></content>
       <categories>
         <category>小程序</category>
       </categories>
@@ -2072,7 +2453,9 @@ export default {
     /*border-right: 20px solid #000;*/
     /*border-left: 20px solid #00f;*/
     border-top: 20px solid #0f0;
-    }</code></pre>]]></content>
+    }</code></pre><h1 id="省略号"><a href="#省略号" class="headerlink" title="省略号"></a>省略号</h1><pre><code>overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;</code></pre>]]></content>
       <categories>
         <category>css</category>
       </categories>
@@ -2125,7 +2508,105 @@ export default {
 npm install node-sass sass-loader -D</code></pre><p>样式标签配置less</p>
 <pre><code>&lt;style scoped lang=&#39;less&#39;&gt;
     @import &#39;main.less&#39;;            //一定要加 ； 号
- &lt;/style&gt;</code></pre>]]></content>
+ &lt;/style&gt;</code></pre><h1 id="多选"><a href="#多选" class="headerlink" title="多选"></a>多选</h1><pre><code class="html">&lt;!-- 下拉需要显示的列表 --&gt;
+&lt;div class=&quot;select_con&quot;&gt;
+  &lt;div class=&quot;scroll&quot;&gt;
+    &lt;div data-index=&quot;-1&quot; @click=&quot;handleSelectAll($event)&quot; class=&quot;scroll_item scroll_item1&quot;&gt;全部&lt;/div&gt;
+    &lt;icon class=&quot;circle1&quot; data-index=&quot;-1&quot; :class=&quot;selectItemIndex[0]===-1?&#39;current&#39;:&#39;&#39;&quot;         type=&quot;success&quot; size=&quot;25&quot; color=&quot;#3e81f3&quot;/&gt;
+    &lt;div
+        v-for=&quot;(item, index) in productProjectList&quot;
+        :key=&quot;index&quot;
+        @click.stop=&quot;handleSelectItem($event, item, index)&quot;
+        class=&quot;scroll_item scroll_item1&quot;
+        &gt;
+        &lt;span&gt;{{item.ProjectName}}&lt;/span&gt;
+        &lt;icon class=&quot;circle&quot; :class=&quot;selectedItem[index]===index?&#39;current&#39;:&#39;&#39;&quot; type=&quot;success&quot;     size=&quot;25&quot; color=&quot;#3e81f3&quot;/&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="js">// 选择全部    
+handleSelectAll (e) {
+      let index = parseInt(e.target.dataset.index)
+      let indexItem = this.selectItemIndex.indexOf(index)
+      if (indexItem === -1) {
+        this.selectItemIndex.push(index)
+      } else {
+        this.selectItemIndex.splice(indexItem, 1)
+      }
+      this.projectID = []
+      this.selectItemName = []
+    },
+    // 选择
+    handleSelectItem (e, data, index) {
+      console.log(index)
+      let indexItem = this.selectedItem.indexOf(index)
+      if (indexItem === -1) {
+        this.index1[index] = index
+        this.projectID.push(data.ProjectID)
+        for (var i = 0; i &lt; this.productProjectList.length; i++) {
+          if (i !== this.index1[i]) {
+            this.selectedItem[i] = -1
+          } else {
+            this.selectedItem[i] = this.index1[i]
+          }
+        }
+        this.selectItemName.push(data.ProjectName)
+      } else {
+        this.projectID.splice(indexItem, 1)
+        this.index1[indexItem] = -1
+        this.selectedItem[indexItem] = -1
+        this.selectItemName.splice(indexItem, 1)
+      }
+      // console.log(this.index1)
+      // console.log(this.selectedItem)
+      // console.log(this.selectItemIndex)
+    },</code></pre>
+<pre><code class="js"> // 重置
+    handleReset () {
+      this.index1 = []
+      this.selectItemIndex = []
+      this.selectedItem = []
+      this.projectID = []
+      this.selectItemName = []
+    },    
+// 筛选确定
+    async handleConfirm () {
+      let check = this.selectedItem.every(item =&gt; {
+        return item === -1
+      })
+      if (check &amp;&amp; this.selectItemIndex.length === 0) {
+        mpvue.showToast({
+          title: &#39;请选择所属项目&#39;,
+          icon: &#39;none&#39;
+        })
+        return
+      }
+      this.selectItemNameString = this.selectItemName.toString()
+      this.getQuestionDetails()
+      this.index1 = []
+      this.selectedItem = []
+      this.selectItemIndex = []
+      this.selectItemName = []
+      this.selectStatus = false
+    },
+    // 关闭弹窗
+    handleShutMask () {
+      this.index1 = []
+      this.selectedItem = []
+      this.selectItemIndex = []
+      this.selectItemName = []
+      this.selectStatus = false
+    },
+    // 打开筛选弹窗
+    handleScreen () {
+      this.selectItemIndex = []
+      this.selectedItem = []
+      this.projectID = []
+      this.selectItemName = []
+      this.selectStatus = true
+      // console.log(this.currentIndex)
+    },</code></pre>
+]]></content>
       <categories>
         <category>小程序</category>
       </categories>
@@ -3196,7 +3677,7 @@ export default (url, method, data) =&gt; {
         );
  if (pattern.test(value)) {}
 
- 或 value.match(pattern)</code></pre><h1 id="校验数字的表达式"><a href="#校验数字的表达式" class="headerlink" title="校验数字的表达式"></a>校验数字的表达式</h1><pre><code>1 数字：^[0-9]*$ 
+ 或 value.match(pattern)</code></pre><h1 id="邮箱"><a href="#邮箱" class="headerlink" title="邮箱"></a>邮箱</h1><pre><code>let pattern = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/</code></pre><h1 id="电话"><a href="#电话" class="headerlink" title="电话"></a>电话</h1><pre><code>let pattern = /^[1][3-8][0-9]{9}$/</code></pre><h1 id="校验数字的表达式"><a href="#校验数字的表达式" class="headerlink" title="校验数字的表达式"></a>校验数字的表达式</h1><pre><code>1 数字：^[0-9]*$ 
 
 2 n位的数字：^\d{n}$
 
