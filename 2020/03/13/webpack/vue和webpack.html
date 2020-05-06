@@ -6,4 +6,20 @@ npm install sass-loader@7.3.1 --save-dev</code></pre><p>webpack.base.config.js</
 <pre><code>{
     test: /\.sass$/,
     loaders: [&apos;style&apos;, &apos;css&apos;, &apos;sass&apos;]
-}</code></pre>
+}</code></pre><h1 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h1><p>config/index.js</p>
+<pre><code class="js">build: {
+  <span class="comment">// Template for index.html</span>
+  index: path.resolve(__dirname, <span class="string">'../dist/index.html'</span>),
+
+  <span class="comment">// Paths</span>
+  assetsRoot: path.resolve(__dirname, <span class="string">'../dist'</span>),
+  assetsSubDirectory: <span class="string">'static'</span>,
+  assetsPublicPath: <span class="string">'./'</span>,       <span class="comment">// 原来是'/',改为'./'    找不到css、js、图片</span></code></pre>
+<p>build/utils</p>
+<pre><code class="js"><span class="keyword">if</span> (options.extract) {
+      <span class="keyword">return</span> ExtractTextPlugin.extract({
+        use: loaders,
+        fallback: <span class="string">'vue-style-loader'</span>,
+        publicPath:<span class="string">"../../"</span>       <span class="comment">// 加上这一句话，背景图片</span>
+      })</code></pre>
+<p>最后 npm run build</p>

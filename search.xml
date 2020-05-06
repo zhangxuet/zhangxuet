@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>vue-router</title>
+    <url>/2020/04/28/vue/vue-router/</url>
+    <content><![CDATA[<h1 id="vue-router让所有页面共用头部，写在APP-vue中"><a href="#vue-router让所有页面共用头部，写在APP-vue中" class="headerlink" title="vue-router让所有页面共用头部，写在APP.vue中"></a>vue-router让所有页面共用头部，写在APP.vue中</h1><p>若要其中一项不用头部</p>
+<pre><code class="html">&lt;div v-show=&quot;path !== &#39;/login&#39;&quot; class=&quot;container&quot;&gt;</code></pre>
+<pre><code class="js">mounted () {
+    this.path = this.$route.path
+  },
+  watch: {
+    $route (to, from) {
+      this.path = to.path
+    }
+  },</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>小程序使用vant-weapp</title>
     <url>/2020/04/22/wxprogram/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8vant-weapp/</url>
     <content><![CDATA[<h1 id="小程序使用vant-weapp"><a href="#小程序使用vant-weapp" class="headerlink" title="小程序使用vant-weapp"></a>小程序使用vant-weapp</h1><h2 id="原生使用-例如checkbox"><a href="#原生使用-例如checkbox" class="headerlink" title="原生使用(例如checkbox)"></a>原生使用(例如checkbox)</h2><p>官网下载vant到本地</p>
@@ -1574,7 +1595,7 @@ export default (path, param, method, header) =&gt; {
   return y + &#39;/&#39; + m + &#39;/&#39; + d + &#39; &#39; + h + &#39;:&#39; + minute + &#39;:&#39; + second
 }</code></pre><p><strong>使用</strong></p>
 <pre><code>import { formatDateTime } from &#39;@/utils/index.js</code></pre><p><strong>vue中使用(过滤器</strong></p>
-<pre><code>filter: {
+<pre><code>filters: {
     formatDateTime(date) {
         var date = new Date(date)
         return formatDateTime(date)
@@ -1608,7 +1629,7 @@ export function formatDate (date, fmt) {
 function padLeftZero (str) {
   return (&#39;00&#39; + str).substr(str.length)
 }</code></pre><p><strong>使用 （yyyy-MM-dd hh:mm:ss可自定义）</strong></p>
-<pre><code>import { formatDateTime, formatDate } from &#39;@/utils/index.js</code></pre><pre><code>filter: {
+<pre><code>import { formatDateTime, formatDate } from &#39;@/utils/index.js</code></pre><pre><code>filters: {
     formatDateTime(date) {
         var date = new Date(date)
         return formatDateTime(date, &#39;yyyy-MM-dd hh:mm:ss&#39;)
@@ -1812,7 +1833,24 @@ npm install sass-loader@7.3.1 --save-dev</code></pre><p>webpack.base.config.js</
 <pre><code>{
     test: /\.sass$/,
     loaders: [&#39;style&#39;, &#39;css&#39;, &#39;sass&#39;]
-}</code></pre>]]></content>
+}</code></pre><h1 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h1><p>config/index.js</p>
+<pre><code class="js">  build: {
+    // Template for index.html
+    index: path.resolve(__dirname, &#39;../dist/index.html&#39;),
+
+    // Paths
+    assetsRoot: path.resolve(__dirname, &#39;../dist&#39;),
+    assetsSubDirectory: &#39;static&#39;,
+    assetsPublicPath: &#39;./&#39;,       // 原来是&#39;/&#39;,改为&#39;./&#39;    找不到css、js、图片</code></pre>
+<p>build/utils</p>
+<pre><code class="js">if (options.extract) {
+      return ExtractTextPlugin.extract({
+        use: loaders,
+        fallback: &#39;vue-style-loader&#39;,
+        publicPath:&quot;../../&quot;       // 加上这一句话，背景图片
+      })</code></pre>
+<p>最后 npm run build</p>
+]]></content>
       <categories>
         <category>webpack</category>
       </categories>
@@ -2445,7 +2483,7 @@ moveTo () {
     border-bottom: 2px solid #000;
     border-right: 2px solid #000;
     transform: rotate(45deg)
-    }</code></pre><h1 id="实心三角形"><a href="#实心三角形" class="headerlink" title="实心三角形"></a>实心三角形</h1><pre><code>.angel {
+    }</code></pre><h1 id="实心三角形"><a href="#实心三角形" class="headerlink" title="实心三角形"></a>实心三角形</h1><pre><code>.angle {
     width: 0px;
     height: 0px;
     border: 20px solid #fff;
@@ -2453,9 +2491,21 @@ moveTo () {
     /*border-right: 20px solid #000;*/
     /*border-left: 20px solid #00f;*/
     border-top: 20px solid #0f0;
-    }</code></pre><h1 id="省略号"><a href="#省略号" class="headerlink" title="省略号"></a>省略号</h1><pre><code>overflow: hidden;
+    }</code></pre><pre><code>.triangle {
+    width: 0px;
+    height: 0px;
+    border-width: 20px;
+    border-style: solid;
+    border-color: red red yellow blue;
+}</code></pre><h1 id="省略号"><a href="#省略号" class="headerlink" title="省略号"></a>省略号</h1><pre><code>overflow: hidden;
 text-overflow: ellipsis;
-white-space: nowrap;</code></pre>]]></content>
+white-space: nowrap;</code></pre><pre><code class="js">// 多行文本
+display: -webkit-box;/*作为弹性伸缩盒子模型显示*/
+-webkit-line-clamp: 1; /*显示的行数；如果要设置2行加...则设置为2*/
+overflow: hidden; /*超出的文本隐藏*/
+text-overflow: ellipsis; /* 溢出用省略号*/
+-webkit-box-orient: vertical;/*伸缩盒子的子元素排列：从上到下*/</code></pre>
+]]></content>
       <categories>
         <category>css</category>
       </categories>
@@ -3509,15 +3559,15 @@ import VueI18n from &#39;vue-i18n&#39;
 import locale from &#39;element-ui/lib/locale&#39;
 import zhLocale from &#39;element-ui/lib/locale/lang/zh-CN&#39;
 import enLocale from &#39;element-ui/lib/locale/lang/en&#39;
-
+/* eslint-disable */
 Vue.use(VueI18n)
-var message = {
+var messages = {
   &#39;en-US&#39;: Object.assign(en, enLocale),
   &#39;zh-CN&#39;: Object.assign(zh, zhLocale)
 }
 const i18n = new VueI18n({
   locale: window.apiConfig.language,
-  message
+  messages
 })
 
 locale.i18n((key, value) =&gt; i18n.t(key, value))

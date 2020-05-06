@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hello World | Ting</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Hello World | Ting">
+  <title>vue-router | Ting</title>
+  <meta name="keywords" content=" vue ">
+  <meta name="description" content="vue-router | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="vue-router让所有页面共用头部，写在APP.vue中若要其中一项不用头部 &lt;div v-show&#x3D;&quot;path !&#x3D;&#x3D; &#39;&#x2F;login&#39;&quot; class&#x3D;&quot;container&quot;&gt; mounted () {     this.path &#x3D; this.$route.path   },   watch: {     $route (">
 <meta property="og:type" content="article">
@@ -669,24 +669,36 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-vue/vue-router" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Hello World</h1>
+        <h1 class="article-title">vue-router</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a  data-rel="vue">vue</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">vue</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-31 08:37:56'>2019-12-31 08:37</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-28 23:18:04'>2020-04-28 22:50</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:75</span>
+        <span>字数:55</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -705,7 +717,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-router让所有页面共用头部，写在APP-vue中"><span class="toc-text">vue-router让所有页面共用头部，写在APP.vue中</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -721,15 +733,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="vue-router让所有页面共用头部，写在APP-vue中"><a href="#vue-router让所有页面共用头部，写在APP-vue中" class="headerlink" title="vue-router让所有页面共用头部，写在APP.vue中"></a>vue-router让所有页面共用头部，写在APP.vue中</h1><p>若要其中一项不用头部</p>
+<pre><code class="html">&lt;div v-show=&quot;path !== &#39;/login&#39;&quot; class=&quot;container&quot;&gt;</code></pre>
+<pre><code class="js">mounted () {
+    this.path = this.$route.path
+  },
+  watch: {
+    $route (to, from) {
+      this.path = to.path
+    }
+  },</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
@@ -739,12 +752,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Hello World</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">75</span></p>
+    <p><span class="copy-title">文章标题:</span>vue-router</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">55</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-31, 08:37:56</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-31, 08:37:56</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/31/hello-world/" title="Hello World">https://zhangxuet.github.io/2019/12/31/hello-world/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-28, 22:50:55</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-28, 23:18:04</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/28/vue/vue-router/" title="vue-router">https://zhangxuet.github.io/2020/04/28/vue/vue-router/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
