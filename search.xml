@@ -1,6 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>浅拷贝和深拷贝</title>
+    <url>/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/</url>
+    <content><![CDATA[<h1 id="区分浅拷贝和深拷贝"><a href="#区分浅拷贝和深拷贝" class="headerlink" title="区分浅拷贝和深拷贝"></a>区分浅拷贝和深拷贝</h1><p><strong>如果b复制了a，a中的数据改变b中的数据也跟着变就是浅拷贝，b中的数据不受a中数据的影响就是深拷贝</strong></p>
+<p><strong>深拷贝只针对较为复杂的object数据类型</strong></p>
+<h1 id="基本数据和复杂数据"><a href="#基本数据和复杂数据" class="headerlink" title="基本数据和复杂数据"></a>基本数据和复杂数据</h1><h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><p>基本数据名和值都存在栈内存中，b复制a，栈内存会重新开辟一个内存存放，当修改a时不会影响b</p>
+<p><img src="/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/%E5%9B%BE/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.png" alt></p>
+<h2 id="复杂数据类型"><a href="#复杂数据类型" class="headerlink" title="复杂数据类型"></a>复杂数据类型</h2><p>复杂数据类型名在栈内存，值在堆内存，栈内存会提供一个引用地址指向堆内存，复制的时候只复制引用地址，a与b指向同一个值，一个改变会影响另外一个</p>
+<p><img src="/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/%E5%9B%BE/%E5%A4%8D%E6%9D%82%E7%B1%BB%E5%9E%8B1.png" alt></p>
+<h1 id="浅拷贝方法"><a href="#浅拷贝方法" class="headerlink" title="浅拷贝方法"></a>浅拷贝方法</h1><p>把任意多个源对象自身的可枚举属性拷贝给目标对象，返回目标对象</p>
+<p><strong>第一种</strong></p>
+<pre><code>Object.assign(target, ...sources)</code></pre><pre><code class="js">var obj1 = {
+    a: &#39;1&#39;,
+    b: {
+        cc: &#39;22&#39;
+    }
+}
+var cloneObj2 = Object.assign({}, obj1)
+cloneObj2.a = &#39;111&#39;
+cloneObj2.b.cc = &#39;222&#39;
+console.log(obj1)    // {a: &#39;1&#39;, b: {cc: &#39;222&#39;}}</code></pre>
+<p><strong>如果对象只有一层，可以使用Object.assign()作为深拷贝</strong></p>
+<pre><code class="js">var obj1 = {
+    a: &#39;1&#39;,
+    b: &#39;2&#39;
+}
+var cloneObj2 = Object.assign({}, obj1)
+cloneObj2.a = &#39;111&#39;
+cloneObj2.b = &#39;222&#39;
+console.log(obj1)   // {a: &#39;1&#39;, b: &#39;2&#39;}</code></pre>
+<p><strong>第二种</strong></p>
+<pre><code class="js">function simpleClone (obj) {
+    var cloneObj2 = {}
+    for (let i in obj) {
+        cloneObj2[i] = obj[i]
+    }
+    return cloneObj2
+}
+
+var obj1 = {
+    a: &#39;1&#39;,
+    b: {
+        cc: &#39;22&#39;
+    }
+}
+
+var cloneObj = simpleClone(obj1)
+cloneObj.a = &#39;111&#39;
+cloneObj.b.cc = &#39;222&#39;
+console.log(obj1)      // {a: &#39;1&#39;, b: {cc: &#39;222&#39;}}</code></pre>
+<h1 id="深拷贝方法"><a href="#深拷贝方法" class="headerlink" title="深拷贝方法"></a>深拷贝方法</h1><p><strong>第一种</strong></p>
+<pre><code class="js">JSON.parse(JSON.stringify())
+
+var obj = {a: &#39;1&#39;, b: {cc: &#39;22&#39;}}
+var cloneObj = JSON.parse(JSON.stringify(obj))
+cloneObj.a = &#39;111&#39;
+cloneObj.b.cc = &#39;222&#39;
+console.log(obj)   // {a: &#39;1&#39;, b: {cc: &#39;22&#39;}}</code></pre>
+<p><strong>第二种（Object.assign()只有一层）</strong></p>
+<p><strong>第三种（手动拷贝）</strong></p>
+<pre><code class="js">var obj = {a: &#39;1&#39;, b: &#39;2&#39;}
+var cloneObj = {{a: obj.a, b: obj.b}</code></pre>
+<p><strong>第四种（递归拷贝）</strong></p>
+<pre><code class="js">function deepClone(obj){
+    let objClone = Array.isArray(obj)?[]:{};
+    if(obj &amp;&amp; typeof obj===&quot;object&quot;){
+        for(var i in obj){
+            if(obj.hasOwnProperty(i)){
+                //判断ojb子元素是否为对象，如果是，递归复制
+                if(obj[i]&amp;&amp;typeof obj[i] ===&quot;object&quot;){
+                    objClone[i] = deepClone(obj[i])
+                }else{
+                    //如果不是，简单复制
+                    objClone[i] = obj[i]
+                }
+            }
+        }
+    }
+    return objClone
+}    
+let a=[1,2,3,4]
+b=deepClone(a)
+b[0] = 11
+console.log(a)   // [1,2,3,4]
+console.log(b)   // [11,2,3,4]</code></pre>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js判断数据类型</title>
+    <url>/2020/05/18/js/js%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h1><p>返回的结果包括以下 7 种：number、string、boolean、undefined、symbol、object、function 等。</p>
+<pre><code class="js">typeof null; //object
+typeof new Function(); // function</code></pre>
+<p>对于基本类型，除 null 以外，均可以返回正确的结果</p>
+<p>对于引用类型，除 function 以外，一律返回 object 类型</p>
+<h1 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h1><p>判断 A 是否为 B 的实例,<strong>instanceof 检测的是原型</strong></p>
+<pre><code class="js">[] instanceof Object; // true
+[] instanceof Array; // true</code></pre>
+<h1 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h1><p>是prototype对象的一个属性，默认指向prototype属性所在的构造函数</p>
+<p>变量名.constructor === 数据类型</p>
+<pre><code class="js">str.constructor===String   //true</code></pre>
+<p>null 和 undefined 是无效的对象，因此是不会有 constructor 存在的</p>
+<p>函数的 constructor 是不稳定的，重写 prototype 后，原有的 constructor 引用会丢失，</p>
+<p>constructor 会默认为 Object</p>
+<pre><code class="js">function F () {}
+var f = new F()
+f.constructor == F // false</code></pre>
+<h1 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h1><p>Object 的原型方法，默认返回当前对象的 [[Class]] 。这是一个内部属性，其格式为 [object xxx]</p>
+<pre><code class="js">Object.prototype.toString.call(&#39;&#39;)  // [Object String]</code></pre>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue导航守卫</title>
+    <url>/2020/05/17/vue/vue%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/</url>
+    <content><![CDATA[<p>除去登录页面外，其他的页面必须登录成功后才能访问。</p>
+<ul>
+<li>根据本地的存储中是否有用户信息来判断是否登录成功。</li>
+<li>在跳转路由之前，去判断登录状态：<ul>
+<li>登录了，放行。</li>
+<li>未登录，拦截，去登录页面。</li>
+</ul>
+</li>
+</ul>
+<pre><code class="js">// 前置守卫
+router.beforeEach((to, from, next) =&gt; {
+  // // 1. 去的路径是登录的时候  放行
+  // if (to.path === &#39;/login&#39;) return next()
+  // // 2. 不是登录的时候 且 并没有登录  拦截 登录页面
+  // if (!store.getUser().token) return next(&#39;/login&#39;)
+  // // 3. 其他情况 放行
+  // next()
+  if (to.path !== &#39;/login&#39; &amp;&amp; !store.getUser().token) return next(&#39;/login&#39;)
+  next()
+})</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue插槽</title>
+    <url>/2020/05/17/vue/vue%E6%8F%92%E6%A7%BD/</url>
+    <content><![CDATA[<h1 id="默认插槽"><a href="#默认插槽" class="headerlink" title="默认插槽"></a>默认插槽</h1><p>只传入一次内容</p>
+<pre><code class="html">&lt;slot&gt;&lt;/slot&gt;</code></pre>
+<h1 id="备用内容"><a href="#备用内容" class="headerlink" title="备用内容"></a>备用内容</h1><p>不传入内容，显示默认内容</p>
+<pre><code class="html">&lt;slot&gt;默认内容&lt;/slot&gt;</code></pre>
+<h1 id="具名插槽"><a href="#具名插槽" class="headerlink" title="具名插槽"></a>具名插槽</h1><pre><code class="html">&lt;slot name=&quot;content&quot;&gt;&lt;/slot&gt;</code></pre>
+<p>使用</p>
+<pre><code class="html">&lt;div slot=&quot;content&quot;&gt;内容&lt;/div&gt;</code></pre>
+<h1 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h1><p>使用插槽的时候，需要使用组件内部数据</p>
+<pre><code class="html">&lt;slot name=&quot;content&quot; :msg=&quot;message&quot; :list=&quot;list&quot;&gt;默认内容&lt;/slot&gt;</code></pre>
+<pre><code class="html">&lt;!--slot-scope=&quot;scope&quot; 接收作用域插槽上所有绑定的数据，数据的集合名字叫scope对象{msg:&#39;&#39;,list:&#39;&#39;}--&gt;
+&lt;div slot=&quot;content&quot; slot-scope=&quot;scope&quot;&gt;内容1 {{scope.msg}}&lt;/div&gt;</code></pre>
+<p>新语法：v-slot</p>
+<pre><code> &lt;template v-slot:content=&quot;scope&quot;&gt;内容1 {{scope.msg}}&lt;/template&gt;</code></pre><h1 id="封装面包屑组件"><a href="#封装面包屑组件" class="headerlink" title="封装面包屑组件"></a>封装面包屑组件</h1><pre><code class="vue">&lt;template&gt;
+  &lt;el-breadcrumb separator-class=&quot;el-icon-arrow-right&quot;&gt;
+    &lt;el-breadcrumb-item :to=&quot;{ path: &#39;/&#39; }&quot;&gt;首页&lt;/el-breadcrumb-item&gt;
+    &lt;el-breadcrumb-item&gt;
+      &lt;slot&gt;&lt;/slot&gt;
+    &lt;/el-breadcrumb-item&gt;
+  &lt;/el-breadcrumb&gt;
+&lt;/template&gt;</code></pre>
+<p>使用</p>
+<pre><code class="js">import MyBread from &#39;@/components/my-bread&#39;
+export default {
+    components: { MyBread },
+}</code></pre>
+<pre><code class="html">&lt;my-bread&gt;内容管理&lt;/my-bread&gt;</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>收藏图片</title>
+    <url>/2020/05/17/vue/%E6%94%B6%E8%97%8F%E5%9B%BE%E7%89%87/</url>
+    <content><![CDATA[<pre><code class="js">// 切换图片状态
+async toggleStatus (item) {
+    const { data: { data } } = await this.$http.put(`user/images/${item.id}`, {
+        collect: !item.is_collected
+    })
+    // 成功
+    this.$message.success(data.collect ? &#39;添加收藏成功&#39; : &#39;取消收藏成功&#39;)
+    // 更新列表  重新获取数据-&gt;按照后台的排序更新图片的顺序-&gt;图片的位置改变-&gt;体验不好
+    // 只更新当图片的状态 即可。
+    item.is_collected = data.collect
+}</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用json-bigint处理最大安全数值</title>
+    <url>/2020/05/17/vue/%E4%BD%BF%E7%94%A8json-bigint%E5%A4%84%E7%90%86%E6%9C%80%E5%A4%A7%E5%AE%89%E5%85%A8%E6%95%B0%E5%80%BC/</url>
+    <content><![CDATA[<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p><strong>拿到的数据是json格式，浏览器toolbar preview转换的数据为JSON.parse会出现误差，超出js的最大安全数值，最大安全数值2的53次方</strong></p>
+<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><p><strong>使用json-bigint包，将数字转换成其它格式</strong></p>
+<pre><code class="js">npm i json-bigint
+
+import JSONBIG from &#39;json-bigint&#39;
+// 进行配置
+// 自定义转换响应内容
+axios.defaults.transformResponse = [(data) =&gt; {
+  // data 原始数据  有一些接口没有响应内容  data === null 报错
+  try {
+    return JSONBIG.parse(data)
+  } catch (e) {
+    return data
+  }
+}]</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>跨域</title>
+    <url>/2020/05/16/vue/%E8%B7%A8%E5%9F%9F/</url>
+    <content><![CDATA[<p><strong>config文件夹下的index.js文件中的proxyTable字段中</strong></p>
+<pre><code class="js">  dev: {
+    env: require(&#39;./dev.env&#39;),
+    port: 8090,
+    autoOpenBrowser: true,
+    assetsSubDirectory: &#39;static&#39;,
+    assetsPublicPath: &#39;/&#39;,
+    proxyTable: {
+      &#39;/api&#39;: {
+        target:&#39;http://xxx.xxx.com/api&#39;, // 你请求的第三方接口
+        changeOrigin:true, // 在本地会创建一个虚拟服务端发送请求的数据，并接收请求的数据，这样服务端和服务端就可以进行数据的交互
+        pathRewrite:{
+          &#39;^/api&#39;: &#39;&#39;  // 替换target中的请求地址
+        }
+      }
+    },
+    cssSourceMap: false
+  }</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue的常见问题</title>
+    <url>/2020/05/16/vue/vue%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="vue单击或双击会出现蓝色背景"><a href="#vue单击或双击会出现蓝色背景" class="headerlink" title="vue单击或双击会出现蓝色背景"></a>vue单击或双击会出现蓝色背景</h1><pre><code class="css">body {
+    -webkit-user-select: none;
+    user-select: none;
+}</code></pre>
+<h1 id="使用rem"><a href="#使用rem" class="headerlink" title="使用rem"></a>使用rem</h1><h2 id><a href="#" class="headerlink" title></a></h2><pre><code class="js">npm i amfe-flexible
+npm i postcss-px2rem</code></pre>
+<h2 id="-1"><a href="#-1" class="headerlink" title></a></h2><p>在main.js导入</p>
+<pre><code class="js">import &#39;amfe-flexible&#39;</code></pre>
+<h2 id="-2"><a href="#-2" class="headerlink" title></a></h2><p>在package.json中设置</p>
+<pre><code class="js">&quot;postcss&quot;: {
+    &quot;plugins&quot;: {
+      &quot;autoprefixer&quot;: {},
+      &quot;postcss-px2rem&quot;: {
+        &quot;remUnit&quot;: 75    // 750px(iphone6)宽度为基准，所以remUnit为75
+      }
+    }
+  }</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue-router</title>
     <url>/2020/04/28/vue/vue-router/</url>
     <content><![CDATA[<h1 id="vue-router让所有页面共用头部，写在APP-vue中"><a href="#vue-router让所有页面共用头部，写在APP-vue中" class="headerlink" title="vue-router让所有页面共用头部，写在APP.vue中"></a>vue-router让所有页面共用头部，写在APP.vue中</h1><p>若要其中一项不用头部</p>
@@ -138,7 +434,19 @@ rowClass () {
 },
 cellStyle () {
     return &quot;text-align: center&quot;
-}</code></pre>]]></content>
+}</code></pre><h1 id="checkbox选中状态"><a href="#checkbox选中状态" class="headerlink" title="checkbox选中状态"></a>checkbox选中状态</h1><pre><code class="js">// 全选
+this.indeterminate = false
+this.checkAll = true
+// 减号
+this.indeterminate = true
+this.checkAll = false
+或
+eterminate = true
+this.checkAll = true
+// 未选中
+this.indeterminate = false
+this.checkAll = false</code></pre>
+]]></content>
       <categories>
         <category>vue</category>
       </categories>
@@ -2466,6 +2774,9 @@ moveTo () {
     let distance = subLeft - screenHalfWidth + subHalfWidth
     this.scrollLeft = scrollLeft + distance
 }</code></pre>
+<h1 id="小程序不会自动换行"><a href="#小程序不会自动换行" class="headerlink" title="小程序不会自动换行"></a>小程序不会自动换行</h1><pre><code class="css">word-wrap: break-word;
+word-break: break-all;
+white-space: pre-line;</code></pre>
 ]]></content>
       <categories>
         <category>小程序</category>
