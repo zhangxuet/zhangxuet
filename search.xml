@@ -1,11 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>移动端滚动回弹效果</title>
-    <url>/2020/07/05/vue/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%9A%E5%8A%A8%E5%9B%9E%E5%BC%B9%E6%95%88%E6%9E%9C/</url>
-    <content><![CDATA[<h1 id="移动端滚动回弹效果"><a href="#移动端滚动回弹效果" class="headerlink" title="移动端滚动回弹效果"></a>移动端滚动回弹效果</h1><pre><code class="css">-webkit-overflow-scrolling: touch; //属性控制元素在移动设备上是否使用滚动回弹效果
-overflow-y: scroll;  //overflow-y:scorll属性滚动的效果很木</code></pre>
-<p>touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建一个新的堆栈上下文</p>
+    <title>canvas签字</title>
+    <url>/2020/07/05/vue/canvas%E7%AD%BE%E5%AD%97/</url>
+    <content><![CDATA[<h1 id="canvas签字"><a href="#canvas签字" class="headerlink" title="canvas签字"></a>canvas签字</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code class="js">npm install vue-esign --save</code></pre>
+<h2 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h2><pre><code class="js">import vueEsign from &#39;vue-esign&#39;
+Vue.use(vueEsign)</code></pre>
+<h2 id="使用-宽高按比例"><a href="#使用-宽高按比例" class="headerlink" title="使用(宽高按比例)"></a>使用(宽高按比例)</h2><pre><code class="vue">&lt;vue-esign class=&quot;canvas&quot; ref=&quot;esign&quot; :width=&quot;800&quot; :height=&quot;300&quot; :isCrop=&quot;isCrop&quot; :lineWidth=&quot;lineWidth&quot; :lineColor=&quot;lineColor&quot; bgColor=&quot;#fff&quot; /&gt;
+&lt;button @click=&quot;handleReset&quot;&gt;清空画板&lt;/button&gt; 
+&lt;button @click=&quot;handleGenerate&quot;&gt;生成图片&lt;/button&gt;</code></pre>
+<pre><code class="js">data () {
+  return {
+    lineWidth: 6,
+    lineColor: &#39;#000000&#39;,
+    resultImg: &#39;&#39;,
+    isCrop: false
+  }
+},
+methods: {
+  handleReset () {
+    this.$refs.esign.reset()
+  },
+  handleGenerate () {
+    this.$refs.esign.generate().then(res =&gt; {
+      this.resultImg = res
+    }).catch(err =&gt; {
+      alert(err) // 画布没有签字时会执行这里 &#39;Not Signned&#39;
+    })
+  }
+}</code></pre>
+<pre><code class="css">.canvas {
+    background: rgba(255, 255, 255, 1) !important;
+}</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>canvas压缩图片</title>
+    <url>/2020/07/05/js/canvas%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/</url>
+    <content><![CDATA[<h1 id="canvas压缩图片"><a href="#canvas压缩图片" class="headerlink" title="canvas压缩图片"></a>canvas压缩图片</h1><pre><code class="js">if (/\/(?:jpeg|png)/i.test(file.file.type) &amp;&amp; file.file.size &gt; 10000) {
+    let canvas = document.createElement(&quot;canvas&quot;)
+    // console.log(canvas)
+    let context = canvas.getContext(&quot;2d&quot;)
+    let img = new Image()
+    // 指定图片的DataURL(图片的base64编码数据)
+    img.src = file.content
+    // 监听浏览器加载图片完成，然后进行进行绘制
+    img.onload = () =&gt; {
+        let multPix = 3
+        canvas.width = img.width / multPix;
+        canvas.height =  img.height/multPix;
+        context.drawImage(img, 0, 0, canvas.width,canvas.height)
+        // canvas.width = 300
+        // canvas.height = 600
+        // context.drawImage(img, 0, 0, 300, 600)
+        file.content = canvas.toDataURL(file.file.type, 0.92)
+        // console.log(file)
+        this.showUploadPop = false
+        this.imgPreview = file.content
+        var imgName = file.file.name
+        var blob = this.dataURLtoBlob(file.content)
+        // var imgName = blob.type.replace(/(\/)/g,&#39;.&#39;)
+        this.imgUploadList = this.blobToFile(blob, imgName)
+
+        // 文件转base64
+        // var reader = new FileReader()
+        // reader.readAsDataURL(this.imgUploadList)
+        // reader.onload = () =&gt; {
+        //     console.log(&#39;file 转 base64结果：&#39; + reader.result)
+        //     this.iconBase64 = reader.result
+        // }
+        this.ImgFilePathss = []
+    }
+}</code></pre>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>base64和文件转换</title>
+    <url>/2020/07/05/js/base64%E5%92%8C%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2/</url>
+    <content><![CDATA[<h1 id="base64转文件"><a href="#base64转文件" class="headerlink" title="base64转文件"></a>base64转文件</h1><p><strong>函数</strong></p>
+<pre><code class="js">// base64转文件
+dataURLtoBlob: function(dataurl) { 
+    var arr = dataurl.split(&#39;,&#39;),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n)
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new Blob([u8arr], { type: mime })
+},
+    //将blob转换为file
+    blobToFile: function(theBlob, fileName){
+        theBlob.lastModifiedDate = new Date()
+        theBlob.name = fileName
+        return theBlob
+    },</code></pre>
+<p><strong>使用</strong></p>
+<pre><code class="js">var blob = this.dataURLtoBlob(baseUrl)
+// var imgName = blob.type.replace(/(\/)/g,&#39;.&#39;)
+this.imgUploadList = this.blobToFile(blob, &#39;imgName&#39;)</code></pre>
+<h1 id="文件转base64"><a href="#文件转base64" class="headerlink" title="文件转base64"></a>文件转base64</h1><pre><code class="js">// 文件转base64
+var reader = new FileReader()
+reader.readAsDataURL(file)
+reader.onload = () =&gt; {
+     console.log(&#39;file 转 base64结果：&#39; + reader.result)
+     this.iconBase64 = reader.result
+}</code></pre>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>js身份证计算年龄</title>
+    <url>/2020/07/05/js/js%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%AE%A1%E7%AE%97%E5%B9%B4%E9%BE%84/</url>
+    <content><![CDATA[<h1 id="js身份证计算年龄"><a href="#js身份证计算年龄" class="headerlink" title="js身份证计算年龄"></a>js身份证计算年龄</h1><pre><code class="js">var UUserCard = this.userNum  // 身份证
+if (UUserCard != null &amp;&amp; UUserCard != &#39;&#39;) {
+    //获取年龄
+    var myDate = new Date()
+    var month = myDate.getMonth() + 1
+    var day = myDate.getDate()
+    var age = myDate.getFullYear() - UUserCard.substring(6, 10) - 1
+    if (UUserCard.substring(10, 12) &lt; month || UUserCard.substring(10, 12) == month &amp;&amp; UUserCard.substring(12, 14) &lt;= day) {
+        age++
+    }
+    this.userAge = age   // 年龄
+}</code></pre>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>鼠标禁止单击</title>
+    <url>/2020/07/05/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/%E9%BC%A0%E6%A0%87%E7%A6%81%E6%AD%A2%E5%8D%95%E5%87%BB/</url>
+    <content><![CDATA[<h1 id="鼠标禁止单击"><a href="#鼠标禁止单击" class="headerlink" title="鼠标禁止单击"></a>鼠标禁止单击</h1><p><strong>不能阻止事件，手动处理</strong></p>
+<pre><code class="css">.btn {
+    cursor: not-allowed;
+}</code></pre>
+<h1 id="鼠标原有事件不能实现"><a href="#鼠标原有事件不能实现" class="headerlink" title="鼠标原有事件不能实现"></a>鼠标原有事件不能实现</h1><pre><code class="css">.btn {
+    pointer-events: none;
+}</code></pre>
+]]></content>
+      <categories>
+        <category>项目优化</category>
+      </categories>
+      <tags>
+        <tag>项目优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue单击或双击会出现蓝色背景</title>
+    <url>/2020/07/05/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/vue%E5%8D%95%E5%87%BB%E6%88%96%E5%8F%8C%E5%87%BB%E4%BC%9A%E5%87%BA%E7%8E%B0%E8%93%9D%E8%89%B2%E8%83%8C%E6%99%AF/</url>
+    <content><![CDATA[<h1 id="vue单击或双击会出现蓝色背景"><a href="#vue单击或双击会出现蓝色背景" class="headerlink" title="vue单击或双击会出现蓝色背景"></a>vue单击或双击会出现蓝色背景</h1><pre><code class="css">body {
+    -webkit-user-select: none;
+    user-select: none;
+}</code></pre>
 ]]></content>
       <categories>
         <category>项目优化</category>
@@ -510,28 +676,6 @@ app.listen(3000, () =&gt; {
       </categories>
       <tags>
         <tag>跨域</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vue的常见问题</title>
-    <url>/2020/05/16/vue/vue%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="vue单击或双击会出现蓝色背景"><a href="#vue单击或双击会出现蓝色背景" class="headerlink" title="vue单击或双击会出现蓝色背景"></a>vue单击或双击会出现蓝色背景</h1><pre><code class="css">body {
-    -webkit-user-select: none;
-    user-select: none;
-}</code></pre>
-<h1 id="鼠标禁止单击"><a href="#鼠标禁止单击" class="headerlink" title="鼠标禁止单击"></a>鼠标禁止单击</h1><p><strong>不能阻止事件，手动处理</strong></p>
-<pre><code class="css">.btn {
-    cursor: not-allowed;
-}</code></pre>
-<h1 id="鼠标原有事件不能实现"><a href="#鼠标原有事件不能实现" class="headerlink" title="鼠标原有事件不能实现"></a>鼠标原有事件不能实现</h1><pre><code class="css">.btn {
-    pointer-events: none;
-}</code></pre>
-]]></content>
-      <categories>
-        <category>vue</category>
-      </categories>
-      <tags>
-        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -1053,6 +1197,26 @@ npm i amfe-flexible -S</code></pre><p> postcss 配置（postcss.config.js）(.po
 <li>rootValue 是转换px的基准值，参考设备iPhone6，设备宽度375px。</li>
 <li>flexible 在iPhone6设备设置的  html—&gt;font-size 也为37.5px 。</li>
 </ul>
+<p>build/utils.js</p>
+<pre><code class="js">  const postcssLoader = {
+    loader: &#39;postcss-loader&#39;,
+    options: {
+      sourceMap: options.sourceMap
+    }
+  }
+
+  // generate loader string to be used with extract text plugin
+  function generateLoaders (loader, loaderOptions) {
+      const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+
+      if (loader) {
+          loaders.push({
+              loader: loader + &#39;-loader&#39;,
+              options: Object.assign({}, loaderOptions, {
+                  sourceMap: options.sourceMap
+              })
+          })
+      }</code></pre>
 <h1 id="表单校验"><a href="#表单校验" class="headerlink" title="表单校验"></a>表单校验</h1><pre><code>&lt;van-cell-group&gt;
     &lt;van-field @blur=&quot;checkMobile&quot; 
                :error-message=&quot;errMsg.mobile&quot; 
@@ -4321,12 +4485,19 @@ export default (url, method, data) =&gt; {
   <entry>
     <title>正则</title>
     <url>/2020/03/09/problem/%E6%AD%A3%E5%88%99/</url>
-    <content><![CDATA[<h1 id="正则匹配特殊字符"><a href="#正则匹配特殊字符" class="headerlink" title="正则匹配特殊字符"></a>正则匹配特殊字符</h1><pre><code>var pattern = new RegExp(
+    <content><![CDATA[<h1 id="正则匹配特殊字符"><a href="#正则匹配特殊字符" class="headerlink" title="正则匹配特殊字符"></a>正则匹配特殊字符</h1><pre><code class="js">var pattern = new RegExp(
           &quot;[`~!@#$^&amp;*()=|{}&#39;:;&#39;,\\[\\].&lt;&gt;/?~@#￥……&amp;*（）——|{}【】‘；：”“&#39;。，、？]&quot;
         );
  if (pattern.test(value)) {}
 
- 或 value.match(pattern)</code></pre><h1 id="邮箱"><a href="#邮箱" class="headerlink" title="邮箱"></a>邮箱</h1><pre><code>let pattern = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/</code></pre><h1 id="电话"><a href="#电话" class="headerlink" title="电话"></a>电话</h1><pre><code>let pattern = /^[1][3-8][0-9]{9}$/</code></pre><h1 id="校验数字的表达式"><a href="#校验数字的表达式" class="headerlink" title="校验数字的表达式"></a>校验数字的表达式</h1><pre><code>1 数字：^[0-9]*$ 
+ let pattern = /[`~!@#$%^&amp;*()_\-+=&lt;&gt;?:&quot;{}|,.\/;&#39;\\[\]·~！@#￥%……&amp;*（）——\-+={}|《》？：“”【】、；‘&#39;，。、]/im
+
+ 或 value.match(pattern)</code></pre>
+<h1 id="邮箱"><a href="#邮箱" class="headerlink" title="邮箱"></a>邮箱</h1><pre><code class="js">let pattern = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/</code></pre>
+<h1 id="电话"><a href="#电话" class="headerlink" title="电话"></a>电话</h1><pre><code class="js">let pattern = /^[1][3-8][0-9]{9}$/</code></pre>
+<h1 id="校验身份证"><a href="#校验身份证" class="headerlink" title="校验身份证"></a>校验身份证</h1><pre><code class="js">let pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/</code></pre>
+<h1 id="校验前后空格"><a href="#校验前后空格" class="headerlink" title="校验前后空格"></a>校验前后空格</h1><pre><code class="js">let pattern = /^[\s　]|[ ]$/gi</code></pre>
+<h1 id="校验数字的表达式"><a href="#校验数字的表达式" class="headerlink" title="校验数字的表达式"></a>校验数字的表达式</h1><pre><code class="js">1 数字：^[0-9]*$ 
 
 2 n位的数字：^\d{n}$
 
@@ -4362,7 +4533,8 @@ export default (url, method, data) =&gt; {
 
 18 负浮点数：^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$ 或 ^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$
 
-19 浮点数：^(-?\d+)(\.\d+)?$ 或 ^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$</code></pre><h1 id="校验字符的表达式"><a href="#校验字符的表达式" class="headerlink" title="校验字符的表达式"></a>校验字符的表达式</h1><pre><code>1 汉字：^[\u4e00-\u9fa5]{0,}$ 
+19 浮点数：^(-?\d+)(\.\d+)?$ 或 ^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$</code></pre>
+<h1 id="校验字符的表达式"><a href="#校验字符的表达式" class="headerlink" title="校验字符的表达式"></a>校验字符的表达式</h1><pre><code class="js">1 汉字：^[\u4e00-\u9fa5]{0,}$ 
 
 2 英文和数字：^[A-Za-z0-9]+$ 或 ^[A-Za-z0-9]{4,40}$ 
 
@@ -4384,7 +4556,8 @@ export default (url, method, data) =&gt; {
 
 11 可以输入含有^%&amp;&#39;,;=?$\&quot;等字符：[^%&amp;&#39;,;=?$\x22]+
 
-12 禁止输入含有~的字符：[^~\x22]+</code></pre><h1 id="特殊需求表达式"><a href="#特殊需求表达式" class="headerlink" title="特殊需求表达式"></a>特殊需求表达式</h1><pre><code>1 Email地址：^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$ 
+12 禁止输入含有~的字符：[^~\x22]+</code></pre>
+<h1 id="特殊需求表达式"><a href="#特殊需求表达式" class="headerlink" title="特殊需求表达式"></a>特殊需求表达式</h1><pre><code class="js">1 Email地址：^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$ 
 
 2 域名：[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(/.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/.? 
 
@@ -4446,7 +4619,8 @@ export default (url, method, data) =&gt; {
 
 31 腾讯QQ号：[1-9][0-9]{4,} (腾讯QQ号从10000开始)
 
-32 中国邮政编码：[1-9]\d{5}(?!\d) (中国邮政编码为6位数字) 33 IP地址：\d+\.\d+\.\d+\.\d+ (提取IP地址时有用) 34 IP地址：((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)) </code></pre>]]></content>
+32 中国邮政编码：[1-9]\d{5}(?!\d) (中国邮政编码为6位数字) 33 IP地址：\d+\.\d+\.\d+\.\d+ (提取IP地址时有用) 34 IP地址：((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)) </code></pre>
+]]></content>
       <categories>
         <category>正则</category>
       </categories>
