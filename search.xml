@@ -1,6 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>移动端滚动回弹效果</title>
+    <url>/2020/07/05/vue/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%9A%E5%8A%A8%E5%9B%9E%E5%BC%B9%E6%95%88%E6%9E%9C/</url>
+    <content><![CDATA[<h1 id="移动端滚动回弹效果"><a href="#移动端滚动回弹效果" class="headerlink" title="移动端滚动回弹效果"></a>移动端滚动回弹效果</h1><pre><code class="css">-webkit-overflow-scrolling: touch; //属性控制元素在移动设备上是否使用滚动回弹效果
+overflow-y: scroll;  //overflow-y:scorll属性滚动的效果很木</code></pre>
+<p>touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建一个新的堆栈上下文</p>
+]]></content>
+      <categories>
+        <category>项目优化</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>移动端滚动回弹效果</title>
+    <url>/2020/07/05/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%9A%E5%8A%A8%E5%9B%9E%E5%BC%B9%E6%95%88%E6%9E%9C/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>点击input会放大页面</title>
+    <url>/2020/07/05/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/%E7%82%B9%E5%87%BBinput%E4%BC%9A%E6%94%BE%E5%A4%A7%E9%A1%B5%E9%9D%A2/</url>
+    <content><![CDATA[<h1 id="IOS移动端点击input会放大页面"><a href="#IOS移动端点击input会放大页面" class="headerlink" title="IOS移动端点击input会放大页面"></a>IOS移动端点击input会放大页面</h1><p>在头部加上一句</p>
+<pre><code>&lt;meta content=&quot;yes&quot; name=&quot;apple-mobile-web-app-capable&quot;&gt; 
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;&quot;&gt;</code></pre>]]></content>
+      <categories>
+        <category>项目优化</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element表格翻页</title>
+    <url>/2020/06/13/vue/element%E8%A1%A8%E6%A0%BC%E7%BF%BB%E9%A1%B5/</url>
+    <content><![CDATA[<h1 id="表格翻页后仍从1开始计数，设置为连续的数字"><a href="#表格翻页后仍从1开始计数，设置为连续的数字" class="headerlink" title="表格翻页后仍从1开始计数，设置为连续的数字"></a>表格翻页后仍从1开始计数，设置为连续的数字</h1><pre><code class="html">&lt;el-pagination
+    @size-change=&quot;handleSizeChange&quot;
+    @current-change=&quot;handleCurrentChange&quot;
+    :current-page=&quot;ImageListPageIndex&quot;
+    :page-sizes=&quot;[5, 10, 15, 20]&quot;
+    :page-size=&quot;ImageListPageSize&quot;
+    layout=&quot;total, sizes, prev, pager, next, jumper&quot;
+    :total=&quot;ImageListTotal&quot;&gt;
+&lt;/el-pagination&gt;</code></pre>
+<pre><code class="js">// 分页
+handleCurrentChange (index) {
+    this.ImageListPageIndex = index
+    this.handleSearchImageList()
+},
+handleSizeChange (index) {
+    this.ImageListPageSize = index
+    this.ImageListPageIndex = 1
+    this.handleSearchImageList()
+ },</code></pre>
+<p><strong>在使用序号的地方加上:index=”indexMethod”</strong></p>
+<pre><code class="html">&lt;el-table-column
+   label=&quot;序号&quot;
+   type=&quot;index&quot;
+   :index=&quot;indexMethod&quot;
+    width=&quot;100&quot;&gt;
+&lt;/el-table-column&gt;</code></pre>
+<pre><code class="js">// 处理序号
+indexMethod (index) {
+    return index + 1 + (this.ImageListPageIndex - 1) * this.ImageListPageSize
+},</code></pre>
+<pre><code class="js">ImageListPageIndex: 1,
+ImageListPageSize: 10,</code></pre>
+]]></content>
+      <categories>
+        <category>element</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue使用rem</title>
+    <url>/2020/06/13/vue/vue%E4%BD%BF%E7%94%A8rem/</url>
+    <content><![CDATA[<h1 id="使用rem"><a href="#使用rem" class="headerlink" title="使用rem"></a>使用rem</h1><h2 id><a href="#" class="headerlink" title></a></h2><pre><code class="js">npm i amfe-flexible
+npm i postcss-px2rem</code></pre>
+<h2 id="-1"><a href="#-1" class="headerlink" title></a></h2><p>在main.js导入</p>
+<pre><code class="js">import &#39;amfe-flexible&#39;</code></pre>
+<h2 id="-2"><a href="#-2" class="headerlink" title></a></h2><p>在package.json中设置</p>
+<pre><code class="js">&quot;postcss&quot;: {
+    &quot;plugins&quot;: {
+      &quot;autoprefixer&quot;: {},
+      &quot;postcss-px2rem&quot;: {
+        &quot;remUnit&quot;: 75    // 750px(iphone6)宽度为基准，所以remUnit为75
+      }
+    }
+  }</code></pre>
+<p>在build/utils.js</p>
+<pre><code>const cssLoader = {
+    loader: &#39;css-loader&#39;,
+    options: {
+      sourceMap: options.sourceMap
+    }
+  }
+
+  const postcssLoader = {             // 加上这句
+    loader: &#39;postcss-loader&#39;,
+    options: {
+      sourceMap: options.sourceMap
+    }
+  }
+
+  // generate loader string to be used with extract text plugin
+  function generateLoaders (loader, loaderOptions) {
+    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]   
+    // 加上postcssLoader
+
+    if (loader) {
+      loaders.push({
+        loader: loader + &#39;-loader&#39;,
+        options: Object.assign({}, loaderOptions, {
+          sourceMap: options.sourceMap
+        })
+      })
+    }</code></pre>]]></content>
+      <categories>
+        <category>rem</category>
+      </categories>
+      <tags>
+        <tag>rem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>获取url问号后边的参数</title>
+    <url>/2020/06/09/js/%E8%8E%B7%E5%8F%96url%E9%97%AE%E5%8F%B7%E5%90%8E%E8%BE%B9%E7%9A%84%E5%8F%82%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="获取url？后边参数"><a href="#获取url？后边参数" class="headerlink" title="获取url？后边参数"></a>获取url？后边参数</h1><pre><code class="js">function translateParam (url) {
+    let obj = {}
+    let index = url.indexOf(&#39;?&#39;)
+    let str = url.substr(index+1)
+    let newArr = str.split(&#39;&amp;&#39;)
+    newArr.forEach(item =&gt; {
+        let arr = item.split(&#39;=&#39;)
+        obj[arr[0]] = arr[1]
+    })
+    return obj
+}
+let str = &quot;http://www.baidu.com/a?name=&#39;zs&#39;&amp;age=&#39;18&#39;&amp;gender=&#39;man&#39;&quot;
+let ret = translateParam(str)
+console.log(ret)</code></pre>
+<h1 id="获取地址栏url"><a href="#获取地址栏url" class="headerlink" title="获取地址栏url"></a>获取地址栏url</h1><pre><code class="js">location.href.split(&#39;?&#39;)[1]
+
+
+function translateParam () {
+    let obj = {}
+    let newArr = []
+    newArr = location.href.split(&#39;?&#39;)[1].split(&#39;&amp;&#39;).forEach(item =&gt; {
+        let arr = item.split(&#39;=&#39;)
+        obj[arr[0]] = arr[1]
+    })
+    return obj
+}
+// let str = &quot;http://www.baidu.com/a?name=&#39;zs&#39;&amp;age=&#39;18&#39;&amp;gender=&#39;man&#39;&quot;
+let ret = translateParam()
+console.log(ret)</code></pre>
+<h1 id="location-search"><a href="#location-search" class="headerlink" title="location.search"></a>location.search</h1><pre><code class="js">获取        ?name=&#39;zs&#39;&amp;age=&#39;18&#39;</code></pre>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue预览插件</title>
+    <url>/2020/06/08/vue/vue%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<h1 id="下载imageViewer插件"><a href="#下载imageViewer插件" class="headerlink" title="下载imageViewer插件"></a>下载imageViewer插件</h1><p><strong>放到components文件夹下</strong></p>
+<pre><code>/components/imageViewer</code></pre><h1 id="在main-js导入"><a href="#在main-js导入" class="headerlink" title="在main.js导入"></a>在main.js导入</h1><p><strong>导入文件夹</strong></p>
+<pre><code>import imageViewer from &#39;@/components/imageViewer/&#39;</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><pre><code>&lt;img src=&quot;/static/img/img.jpg&quot; @click=&quot;$imageViewer&quot;/&gt;</code></pre><h1 id="单击和双击事件同时存在"><a href="#单击和双击事件同时存在" class="headerlink" title="单击和双击事件同时存在"></a>单击和双击事件同时存在</h1><h2 id="index-js修改挂载方法"><a href="#index-js修改挂载方法" class="headerlink" title="index.js修改挂载方法"></a>index.js修改挂载方法</h2><pre><code class="js">  // 挂载触发方法
+  Vue.prototype.$imageViewer = (e) =&gt; {
+    // console.log(e)
+    // instance.currentImg = e.currentTarget.currentSrc
+    instance.currentImg = e.currentSrc
+    instance.visible = true
+  }
+}</code></pre>
+<h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h2><p><strong>单击事件有300ms的延时事件，单击时不知道是单击还是双击，判断若300ms内再次单击就是双击事件，若无任何操作则触发单击事件</strong></p>
+<pre><code class="html">&lt;img :src=&quot;item.ImgPath&quot; @click=&quot;handleOpenBigImg&quot;/&gt;</code></pre>
+<pre><code class="js">var timeDouble = null
+export default {
+
+
+// 预览图片
+handleOpenBigImg (e) {
+    clearTimeout(timeDouble)
+    let event = e.currentTarget
+    timeDouble = setTimeout(() =&gt; {
+        this.$imageViewer(event)
+    }, 300)
+},</code></pre>
+<h2 id="触发双击事件清除定时器"><a href="#触发双击事件清除定时器" class="headerlink" title="触发双击事件清除定时器"></a>触发双击事件清除定时器</h2><pre><code class="js">handleDoubleClick () {
+    clearTimeout(timeDouble)
+}</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅拷贝和深拷贝</title>
     <url>/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/</url>
     <content><![CDATA[<h1 id="区分浅拷贝和深拷贝"><a href="#区分浅拷贝和深拷贝" class="headerlink" title="区分浅拷贝和深拷贝"></a>区分浅拷贝和深拷贝</h1><p><strong>如果b复制了a，a中的数据改变b中的数据也跟着变就是浅拷贝，b中的数据不受a中数据的影响就是深拷贝</strong></p>
@@ -242,7 +450,42 @@ axios.defaults.transformResponse = [(data) =&gt; {
   <entry>
     <title>跨域</title>
     <url>/2020/05/16/vue/%E8%B7%A8%E5%9F%9F/</url>
-    <content><![CDATA[<p><strong>config文件夹下的index.js文件中的proxyTable字段中</strong></p>
+    <content><![CDATA[<h1 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h1><p>同源策略: 安全问题(浏览器提供的，可以获得数据，但是浏览器会拒绝)协议域名端口号相同</p>
+<p>协议域名端口号只要一个不同就是跨域</p>
+<p>三种行为受到限制。</p>
+<ul>
+<li><p>Cookie无法读取。</p>
+</li>
+<li><p>DOM 无法获得。</p>
+</li>
+<li><p>AJAX 请求无效（可以发送，但浏览器会拒绝接受响应）。</p>
+</li>
+</ul>
+<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="jsonp原理"><a href="#jsonp原理" class="headerlink" title="jsonp原理"></a>jsonp原理</h2><p><strong>src请求资源不受限制</strong></p>
+<p>动态创建script标签，通过它的src属性发送请求，服务器返回的内容是函数调用（调用提前定义好的回调函数)</p>
+<p>动态创建script标签（异步）为了提高性能</p>
+<pre><code class="js">&lt;script&gt;
+    $ajax({
+        url: &#39;&#39;,
+        jsonp: &#39;cb&#39;,
+        jsonpCallback: &#39;abc&#39;,
+        dataType: &#39;jsonp&#39;,
+        success: (res) =&gt; {
+            console.log(res)
+        }
+    })    
+&lt;/script&gt;</code></pre>
+<p>服务端</p>
+<pre><code class="js">const express = require(&#39;express&#39;)
+const app = express()
+app.get(&#39;/data&#39;, (req, res) =&gt; {
+    let callbackName = req.query.cb
+    res.send(callbackName + &#39;({username: &quot;li&quot;, age: &quot;18&quot;})&#39;)
+})
+app.listen(3000, () =&gt; {
+    console.log(&#39;3000 is running &#39;)
+})</code></pre>
+<p>config文件夹下的index.js文件中的proxyTable字段中**</p>
 <pre><code class="js">  dev: {
     env: require(&#39;./dev.env&#39;),
     port: 8090,
@@ -260,12 +503,13 @@ axios.defaults.transformResponse = [(data) =&gt; {
     },
     cssSourceMap: false
   }</code></pre>
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>在被请求的服务端响应的时候添加一个 <code>Access-Control-Allow-Origin</code> 的响应头，表示这个资源是否允许指定域请求。</p>
 ]]></content>
       <categories>
-        <category>vue</category>
+        <category>跨域</category>
       </categories>
       <tags>
-        <tag>vue</tag>
+        <tag>跨域</tag>
       </tags>
   </entry>
   <entry>
@@ -275,19 +519,13 @@ axios.defaults.transformResponse = [(data) =&gt; {
     -webkit-user-select: none;
     user-select: none;
 }</code></pre>
-<h1 id="使用rem"><a href="#使用rem" class="headerlink" title="使用rem"></a>使用rem</h1><h2 id><a href="#" class="headerlink" title></a></h2><pre><code class="js">npm i amfe-flexible
-npm i postcss-px2rem</code></pre>
-<h2 id="-1"><a href="#-1" class="headerlink" title></a></h2><p>在main.js导入</p>
-<pre><code class="js">import &#39;amfe-flexible&#39;</code></pre>
-<h2 id="-2"><a href="#-2" class="headerlink" title></a></h2><p>在package.json中设置</p>
-<pre><code class="js">&quot;postcss&quot;: {
-    &quot;plugins&quot;: {
-      &quot;autoprefixer&quot;: {},
-      &quot;postcss-px2rem&quot;: {
-        &quot;remUnit&quot;: 75    // 750px(iphone6)宽度为基准，所以remUnit为75
-      }
-    }
-  }</code></pre>
+<h1 id="鼠标禁止单击"><a href="#鼠标禁止单击" class="headerlink" title="鼠标禁止单击"></a>鼠标禁止单击</h1><p><strong>不能阻止事件，手动处理</strong></p>
+<pre><code class="css">.btn {
+    cursor: not-allowed;
+}</code></pre>
+<h1 id="鼠标原有事件不能实现"><a href="#鼠标原有事件不能实现" class="headerlink" title="鼠标原有事件不能实现"></a>鼠标原有事件不能实现</h1><pre><code class="css">.btn {
+    pointer-events: none;
+}</code></pre>
 ]]></content>
       <categories>
         <category>vue</category>
@@ -801,7 +1039,7 @@ import &#39;vant/lib/index.css&#39;;
 Vue.use(Vant);</code></pre><h1 id="移动端rem适配"><a href="#移动端rem适配" class="headerlink" title="移动端rem适配"></a>移动端rem适配</h1><pre><code># 后处理器 开发阶段使用
 npm i postcss-pxtorem -D
 # 修改rem基准值的js插件   需要在打包后需要使用
-npm i amfe-flexible -S</code></pre><p> postcss 配置（postcss.config.js）</p>
+npm i amfe-flexible -S</code></pre><p> postcss 配置（postcss.config.js）(.postcssrc.js)</p>
 <pre><code>module.exports = {
   plugins: {
     &#39;autoprefixer&#39;: {},
@@ -1888,7 +2126,7 @@ export default (path, param, method, header) =&gt; {
     <title>时间格式化</title>
     <url>/2020/04/10/js/js%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96/</url>
     <content><![CDATA[<h1 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h1><p>utils/index.js</p>
-<pre><code>export function formatDateTime (date) {
+<pre><code class="js">export function formatDateTime (date) {
   var y = date.getFullYear()
   var m = date.getMonth() + 1
   m = m &lt; 10 ? (&#39;0&#39; + m) : m
@@ -1901,19 +2139,22 @@ export default (path, param, method, header) =&gt; {
   var second = date.getSeconds()
   second = second &lt; 10 ? (&#39;0&#39; + second) : second
   return y + &#39;/&#39; + m + &#39;/&#39; + d + &#39; &#39; + h + &#39;:&#39; + minute + &#39;:&#39; + second
-}</code></pre><p><strong>使用</strong></p>
+}</code></pre>
+<p><strong>使用</strong></p>
 <pre><code>import { formatDateTime } from &#39;@/utils/index.js</code></pre><p><strong>vue中使用(过滤器</strong></p>
-<pre><code>filters: {
+<pre><code class="js">filters: {
     formatDateTime(date) {
         var date = new Date(date)
         return formatDateTime(date)
     }
-}</code></pre><pre><code>&lt;span&gt;{{createTime|formatDateTime}}</code></pre><p><strong>mpvue小程序中使用</strong></p>
-<pre><code>import { formatDateTime } from &#39;@/utils/index.js</code></pre><pre><code>this.questionDetails = this.questionDetails.map(item =&gt; {
+}</code></pre>
+<pre><code>&lt;span&gt;{{createTime|formatDateTime}}</code></pre><p><strong>mpvue小程序中使用</strong></p>
+<pre><code>import { formatDateTime } from &#39;@/utils/index.js</code></pre><pre><code class="js">this.questionDetails = this.questionDetails.map(item =&gt; {
    item.TimeSpan = formatDate(new Date(item.TimeSpan), &#39;yyyy-MM-dd hh:mm:ss&#39;)
         return item
-})</code></pre><h1 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h1><p>utils/index.js</p>
-<pre><code>
+})</code></pre>
+<h1 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h1><p>utils/index.js</p>
+<pre><code class="js">
 export function formatDate (date, fmt) {
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (date.getFullYear() + &#39;&#39;).substr(4 - RegExp.$1.length))
@@ -1936,13 +2177,59 @@ export function formatDate (date, fmt) {
 
 function padLeftZero (str) {
   return (&#39;00&#39; + str).substr(str.length)
-}</code></pre><p><strong>使用 （yyyy-MM-dd hh:mm:ss可自定义）</strong></p>
-<pre><code>import { formatDateTime, formatDate } from &#39;@/utils/index.js</code></pre><pre><code>filters: {
-    formatDateTime(date) {
+}</code></pre>
+<p><strong>使用 （yyyy-MM-dd hh:mm:ss可自定义）</strong></p>
+<pre><code>import { formatDateTime, formatDate } from &#39;@/utils/index.js</code></pre><pre><code class="js">filters: {
+    formatDate(date) {
         var date = new Date(date)
-        return formatDateTime(date, &#39;yyyy-MM-dd hh:mm:ss&#39;)
+        return formatDate(date, &#39;yyyy-MM-dd hh:mm:ss&#39;)
     }
-}</code></pre>]]></content>
+}</code></pre>
+<h1 id="获取前一天的时间"><a href="#获取前一天的时间" class="headerlink" title="获取前一天的时间"></a>获取前一天的时间</h1><pre><code class="js">export function formatOldDateTime (date, fmt) {
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + &#39;&#39;).substr(4 - RegExp.$1.length))
+  }
+  let year = date.getFullYear()
+  let month = date.getMonth() + 1
+  let day = date.getDate()
+  // console.log(month)
+  if (day === 1) {
+    month = date.getMonth()
+    if (month === 1 || month === 3 || month === 5 || month === 7 || month === 8 || month === 10 || month === 12) {
+      day = 31
+    } else if (month === 4 || month === 6 || month === 9 || month === 11) {
+      day = 30
+    } else if ((year % 4 === 0 &amp;&amp; year % 100 !== 0) || (year % 100 !== 0 &amp;&amp; year % 400 === 0)) {
+      day = 29
+    } else {
+      day = 28
+    }
+  } else {
+    month = date.getMonth() + 1
+    day = date.getDate()
+  }
+  // console.log(year % 4 === 0)
+  // console.log(day)
+  let o = {
+    &#39;M+&#39;: month,
+    &#39;d+&#39;: day,
+    &#39;h+&#39;: date.getHours(),
+    &#39;m+&#39;: date.getMinutes(),
+    &#39;s+&#39;: date.getSeconds()
+  }
+  for (let k in o) {
+    if (new RegExp(`(${k})`).test(fmt)) {
+      let str = o[k] + &#39;&#39;
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str))
+    }
+  }
+  return fmt
+}
+
+function padLeftZero (str) {
+  return (&#39;00&#39; + str).substr(str.length)
+}</code></pre>
+]]></content>
       <categories>
         <category>js</category>
       </categories>
@@ -2158,7 +2445,8 @@ npm install sass-loader@7.3.1 --save-dev</code></pre><p>webpack.base.config.js</
         publicPath:&quot;../../&quot;       // 加上这一句话，背景图片
       })</code></pre>
 <p>最后 npm run build</p>
-]]></content>
+<p><strong>img引入static中的图片要使用的路径是</strong></p>
+<pre><code>./static/img/a.png</code></pre>]]></content>
       <categories>
         <category>webpack</category>
       </categories>
