@@ -6,20 +6,17 @@
   <meta name="keywords" content=" vue ">
   <meta name="description" content="vue基础知识 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="区分浅拷贝和深拷贝如果b复制了a，a中的数据改变b中的数据也跟着变就是浅拷贝，b中的数据不受a中数据的影响就是深拷贝 深拷贝只针对较为复杂的object数据类型 基本数据和复杂数据基本类型基本数据名和值都存在栈内存中，b复制a，栈内存会重新开辟一个内存存放，当修改a时不会影响b  复杂数据类型复杂数据类型名在栈内存，值在堆内存，栈内存会提供一个引用地址指向堆内存，复制的时候只复制引用地址，a与b指">
+<meta name="description" content="移动端滚动回弹效果-webkit-overflow-scrolling: touch; &#x2F;&#x2F;属性控制元素在移动设备上是否使用滚动回弹效果 overflow-y: scroll;  &#x2F;&#x2F;overflow-y:scorll属性滚动的效果很木 touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅拷贝和深拷贝">
-<meta property="og:url" content="https://zhangxuet.github.io/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/index.html">
+<meta property="og:title" content="移动端滚动回弹效果">
+<meta property="og:url" content="https://zhangxuet.github.io/2020/07/05/vue/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%9A%E5%8A%A8%E5%9B%9E%E5%BC%B9%E6%95%88%E6%9E%9C/index.html">
 <meta property="og:site_name" content="Ting">
-<meta property="og:description" content="区分浅拷贝和深拷贝如果b复制了a，a中的数据改变b中的数据也跟着变就是浅拷贝，b中的数据不受a中数据的影响就是深拷贝 深拷贝只针对较为复杂的object数据类型 基本数据和复杂数据基本类型基本数据名和值都存在栈内存中，b复制a，栈内存会重新开辟一个内存存放，当修改a时不会影响b  复杂数据类型复杂数据类型名在栈内存，值在堆内存，栈内存会提供一个引用地址指向堆内存，复制的时候只复制引用地址，a与b指">
-<meta property="og:image" content="https://zhangxuet.github.io/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.png">
-<meta property="og:image" content="https://zhangxuet.github.io/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/%E5%A4%8D%E6%9D%82%E7%B1%BB%E5%9E%8B1.png">
-<meta property="article:published_time" content="2020-05-25T01:58:17.000Z">
-<meta property="article:modified_time" content="2020-05-25T15:08:18.745Z">
+<meta property="og:description" content="移动端滚动回弹效果-webkit-overflow-scrolling: touch; &#x2F;&#x2F;属性控制元素在移动设备上是否使用滚动回弹效果 overflow-y: scroll;  &#x2F;&#x2F;overflow-y:scorll属性滚动的效果很木 touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建">
+<meta property="article:published_time" content="2020-07-05T14:33:51.000Z">
+<meta property="article:modified_time" content="2020-07-05T14:52:24.515Z">
 <meta property="article:author" content="Ting">
-<meta property="article:tag" content="js">
+<meta property="article:tag" content="优化">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhangxuet.github.io/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
