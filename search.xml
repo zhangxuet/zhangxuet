@@ -1,6 +1,428 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>vue非父子组件传值</title>
+    <url>/2020/07/17/vue/vue%E9%9D%9E%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/</url>
+    <content><![CDATA[<h1 id="vue非父子组件传值"><a href="#vue非父子组件传值" class="headerlink" title="vue非父子组件传值"></a>vue非父子组件传值</h1><p>eventBus: 事件总线</p>
+<h2 id="先定义公共bus"><a href="#先定义公共bus" class="headerlink" title="先定义公共bus"></a>先定义公共bus</h2><p>没有dom，仅仅有实例方法</p>
+<pre><code class="js">import Vue from &#39;vue&#39;
+export default new Vue()</code></pre>
+<h2 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h2><h3 id="两个组件"><a href="#两个组件" class="headerlink" title="两个组件"></a>两个组件</h3><p>组件1：发送事件</p>
+<pre><code class="js">&lt;script&gt;
+import Bus from &#39;@/utils/bus&#39;
+export default {
+  name: &#39;Home&#39;,
+  data () {
+    return {
+      count: 1
+    }
+  },
+  created () {
+    this.calculateCount()
+  },
+  methods: {
+    calculateCount () {
+      Bus.$emit(&#39;val&#39;, this.count)
+      this.$router.push(&#39;/home&#39;)
+    }
+  }
+}
+&lt;/script&gt;</code></pre>
+<p>组件2：接收事件</p>
+<pre><code class="js">&lt;script&gt;
+import Bus from &#39;@/utils/bus&#39;
+export default {
+  data () {
+    return {
+      num: 0
+    }
+  },
+  mounted () {
+    Bus.$on(&#39;val&#39;, (data) =&gt; {
+      console.log(data)
+    })
+  },
+  methods: {
+
+  }
+}
+&lt;/script&gt;</code></pre>
+<p><strong>非父子组件接收到了值但页面没更新</strong></p>
+<p>vue路由切换时，会先加载新的组件,等新的组件渲染好但是还没挂载前，销毁旧的组件，之后挂载新的组件</p>
+<p>新组件：beforeCreate</p>
+<p>新组件：created</p>
+<p>新组件：beforeMount</p>
+<p>旧组件：beforeDestroyed</p>
+<p>旧组件：destroyed</p>
+<p>新组件：mounted</p>
+<p><strong>在$emit时，必须已经$on，否则无法监听到事件，所以接收组件应该在created生命周期$on,发送事件的组件destroyed生命周期里面$emit</strong></p>
+<p>在发送事件的destroyed生命周期中发送</p>
+<pre><code class="js">destroyed () {
+    Bus.$emit(&#39;val&#39;, this.count)
+},</code></pre>
+<p>在接收的组件created中接收</p>
+<pre><code class="js">created () {
+    Bus.$on(&#39;val&#39;, (data) =&gt; {
+        this.count += data
+    })
+},</code></pre>
+<h2 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h2><p>通过父组件触发</p>
+<p>子组件1</p>
+<pre><code class="vue">&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;increment()&quot;&gt;加&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+// @ is an alias to /src
+import Bus from &#39;@/utils/bus&#39;
+export default {
+  name: &#39;Home&#39;,
+  data () {
+    return {
+      num: 1,
+      deg: 1
+    }
+  },
+  methods: {
+    increment () {
+      Bus.$emit(&#39;increamented&#39;, {
+        num: this.num,
+        deg: this.deg
+      })
+    }
+  }
+}
+&lt;/script&gt;</code></pre>
+<p>子组件2</p>
+<pre><code class="vue">&lt;template&gt;
+  &lt;div class=&quot;about&quot;&gt;
+    &lt;h1&gt;This is an about page&lt;/h1&gt;
+    &lt;button @click=&quot;decrease()&quot;&gt;减&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Bus from &#39;@/utils/bus&#39;
+export default {
+  data () {
+    return {
+      num: 1,
+      deg: 1
+    }
+  },
+  methods: {
+    decrease (val) {
+      Bus.$emit(&#39;decreased&#39;, {
+        num: this.num,
+        deg: this.deg
+      })
+    }
+  }
+}
+&lt;/script&gt;</code></pre>
+<p>父组件</p>
+<pre><code class="vue">&lt;template&gt;
+  &lt;div&gt;
+    &lt;About&gt;&lt;/About&gt;
+    &lt;Home&gt;&lt;/Home&gt;
+    &lt;div&gt;{{inVal}}&lt;/div&gt;
+    &lt;div&gt;{{degVal}}&lt;/div&gt;
+    &lt;div&gt;{{backVal}}&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import About from &#39;./About&#39;
+import Home from &#39;./Home&#39;
+import Bus from &#39;@/utils/bus&#39;
+export default {
+  components: { About, Home },
+  data () {
+    return {
+      degVal: 0,
+      inVal: 0,
+      backVal: 0
+    }
+  },
+  mounted () {
+    Bus.$on(&#39;increamented&#39;, ({ num, deg }) =&gt; {
+      this.inVal += num
+      this.$nextTick(() =&gt; {
+        this.degVal -= deg
+        this.backVal += num
+      })
+    })
+    Bus.$on(&#39;decreased&#39;, ({ num, deg }) =&gt; {
+      this.inVal -= num
+      this.$nextTick(() =&gt; {
+        this.degVal -= deg
+        this.backVal -= num
+      })
+    })
+  }
+}
+&lt;/script&gt;</code></pre>
+<h1 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h1><p>可把eventBus注册为全局的事件，在mian,js中</p>
+<pre><code class="js">Vue.prototype.$EventBus = new Vue()</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TypeScript</title>
+    <url>/2020/07/17/TypeScript/TypeScript/</url>
+    <content><![CDATA[<h1 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h1><p><strong>javascript的超集，它可以编译成纯javascript,typescript可以在任何浏览器，任何计算机和任何操作系统上运行</strong></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code class="js">npm i -g typescript</code></pre>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="创建一个greeter-ts文件"><a href="#创建一个greeter-ts文件" class="headerlink" title="创建一个greeter.ts文件"></a>创建一个greeter.ts文件</h3><pre><code class="js">function greeter(person) {
+    return &#39;Hello, &#39; + person
+}
+let user = [0, 1, 2]
+document.body.innerHTML = greeter(user)</code></pre>
+<p>执行tsc greeter.ts会生成一个greeter.js文件</p>
+<h3 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h3><pre><code class="js">function greeter(person: string) {
+    return &#39;Hello, &#39; + person
+}
+let user = &#39;Jane User&#39;
+document.body.innerHTML = greeter(user)</code></pre>
+<p>若user = [0, 1, 2]为数组，编译会报错，但会创建greeter.js文件（TypeScript会警告你代码可能不会按预期执行）</p>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>在TypeScript里，只在两个类型内部的结构兼容那么这两个类型就是兼容的。 这就允许我们在实现接口时候只要保证包含了接口要求的结构就可以，而不必明确地使用 <code>implements</code>语句。</p>
+<pre><code class="js">interface Person {
+    firstName: string;
+    lastName: string;
+}
+
+function greeter(person: Person) {
+    return &#39;Hello, &#39; + person.firstName + &#39;&#39; + person.lastName
+}
+let user = {firstName: &#39;Jane&#39;, lastName: &#39;User&#39;}
+document.body.innerHTML = greeter(user)</code></pre>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>支持基于类的面向对象编程</p>
+<pre><code class="js">class Student {
+    fullName: string;
+    constructor(public firstName, public middleInitial, public lastName) {
+        this.fullName = firstName + &#39;&#39; + middleInitial + &#39;&#39; + lastName
+    }
+}
+interface Person {
+    firstName: string;
+    lastName: string;
+}
+
+function greeter(person: Person) {
+    return &#39;Hello, &#39; + person.firstName + &#39;&#39; + person.lastName
+}
+let user = new Student(&#39;Jane&#39;, &#39;M&#39;, &#39;User&#39;)
+document.body.innerHTML = greeter(user)</code></pre>
+<p>ts运行</p>
+<pre><code class="js">var Student = /** @class */ (function () {
+    function Student(firstName, middleInitial, lastName) {
+        this.firstName = firstName;
+        this.middleInitial = middleInitial;
+        this.lastName = lastName;
+        this.fullName = firstName + &#39;&#39; + middleInitial + &#39;&#39; + lastName;
+    }
+    return Student;
+}());
+function greeter(person) {
+    return &#39;Hello, &#39; + person.firstName + &#39;&#39; + person.lastName;
+}
+var user = new Student(&#39;Jane&#39;, &#39;M&#39;, &#39;User&#39;);
+document.body.innerHTML = greeter(user);</code></pre>
+<p>greeter.html</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script src=&quot;./greeter.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue中使用mock.js</title>
+    <url>/2020/07/17/mockjs/vue%E4%B8%AD%E4%BD%BF%E7%94%A8mock-js/</url>
+    <content><![CDATA[<h1 id="vue中使用mock-js"><a href="#vue中使用mock-js" class="headerlink" title="vue中使用mock.js"></a>vue中使用mock.js</h1><h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><pre><code class="js">import Mock from &#39;mockjs&#39;
+// var Mock = require(&#39;mockjs&#39;)
+
+// var data = Mock.mock({
+//   &#39;list|1-10&#39;: [{
+//     &#39;id|+1&#39;: 1
+//   }]
+// })
+
+// var data = Mock.mock({ &#39;data|1-4&#39;: &#39;哑巴&#39; })
+
+// var data = Mock.mock(&#39;@province&#39;)
+
+const url = {
+  tableDataOne: &#39;http://20181024Mock.com/mode1/tableDataOne&#39;,
+  tableDataTwo: &#39;http://20181024Mock.com/mode1/tableDataTwo&#39;,
+  tableDataThi: &#39;http://20181024Mock.com/mode1/tableDataThi&#39;
+}
+
+var data = Mock.mock(url.tableDataOne, {
+  &#39;dataSource|1-9&#39;: [{
+    &#39;key|+1&#39;: 1,
+    &#39;mockTitle|1&#39;: [&#39;青春有你&#39;, &#39;创造营2020&#39;, &#39;明日之子&#39;],
+    &#39;mockContent|1&#39;: [&#39;是我站的还不够高吗&#39;, &#39;淡黄的长裙，蓬松的头发&#39;, &#39;我的小提琴手&#39;],
+    &#39;mockAction|1&#39;: [&#39;love&#39;, &#39;pick&#39;, &#39;喜欢&#39;]
+  }]
+})
+// console.log(data)
+export { data }
+</code></pre>
+<h2 id="引入express"><a href="#引入express" class="headerlink" title="引入express"></a>引入express</h2><pre><code class="js">const express = require(&#39;express&#39;)
+// import express from &#39;express&#39;
+const Mock = require(&#39;mockjs&#39;)
+
+var app = express()
+app.use((req, res, next) =&gt; {
+  res.header(&#39;Access-Control-Allow-Origin&#39;, &#39;*&#39;)
+  res.header(&#39;Access-Control-Allow-Methods&#39;, &#39;PUT, GET, POST, DELETE, OPTIONS&#39;)
+  res.header(&#39;Access-Control-Allow-Headers&#39;, &#39;X-Requested-With&#39;)
+  res.header(&#39;Access-Control-Allow-Headers&#39;, &#39;Content-Type&#39;)
+  next()
+})
+app.use(&#39;/mode2/DataOne&#39;, (req, res) =&gt; {
+  res.json(Mock.mock({
+    &#39;dataSource|1-9&#39;: [{
+      &#39;key|+1&#39;: 1,
+      &#39;mockTitle|1&#39;: [&#39;青春有你&#39;, &#39;创造营2020&#39;, &#39;明日之子&#39;],
+      &#39;mockContent|1&#39;: [&#39;是我站的还不够高吗&#39;, &#39;淡黄的长裙，蓬松的头发&#39;, &#39;我的小提琴手&#39;],
+      &#39;mockAction|1&#39;: [&#39;love&#39;, &#39;pick&#39;, &#39;喜欢&#39;]
+    }]
+  }))
+})
+app.listen(&#39;4000&#39;, () =&gt; {
+  console.log(&#39;app is running&#39;)
+})
+</code></pre>
+]]></content>
+      <categories>
+        <category>mockjs</category>
+      </categories>
+      <tags>
+        <tag>mockjs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue数组改变视图不更新</title>
+    <url>/2020/07/17/vue/Vue%E6%95%B0%E7%BB%84%E6%94%B9%E5%8F%98%E8%A7%86%E5%9B%BE%E4%B8%8D%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<h1 id="Vue数组改变视图不更新"><a href="#Vue数组改变视图不更新" class="headerlink" title="Vue数组改变视图不更新"></a>Vue数组改变视图不更新</h1><pre><code class="js">Vue.set(this.data, index, this.data[index])</code></pre>
+<pre><code class="js">push()
+pop()
+shift()
+unshift()
+splice()  //注意长度会变化
+sort()
+reverse()</code></pre>
+<p><strong>不能改变原数组</strong></p>
+<pre><code class="js">filter() map() concat()  slice() // 这些不会改变原始数组，但总是返回一个新数组</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue-print插件打印时多了张空白页</title>
+    <url>/2020/07/17/vue/vue-print%E6%8F%92%E4%BB%B6%E6%89%93%E5%8D%B0%E6%97%B6%E5%A4%9A%E4%BA%86%E5%BC%A0%E7%A9%BA%E7%99%BD%E9%A1%B5/</url>
+    <content><![CDATA[<h1 id="vue-print插件打印时多了张空白页"><a href="#vue-print插件打印时多了张空白页" class="headerlink" title="vue-print插件打印时多了张空白页"></a>vue-print插件打印时多了张空白页</h1><pre><code class="css">&lt;style media=&quot;print&quot;&gt;
+  @page {
+    size: auto; 
+    margin: 3mm;
+  }
+
+  html {
+    background-color: #ffffff;
+    margin: 0px;
+  }
+
+  body {
+    border: solid 1px #ffffff;
+    margin: 10mm 15mm 10mm 15mm; 
+  }
+&lt;/style&gt;</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vant-image本地图片无法显示</title>
+    <url>/2020/07/17/vue/vant-image%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<h1 id="vant-image本地图片无法显示"><a href="#vant-image本地图片无法显示" class="headerlink" title="vant-image本地图片无法显示"></a>vant-image本地图片无法显示</h1><p>src属性绑定requeir（）方法</p>
+<pre><code class="html">:src=&quot;require(&#39;../assets/img.png&#39;)&quot; </code></pre>
+]]></content>
+      <categories>
+        <category>vant</category>
+      </categories>
+      <tags>
+        <tag>vant</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue进入页面在最顶部显示</title>
+    <url>/2020/07/06/vue/vue%E8%BF%9B%E5%85%A5%E9%A1%B5%E9%9D%A2%E5%9C%A8%E6%9C%80%E9%A1%B6%E9%83%A8%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<h1 id="vue进入页面在最顶部显示"><a href="#vue进入页面在最顶部显示" class="headerlink" title="vue进入页面在最顶部显示"></a>vue进入页面在最顶部显示</h1><pre><code class="js">export default new Router({
+    mode:&#39;history&#39;,
+    routes,
+    scrollBehavior (to, from ,savedPosition) {
+        return {x:0,y:0}
+    }
+})</code></pre>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>vue-loading-chunk</title>
+    <url>/2020/07/06/vue/vue-loading-chunk/</url>
+    <content><![CDATA[<h1 id="vue-loading-chunk"><a href="#vue-loading-chunk" class="headerlink" title="vue-loading-chunk"></a>vue-loading-chunk</h1><pre><code class="js">router.onError((error) =&gt; {
+  const pattern = /Loading chunk (\d)+ failed/g;
+  const isChunkLoadFailed = error.message.match(pattern);
+  if (isChunkLoadFailed) {
+    // const targetPath = router.history.pending.fullPath;
+    // router.replace(targetPath);
+    location.reload();
+  }
+})</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>chunk</title>
+    <url>/2020/07/06/chunk/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>canvas签字</title>
     <url>/2020/07/05/vue/canvas%E7%AD%BE%E5%AD%97/</url>
     <content><![CDATA[<h1 id="canvas签字"><a href="#canvas签字" class="headerlink" title="canvas签字"></a>canvas签字</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code class="js">npm install vue-esign --save</code></pre>
@@ -1336,7 +1758,7 @@ export default {
   }
 }
 </code></pre><p>使用</p>
-<pre><code>&lt;span&gt;{{article.pubdate|relTime}}&lt;/span&gt;</code></pre><h1 id="组件缓存"><a href="#组件缓存" class="headerlink" title="组件缓存"></a>组件缓存</h1><p><strong><keep-alive></keep-alive></strong>缓存组件实例，组件切回来还在原位置</p>
+<pre><code>&lt;span&gt;{{article.pubdate|relTime}}&lt;/span&gt;</code></pre><h1 id="组件缓存（文件列表和详情都加keepAlive）"><a href="#组件缓存（文件列表和详情都加keepAlive）" class="headerlink" title="组件缓存（文件列表和详情都加keepAlive）"></a>组件缓存（文件列表和详情都加keepAlive）</h1><p><strong><keep-alive></keep-alive></strong>缓存组件实例，组件切回来还在原位置</p>
 <ul>
 <li>激活组件的时候，是不会触发 created 钩子。</li>
 <li>激活组件钩子 <a href="https://cn.vuejs.org/v2/api/#activated" target="_blank" rel="noopener">activated</a></li>
@@ -4706,7 +5128,7 @@ return wbout;
   <entry>
     <title>echarts</title>
     <url>/2020/01/06/echarts/echarts/</url>
-    <content><![CDATA[<pre><code>
+    <content><![CDATA[<pre><code class="html">
 &lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
     &lt;head&gt;
@@ -4883,7 +5305,8 @@ option = {
 chart.setOption(option)
         &lt;/script&gt;
     &lt;/body&gt;
-&lt;/html&gt;</code></pre>]]></content>
+&lt;/html&gt;</code></pre>
+]]></content>
       <categories>
         <category>echarts</category>
       </categories>
