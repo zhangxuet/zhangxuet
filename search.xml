@@ -1,6 +1,618 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>react基础</title>
+    <url>/2020/07/17/react/react%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><ul>
+<li>引入react库文件react和react-dom</li>
+<li>引入babel运行时（React代码浏览器不认识，需要通过babel把react代码转化为js代码）</li>
+</ul>
+<p><strong>第一个文件</strong></p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;script src=&quot;./lib/react.development.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./lib/react-dom.development.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./lib/babel.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script type=&quot;text/babel&quot;&gt;
+        let element = &lt;div&gt;Hello World!&lt;/div&gt;
+        ReactDOM.render(
+            element,
+            document.getElementById(&#39;root&#39;)
+        )
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><ul>
+<li>sublime(设置文件类型为babel-sublime/JavaScript)<ul>
+<li>babel-sublime</li>
+<li>sublime-react</li>
+<li>SublimeServer  静态资源服务</li>
+</ul>
+</li>
+<li>vscode<ul>
+<li>JSX Snippets</li>
+<li>JSX beautify</li>
+<li>live-server 静态资源服务</li>
+</ul>
+</li>
+</ul>
+<pre><code class="json">  &quot;emmet.triggerExpansionOnTab&quot;: true,
+  &quot;emmet.includeLanguages&quot;: {
+    &quot;javascript&quot;: &quot;javascriptreact&quot;,
+    &quot;wxml&quot;: &quot;html&quot;
+  },</code></pre>
+<h1 id="JSX语法"><a href="#JSX语法" class="headerlink" title="JSX语法"></a>JSX语法</h1><ul>
+<li><p>jsx是js语法的扩展，在js中写html标签</p>
+</li>
+<li><p>jsx元素中动态插入数据</p>
+<pre><code class="jsx">&lt;script type=&quot;text/babel&quot;&gt;
+    var containDiv = document.getElementById(&#39;root&#39;)
+    let name = &#39;world&#39;
+
+    var vDom = (
+    &lt;div&gt;
+        hello, react
+        &lt;h1&gt;你好, {name}&lt;/h1&gt;    
+    &lt;/div&gt;
+    )
+    ReactDOM.render(vDom, containDiv)
+&lt;/script&gt;</code></pre>
+</li>
+<li><p>jsx动态设置属性值</p>
+<pre><code class="jsx">let cname = &#39;active&#39;
+&lt;h1 className={cname}&gt;你好, {name}&lt;/h1&gt;    </code></pre>
+</li>
+<li><p>JSX元素必须包含一个根元素</p>
+</li>
+</ul>
+<h1 id="jsx表达式"><a href="#jsx表达式" class="headerlink" title="jsx表达式"></a>jsx表达式</h1><ul>
+<li>JSX可以赋值给变量</li>
+<li>作为函数的参数</li>
+<li>作为函数的返回值</li>
+</ul>
+<pre><code class="jsx">function showInfo () {
+    return (
+        &lt;div&gt;
+            hello, react
+        &lt;/div&gt;
+    )
+}
+let element = showInfo()
+ReactDOM.render(element, containDiv)</code></pre>
+<h1 id="JSX的本质：就是对象"><a href="#JSX的本质：就是对象" class="headerlink" title="JSX的本质：就是对象"></a>JSX的本质：就是对象</h1><p>React.createElement(element, [props], […children])</p>
+<pre><code class="jsx">const element = React.createElement(
+    &#39;h1&#39;,
+    {className: &#39;active&#39;},
+    &#39;hello, world&#39;
+)
+ReactDOM.render(element, containDiv)
+// 例如
+let vnode = {
+    tagName: &#39;div&#39;,
+    attrs: {classname: &#39;active&#39;},
+    children: &#39;Hello, world!&#39;
+}
+let div = document.createElement(vnode.tagName)
+div.setAttribute(&#39;className&#39;, vnode.attrs.className)
+div.innerHTML = vnode.children 
+document.querySelector(&#39;body&#39;).appendChild(div)</code></pre>
+<h1 id="JSX条件渲染"><a href="#JSX条件渲染" class="headerlink" title="JSX条件渲染"></a>JSX条件渲染</h1><ul>
+<li>条件渲染</li>
+</ul>
+<pre><code class="jsx">var containDiv = document.getElementById(&#39;root&#39;)
+function showInfo (flag) {
+    if(flag) {
+        return &lt;div&gt;hello&lt;/div&gt;
+    } else {
+        return &lt;div&gt;world&lt;/div&gt;
+    }
+}
+ReactDOM.render(showInfo(0), containDiv)</code></pre>
+<ul>
+<li>元素变量</li>
+</ul>
+<pre><code class="jsx">function showInfo (flag) {
+    let form = null
+    if(flag) {
+        form = &lt;div&gt;hello&lt;/div&gt;
+    } else {
+        form = &lt;div&gt;world&lt;/div&gt;
+    }
+    return form
+}
+ReactDOM.render(showInfo(0), containDiv)</code></pre>
+<ul>
+<li>行内条件渲染</li>
+</ul>
+<pre><code class="jsx">function showInfo (flag) {
+    let form = null
+    return &lt;div&gt;{flag?&#39;hello&#39;:&#39;world&#39;}&lt;/div&gt;
+}
+ReactDOM.render(showInfo(0), containDiv)</code></pre>
+<ul>
+<li>阻止渲染</li>
+</ul>
+<pre><code class="jsx">function showInfo (flag) {
+    if(flag) {
+        return null
+    } else {
+        return &lt;div&gt;world&lt;/div&gt;
+    }
+}
+ReactDOM.render(showInfo(1), containDiv)</code></pre>
+<h1 id="JSX列表渲染"><a href="#JSX列表渲染" class="headerlink" title="JSX列表渲染"></a>JSX列表渲染</h1><ul>
+<li>渲染多个元素<ul>
+<li>数组中可以放置JSX元素</li>
+</ul>
+</li>
+<li>key只在数组上下文中有含义<ul>
+<li>为了提高渲染性能</li>
+</ul>
+</li>
+<li>key在兄弟节点之间必须唯一</li>
+</ul>
+<pre><code class="jsx">// 1
+let arr = [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;]
+let list = arr.map((item, index) =&gt; {
+    return &lt;li key={index}&gt;{item}&lt;/li&gt;
+})
+let element = &lt;ul&gt;{list}&lt;/ul&gt;
+    ReactDOM.render(element, containDiv)
+
+// 2
+let list = []
+arr.forEach((item, index) =&gt; {
+    list.push(&lt;li key={index}&gt;{item}&lt;/li&gt;)
+})
+let element = &lt;ul&gt;{list}&lt;/ul&gt;
+    ReactDOM.render(element, containDiv)</code></pre>
+<h1 id="JSX样式处理"><a href="#JSX样式处理" class="headerlink" title="JSX样式处理"></a>JSX样式处理</h1><ul>
+<li>使用className类处理样式</li>
+<li>使用style属性处理样式</li>
+</ul>
+<pre><code class="jsx">let element = &lt;div style={{color: 'red'}}&gt;hello&lt;/div&gt;
+ReactDOM.render(element, containDiv)
+
+</code></pre>
+<h1 id="react静态"><a href="#react静态" class="headerlink" title="react静态"></a>react静态</h1><pre><code class="js">static defaultProps = {
+    initCount: 0       //  如果调用组件时没有给组件传值，组件内部初始化一个值
+}</code></pre>
+<pre><code class="js">// 创建一个静态的propTypes对象，可以对外界传过来的属性进行类型校验,类型传错控制台会报错
+// 做类型校验必须安装包 npm i prop-types(在v.15之后抽离)
+import ReactTypes from &#39;prop-types&#39;
+static propTypes = {
+    initCount: ReactTypes.number
+}</code></pre>
+<h1 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h1><p>父组件传值给孙组件</p>
+<p>在父组件定义一个function,这个function有个固定名称getChildContext，内部必须返回一个对象，这个对象就是要共享给所有子孙组件的</p>
+<pre><code class="js">getChildContext () {
+    return {
+        color: this.state.color
+    }
+}</code></pre>
+<p>属性校验</p>
+<pre><code class="js">static childContextTypes = {
+    color: ReactTypes.string
+}</code></pre>
+<p>孙组件</p>
+<pre><code class="jsx">class Com3 extends React.Component {
+    static contextTypes = {
+        color: ReactTypes.string
+    }  
+    render() {
+        return (
+            &lt;div&gt;
+                &lt;h1 style={color: this.context.color}&gt;这是孙子组件&lt;/h1&gt;
+            &lt;/div&gt;
+        )
+    }
+}</code></pre>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>react</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>react-router</title>
+    <url>/2020/07/17/react/react-router/</url>
+    <content><![CDATA[<h1 id="react-router"><a href="#react-router" class="headerlink" title="react-router"></a>react-router</h1><ul>
+<li><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4></li>
+</ul>
+<pre><code class="js">npm install react-router-dom -D
+yarn add react-router-dom --dev</code></pre>
+<ul>
+<li><h4 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h4></li>
+</ul>
+<pre><code class="js">import { BrowserRouter as Router, Route, Link } from &quot;react-router-dom&quot;</code></pre>
+<ul>
+<li><h4 id="配置路由的容器"><a href="#配置路由的容器" class="headerlink" title="配置路由的容器"></a>配置路由的容器</h4></li>
+</ul>
+<pre><code class="html">&lt;BrowserRouter&gt;
+   // 路由相关配置:路由填充位和链接
+&lt;/BrowserRouter&gt;</code></pre>
+<ul>
+<li><h4 id="配置路由连接Link"><a href="#配置路由连接Link" class="headerlink" title="配置路由连接Link"></a>配置路由连接Link</h4></li>
+</ul>
+<pre><code class="html">&lt;Link to=&quot;/user&quot;&gt;用户&lt;/Link&gt;</code></pre>
+<ul>
+<li><h4 id="配置路由填充位置以及路径和组件的映射关系"><a href="#配置路由填充位置以及路径和组件的映射关系" class="headerlink" title="配置路由填充位置以及路径和组件的映射关系"></a>配置路由填充位置以及路径和组件的映射关系</h4></li>
+</ul>
+<pre><code class="html">&lt;Route path=&quot;/user&quot; component={User} /&gt;</code></pre>
+<ul>
+<li><h4 id="Switch组件和exact属性"><a href="#Switch组件和exact属性" class="headerlink" title="Switch组件和exact属性"></a>Switch组件和exact属性</h4><p><strong>Switch：保证中间的路由映射仅仅匹配一个，如果有多个匹配，以最先匹配的为准，如果Router组件没有path会作为默认显示的组件</strong></p>
+<p><strong>Router组件中exact的作用：路由进行了精确匹配，不会存在包含关系（/login不会匹配/）</strong></p>
+</li>
+</ul>
+<pre><code class="jsx">function App () {
+  return (
+    &lt;div&gt;
+      {/* &lt;Welcome/&gt; */}
+      &lt;BrowserRouter&gt;
+        &lt;Link to=&quot;/&quot;&gt;首页&lt;/Link&gt;&amp;nbsp;&amp;nbsp;
+        &lt;Link to=&quot;/movie/top250/20&quot;&gt;电影&lt;/Link&gt;&amp;nbsp;&amp;nbsp;
+        &lt;Link to=&quot;/about&quot;&gt;关于&lt;/Link&gt;
+        &lt;Route path=&quot;/&quot; exact component={Home}/&gt;   /////////////////////////////////
+        &lt;Route path=&quot;/movie/:type/:id&quot; component={Movie}/&gt;
+        &lt;Route path=&quot;/about&quot; component={About}/&gt;
+      &lt;/BrowserRouter&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+<ul>
+<li><h4 id="路由传参-动态路由"><a href="#路由传参-动态路由" class="headerlink" title="路由传参(动态路由)"></a>路由传参(动态路由)</h4><p><strong>组件用props.match.params</strong></p>
+</li>
+</ul>
+<pre><code class="jsx">function App () {
+  return (
+    &lt;div&gt;
+      {/* &lt;Welcome/&gt; */}
+      &lt;BrowserRouter&gt;
+        &lt;Link to=&quot;/home&quot;&gt;首页&lt;/Link&gt;&amp;nbsp;&amp;nbsp;
+        &lt;Link to=&quot;/movie/top250/20&quot;&gt;电影&lt;/Link&gt;&amp;nbsp;&amp;nbsp;
+        &lt;Link to=&quot;/about&quot;&gt;关于&lt;/Link&gt;
+        &lt;Route path=&quot;/home&quot; component={Home}/&gt;
+        &lt;Route path=&quot;/movie/:type/:id&quot; component={Movie}/&gt;
+        &lt;Route path=&quot;/about&quot; component={About}/&gt;
+      &lt;/BrowserRouter&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+<p>组件Movie</p>
+<pre><code class="jsx">class Movie extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            routerParams: props.match.params
+        }
+    }
+    render() {
+        return &lt;div&gt;这是电影---{this.state.routerParams.type}---{this.state.routerParams.id}&lt;/div&gt;
+    }
+}</code></pre>
+<ul>
+<li><h4 id="组件重定向"><a href="#组件重定向" class="headerlink" title="组件重定向"></a>组件重定向</h4></li>
+</ul>
+<pre><code class="jsx">import { BrowserRouter as Router, Route, Link, BrowserRouter, Redirect } from &#39;react-router-dom&#39;</code></pre>
+<pre><code class="jsx">function App () {
+  return (
+    &lt;div&gt;
+      {/* &lt;Welcome/&gt; */}
+      &lt;BrowserRouter&gt;
+        &lt;Link to=&quot;/home&quot;&gt;首页&lt;/Link&gt;&amp;nbsp;&amp;nbsp;
+        &lt;Link to=&quot;/movie/top250/20&quot;&gt;电影&lt;/Link&gt;&amp;nbsp;&amp;nbsp;
+        &lt;Link to=&quot;/about&quot;&gt;关于&lt;/Link&gt;
+        &lt;Route path=&quot;/home&quot; exact component={Home}/&gt;
+        &lt;Route path=&quot;/movie/:type/:id&quot; component={Movie}/&gt;
+        &lt;Route path=&quot;/about&quot; component={About}/&gt;
+        &lt;Redirect form=&quot;/home&quot; to=&quot;/about&quot;/&gt;  //////////////////////////////////////////
+      &lt;/BrowserRouter&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+<ul>
+<li><h4 id="编程式导航"><a href="#编程式导航" class="headerlink" title="编程式导航"></a>编程式导航</h4></li>
+</ul>
+<pre><code class="jsx">// 1
+import { withRouter } from &#39;react-router-dom&#39;
+// 2
+export default withRouter(Movie)
+// 3
+const { history } = this.props
+history.push(&#39;/about&#39;)</code></pre>
+<pre><code class="jsx">import React from &#39;react&#39;
+import { withRouter } from &#39;react-router-dom&#39;
+class Movie extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            routerParams: props.match.params
+        }
+    }
+    handleWithRouter = () =&gt; {
+        const { history } = this.props
+        history.push(&#39;/about&#39;)
+    }
+    render() {
+        return (
+            &lt;div&gt;
+                &lt;div&gt;这是电影---{this.state.routerParams.type}---{this.state.routerParams.id}&lt;/div&gt;
+                &lt;button onClick={this.handleWithRouter}&gt;跳转&lt;/button&gt;
+            &lt;/div&gt;
+        )
+    }
+}
+export default withRouter(Movie)</code></pre>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>react-router</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ant Design</title>
+    <url>/2020/07/17/react/Ant%20Design/</url>
+    <content><![CDATA[<h1 id="Ant-Design"><a href="#Ant-Design" class="headerlink" title="Ant Design"></a>Ant Design</h1><p>文档：<a href="https://ant.design/docs/react/introduce-cn" target="_blank" rel="noopener">https://ant.design/docs/react/introduce-cn</a></p>
+<ul>
+<li><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4></li>
+</ul>
+<pre><code class="js">npm install antd --save</code></pre>
+<ul>
+<li>使用</li>
+</ul>
+<pre><code class="jsx">import { DatePicker } from &quot;antd&quot;
+
+&lt;DatePicker /&gt;</code></pre>
+<ul>
+<li><p>引入样式</p>
+<p>在app.css最顶部引入</p>
+</li>
+</ul>
+<pre><code class="jsx">@import &#39;~antd/dist/antd.css&#39;;</code></pre>
+<h1 id="Ant-Design-Mobile"><a href="#Ant-Design-Mobile" class="headerlink" title="Ant Design Mobile"></a>Ant Design Mobile</h1><ul>
+<li><h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4></li>
+</ul>
+<pre><code class="jsx">npm install antd-mobile --save</code></pre>
+<ul>
+<li><h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4></li>
+</ul>
+<pre><code class="jsx">import { Button } from &#39;antd-mobile&#39;;</code></pre>
+<ul>
+<li><h4 id="引入样式"><a href="#引入样式" class="headerlink" title="引入样式"></a>引入样式</h4></li>
+</ul>
+<pre><code class="jsx">import &#39;antd-mobile/dist/antd-mobile.css&#39;; </code></pre>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>Ant Design</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用脚手架</title>
+    <url>/2020/07/17/react/%E4%BD%BF%E7%94%A8%E8%84%9A%E6%89%8B%E6%9E%B6/</url>
+    <content><![CDATA[<h1 id="使用脚手架"><a href="#使用脚手架" class="headerlink" title="使用脚手架"></a>使用脚手架</h1><pre><code class="js">npm install create-react-app -g
+npx create-react-app myapp
+
+npm run start</code></pre>
+<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><p>入口文件 index.js</p>
+<p>入口组件 app.js</p>
+<h2 id="组件化开发-分而治之"><a href="#组件化开发-分而治之" class="headerlink" title="组件化开发(分而治之)"></a>组件化开发(分而治之)</h2><blockquote>
+<p>组件将UI分割为可以重用的单元（组件接收数据，呈现内容）<br>原则：高内聚，低耦合</p>
+</blockquote>
+<h2 id="定义组件方式"><a href="#定义组件方式" class="headerlink" title="定义组件方式"></a>定义组件方式</h2><ul>
+<li><p>函数组件</p>
+<p>首字母必须大写</p>
+<p>父组件向子组件传值使用props(数据传递是单向数据流：props属性是只读的)</p>
+</li>
+<li><p>类组件</p>
+</li>
+</ul>
+<pre><code class="jsx">class Welcome extends React.Component {
+  render() {
+      return &lt;h1&gt;hello, world&lt;/h1&gt;
+  }
+}</code></pre>
+<h1 id="类的基本用法"><a href="#类的基本用法" class="headerlink" title="类的基本用法"></a>类的基本用法</h1><pre><code class="jsx">// 函数
+function Person (uname, age) {
+  this.uname = uname
+  this.age = age
+}
+Person.prototype.showUname = function () {
+  // console.log(this.uname)
+}
+var p = new Person(&#39;lisi&#39;, 10)
+p.showUname()
+
+// 类
+class Person {
+  constructor (uname, age) {
+    this.uname = uname
+    this.age = age
+  }
+  showUname () {
+    console.log(this.uname)
+  }
+}
+var p = new Person(&#39;lisi&#39;, 11)
+p.showUname()</code></pre>
+<h1 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h1><p><strong>既可以继承父类的属性，也可以继承父类的方法</strong></p>
+<p><strong>必须在构造函数的第一行调用父类构造函数</strong></p>
+<p><strong>super一般用于向父类构造函数传递参数</strong></p>
+<pre><code class="jsx">class Person {
+    constructor(uname, age) {
+        this.uname = uname
+        this.age = age
+    }
+    showuName () {
+        console.log(this.uname)
+    }
+}
+class Student extends Person {
+    constructor(uname, age, gender) {
+        super(uname, age)
+        this.gender = gender
+    }
+    showInfo () {
+        console.log(this.uname + &#39;-&#39; + this.age + &#39;-&#39; + this.gender)
+    }
+}
+let Stu = new Student(&#39;lisi&#39;, 10, &#39;男&#39;)
+Stu.showInfo()
+Stu.showuName()</code></pre>
+<h4 id="类组件必须用render方法渲染模板"><a href="#类组件必须用render方法渲染模板" class="headerlink" title="类组件必须用render方法渲染模板"></a>类组件必须用render方法渲染模板</h4><pre><code class="jsx">class app extends React.Component {
+  render () {
+    return (
+      &lt;div&gt;hello&lt;/div&gt;
+    )
+  }
+}</code></pre>
+<h4 id="组件接收数据props"><a href="#组件接收数据props" class="headerlink" title="组件接收数据props"></a>组件接收数据props</h4><h4 id="组件状态state"><a href="#组件状态state" class="headerlink" title="组件状态state"></a>组件状态state</h4><p>状态是组件私有的并且完全被组件控制（只有类组件有状态，函数组件没有）</p>
+<h4 id="组件状态的修改"><a href="#组件状态的修改" class="headerlink" title="组件状态的修改"></a>组件状态的修改</h4><ul>
+<li><p>类组件中状态的变化必须使用setState，不可以直接修改</p>
+<p>​    状态的修改操作是异步的</p>
+<p>​    不建议频繁调用setState（频繁调用setState并不会保证每次都更新内容）</p>
+</li>
+</ul>
+<pre><code class="jsx">class app extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      msg: &#39;hello&#39;,
+      num: 1
+    }
+  } 
+  componentDidMount () {
+    this.setState({
+      msg: &#39;nihao&#39;
+    }, () =&gt; {
+      console.log(this.state.msg)
+    })
+    // console.log(this.state.msg)
+    this.setState({
+      num: this.state.num + 1
+    })
+    this.setState({
+      num: this.state.num + 1
+    })
+    this.setState({
+      num: this.state.num + 1
+    })
+  }
+  render () {
+    return (
+      &lt;div&gt;
+        &lt;div&gt;{this.state.msg}&lt;/div&gt;
+        &lt;div&gt;{this.state.num}&lt;/div&gt;
+      &lt;/div&gt;
+    )
+  }
+}</code></pre>
+<h1 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h1><ul>
+<li>事件绑定方式</li>
+</ul>
+<pre><code class="jsx">&lt;button onclick={handle}&gt;点击&lt;/button&gt;</code></pre>
+<ul>
+<li><p>不能使用return false的方式阻止默认行为，必须使用preventDefault</p>
+</li>
+<li><p>React事件是合成对象，没有兼容问题</p>
+</li>
+<li><p>事件函数中的this</p>
+<p>​    在构造函数中绑定</p>
+<p>​    使用箭头函数</p>
+</li>
+<li><p>事件传参</p>
+</li>
+</ul>
+<pre><code class="jsx">&lt;button onClick={(e) =&gt; this.deleteRow(id, e)}&gt;删除ton&gt;
+&lt;button onClick={this.deleteRow.bind(this, id)}&gt;&lt;/button&gt;</code></pre>
+<h1 id="组件间数据传递"><a href="#组件间数据传递" class="headerlink" title="组件间数据传递"></a>组件间数据传递</h1><ul>
+<li><p>父组件向子组件传值props</p>
+</li>
+<li><p>子组件向父组件传值</p>
+<p>​    组件的函数形式属性，父组件定义一个函数，通过子组件标签的属性将该函数传递给子组件，子组件接收到该函数后可以进行调用，调用时可以将子组件的数据通过函数实参传递给父组件</p>
+</li>
+<li><p>非父子组件之间传值redux</p>
+</li>
+</ul>
+<h1 id="表单操作"><a href="#表单操作" class="headerlink" title="表单操作"></a>表单操作</h1><ul>
+<li><p>受控组件（通过事件和值的绑定委托给React操作表单域的状态）</p>
+<p>​    通过value绑定state中的值</p>
+<p>​    通过onclick绑定事件处理函数，并在函数更新对应的值</p>
+</li>
+<li><p>非受控组件</p>
+<p>​    通过ref标记实际的Dom,并可以通过current属性获取标记的元素</p>
+<p>​    可以实现元素的焦点自动获取，处理文件上传操作</p>
+</li>
+</ul>
+<pre><code class="jsx">// 构造函数中
+this.uname = React.createRef()
+
+&lt;input type=&quot;text&quot; ref={this.uname}&gt;&lt;/input&gt;
+this.uname.current.focus()</code></pre>
+<p>文件上传</p>
+<pre><code class="jsx">// 构造函数中
+this.fileRef = React.createRef()
+
+&lt;input type=&quot;file&quot; id=&quot;file&quot; ref={this.fileRef}/&gt;
+let fileInfo = this.fileRef.current.files[0]</code></pre>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>react</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>组件的生命周期</title>
+    <url>/2020/07/17/react/%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</url>
+    <content><![CDATA[<h1 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h1><h2 id="组件创建阶段"><a href="#组件创建阶段" class="headerlink" title="组件创建阶段"></a>组件创建阶段</h2><p><strong>getDefaultProps:</strong> </p>
+<p>​        初始化props属性默认值</p>
+<p>*<em>getInitialState: *</em></p>
+<p>​        初始化组件的私有数据。因为 state 是定义在组件的 constructor 构造器当中的，只要new 了 class类，必然会调用 constructor构造器。</p>
+<p><strong>componentWillMount:</strong></p>
+<p>​        组件将要被挂载。此时还没有开始渲染虚拟DOM。</p>
+<p>​        在这个阶段，不能去操作DOM元素，但可以操作属性、状态、function。相当于 Vue 中的Create()函数。</p>
+<p><strong>render:</strong></p>
+<p>​        第一次开始渲染真正的虚拟DOM。当render执行完，内存中就有了完整的虚拟DOM了。</p>
+<p>意思是，此时，虚拟DOM在内存中创建好了，但是还没有挂在到页面上。</p>
+<p>在这个函数内部，不能去操作DOM元素，因为还没return之前，虚拟DOM还没有创建；当return执行完毕后，虚拟DOM就创建好了，但是还没有挂在到页面上。</p>
+<p><strong>componentDidMount:</strong></p>
+<p>​        只要进入到这个生命周期函数，则必然说明，页面上已经有可见的DOM元素了。此时，组件已经显示到了页面上，state上的数据、内存中的虚拟DOM、以及浏览器中的页面，已经完全保持一致了。相当于 Vue 中的 mounted() 函数</p>
+<h2 id="组件运行阶段"><a href="#组件运行阶段" class="headerlink" title="组件运行阶段"></a>组件运行阶段</h2><p><strong>componentWillReceiveProps:</strong> </p>
+<p>​    组件将要接收新的属性。当父组件中的某事件重新修改了传给子组件的props后才会触发这个钩子函数</p>
+<p><strong>shouldComponentUpdate:</strong> </p>
+<p>​    判断组件是否需要被更新，此时，组件还未被更新，state和props是最新的</p>
+<p><strong>componentWillUpdate:</strong> </p>
+<p>​    组件将要被更新。此时，组件还没有被更新，在进入到这个生命周期函数的时候，内存中的虚拟DOM还是旧的，页面上的 DOM 元素也是旧的。（也就是说，此时操作的是旧的 DOM元素）</p>
+<p><strong>render:</strong></p>
+<pre><code> 此时，又要根据最新的 state 和 props，重新渲染一棵内存中的 虚拟DOM树。当 render 调用完毕，内存中的旧DOM树，已经被新DOM树替换了！此时，虚拟DOM树已经和组件的 state 保持一致了，都是最新的；但是页面还是旧的。</code></pre><p><strong>componentDidUpdate:</strong> </p>
+<p>​    此时，组件完成更新，页面被重新渲染。此时，state、虚拟DOM 和 页面已经完全保持同步。</p>
+<h2 id="组件销毁阶段"><a href="#组件销毁阶段" class="headerlink" title="组件销毁阶段"></a>组件销毁阶段</h2><p><strong>componentWillUnMount:</strong></p>
+<p>​        组件将要被卸载。此时组件还可以正常使用</p>
+]]></content>
+      <categories>
+        <category>react</category>
+      </categories>
+      <tags>
+        <tag>react</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue非父子组件传值</title>
     <url>/2020/07/17/vue/vue%E9%9D%9E%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/</url>
     <content><![CDATA[<h1 id="vue非父子组件传值"><a href="#vue非父子组件传值" class="headerlink" title="vue非父子组件传值"></a>vue非父子组件传值</h1><p>eventBus: 事件总线</p>
@@ -177,75 +789,34 @@ export default {
   <entry>
     <title>TypeScript</title>
     <url>/2020/07/17/TypeScript/TypeScript/</url>
-    <content><![CDATA[<h1 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h1><p><strong>javascript的超集，它可以编译成纯javascript,typescript可以在任何浏览器，任何计算机和任何操作系统上运行</strong></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code class="js">npm i -g typescript</code></pre>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="创建一个greeter-ts文件"><a href="#创建一个greeter-ts文件" class="headerlink" title="创建一个greeter.ts文件"></a>创建一个greeter.ts文件</h3><pre><code class="js">function greeter(person) {
-    return &#39;Hello, &#39; + person
-}
-let user = [0, 1, 2]
-document.body.innerHTML = greeter(user)</code></pre>
-<p>执行tsc greeter.ts会生成一个greeter.js文件</p>
-<h3 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h3><pre><code class="js">function greeter(person: string) {
-    return &#39;Hello, &#39; + person
-}
-let user = &#39;Jane User&#39;
-document.body.innerHTML = greeter(user)</code></pre>
-<p>若user = [0, 1, 2]为数组，编译会报错，但会创建greeter.js文件（TypeScript会警告你代码可能不会按预期执行）</p>
-<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>在TypeScript里，只在两个类型内部的结构兼容那么这两个类型就是兼容的。 这就允许我们在实现接口时候只要保证包含了接口要求的结构就可以，而不必明确地使用 <code>implements</code>语句。</p>
-<pre><code class="js">interface Person {
-    firstName: string;
-    lastName: string;
-}
-
-function greeter(person: Person) {
-    return &#39;Hello, &#39; + person.firstName + &#39;&#39; + person.lastName
-}
-let user = {firstName: &#39;Jane&#39;, lastName: &#39;User&#39;}
-document.body.innerHTML = greeter(user)</code></pre>
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>支持基于类的面向对象编程</p>
-<pre><code class="js">class Student {
-    fullName: string;
-    constructor(public firstName, public middleInitial, public lastName) {
-        this.fullName = firstName + &#39;&#39; + middleInitial + &#39;&#39; + lastName
-    }
-}
-interface Person {
-    firstName: string;
-    lastName: string;
-}
-
-function greeter(person: Person) {
-    return &#39;Hello, &#39; + person.firstName + &#39;&#39; + person.lastName
-}
-let user = new Student(&#39;Jane&#39;, &#39;M&#39;, &#39;User&#39;)
-document.body.innerHTML = greeter(user)</code></pre>
-<p>ts运行</p>
-<pre><code class="js">var Student = /** @class */ (function () {
-    function Student(firstName, middleInitial, lastName) {
-        this.firstName = firstName;
-        this.middleInitial = middleInitial;
-        this.lastName = lastName;
-        this.fullName = firstName + &#39;&#39; + middleInitial + &#39;&#39; + lastName;
-    }
-    return Student;
-}());
-function greeter(person) {
-    return &#39;Hello, &#39; + person.firstName + &#39;&#39; + person.lastName;
-}
-var user = new Student(&#39;Jane&#39;, &#39;M&#39;, &#39;User&#39;);
-document.body.innerHTML = greeter(user);</code></pre>
-<p>greeter.html</p>
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;script src=&quot;./greeter.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+    <content><![CDATA[<h1 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h1><h2 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h2><h3 id="number"><a href="#number" class="headerlink" title="number:"></a>number:</h3><pre><code class="ts">let decListeral: number = 6
+let decListeral: number = 0xf00d   //61453</code></pre>
+<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><pre><code class="ts">let uname: string = &#39;hello&#39;</code></pre>
+<h3 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a>boolean</h3><pre><code class="ts">let isDone: boolean = false</code></pre>
+<p>ts里面null和undefined的类型叫做null和undefined,本身用处不大</p>
+<h3 id="null"><a href="#null" class="headerlink" title="null"></a>null</h3><pre><code class="ts">let u: null = null</code></pre>
+<h3 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h3><pre><code class="ts">let u: undefined = undefined</code></pre>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><pre><code class="ts">let list: number[] = [1, 2, 3]</code></pre>
+<pre><code class="ts">let list: Array&lt;number&gt; = [1, 2, 3]</code></pre>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><pre><code class="ts">declare function create (o: object | null) : void
+create({ prop: 0 })</code></pre>
+<h3 id="元组Tuple"><a href="#元组Tuple" class="headerlink" title="元组Tuple"></a>元组Tuple</h3><p>允许表示一个已知元素数量的类型的数组，各元素的类型不必相同</p>
+<pre><code class="ts">let x: [string, number] = [&#39;hello&#39;, 10]</code></pre>
+<h3 id="枚举enum"><a href="#枚举enum" class="headerlink" title="枚举enum"></a>枚举enum</h3><p>“枚举”类型的定义中列举出所有可能的取值，被说明为该”枚举”类型的变量取值不能超过定义的范围。</p>
+<p><strong>枚举类型是基本数据类型</strong></p>
+<pre><code class="ts">enum Color { Red, Green, Blue }
+console.log(Color)        // {0: &quot;Red&quot;, 1: &quot;Green&quot;, 2: &quot;Blue&quot;, Red: 0, Green: 1, Blue: 2}</code></pre>
+<pre><code class="ts">enum Color { Red = 1, Green = 2, Blue = 3 }
+console.log(Color)        // {1: &quot;Red&quot;, 2: &quot;Green&quot;, 3: &quot;Blue&quot;, Red: 1, Green: 2, Blue: 3}</code></pre>
+<h3 id="Any"><a href="#Any" class="headerlink" title="Any"></a>Any</h3><p>表示任何类型，不需类型检测直接通过编译</p>
+<pre><code class="ts">let notSure: any = 4
+let notSure: any = &#39;hello&#39;</code></pre>
+<h3 id="Void"><a href="#Void" class="headerlink" title="Void"></a>Void</h3><p>表示没有任何类型，只能为它赋予undefined和null</p>
+<pre><code class="ts">let unusable: void = undefined</code></pre>
+<h3 id="Never"><a href="#Never" class="headerlink" title="Never"></a>Never</h3><p>表示永不存在的值的类型，never是那些总是会抛出异常或根本就不会有返回值的函数表达式或箭头函数表达式的返回值类型</p>
+<pre><code class="ts">function fail() {
+    return   Error(&#39;something failed&#39;)
+}</code></pre>
 ]]></content>
       <categories>
         <category>TypeScript</category>
@@ -664,6 +1235,156 @@ ImageListPageSize: 10,</code></pre>
       </categories>
       <tags>
         <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element表单正则校验</title>
+    <url>/2020/06/13/vue/element%E8%A1%A8%E5%8D%95%E6%AD%A3%E5%88%99%E6%A0%A1%E9%AA%8C/</url>
+    <content><![CDATA[<h1 id="element表单正则校验"><a href="#element表单正则校验" class="headerlink" title="element表单正则校验"></a>element表单正则校验</h1><pre><code class="js">data () {
+    let pattern = new RegExp(
+          &quot;[`~!@$^&amp;*()=|{}&#39;:;&#39;,\\[\\].&lt;&gt;/?~@￥……&amp;*（）——|{}【】‘；：”“&#39;。，、？]&quot;
+        );
+    let pattern1 = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&amp;*-]).{8,}$/
+    let validatePass = (rule, value, callback) =&gt; {
+        if (!value) {
+            return callback(new Error(&#39;密码不能为空&#39;));
+        }
+        if (value) {
+            if (!pattern1.test(value)) {
+                callback(
+                    new Error(&#39;密码必须包含大小写字母、数字和特殊字符，并且在8-20位之间&#39;)
+                )
+
+            } else {
+                callback();
+            }
+        }
+    }
+    return {
+        ruleForm: {
+            uname: [
+                { required: true, message: &#39;请输入用户名&#39;, trigger: &#39;blur&#39; },
+                { max: 20, message: &#39;长度不能超过20个字符&#39;, trigger: &#39;blur&#39; }  
+            ],
+            name: [
+                { required: true, message: &#39;请输入姓名&#39;, trigger: &#39;blur&#39; },
+                { max: 20, message: &#39;长度不能超过20个字符&#39;, trigger: &#39;blur&#39; }  
+            ],
+            pwd: [
+                { required: true, message: &#39;请输入密码&#39;, trigger: &#39;blur&#39; },
+                { validator: validatePass, trigger: &#39;blur&#39; },
+                { min: 8, max: 20, message: &#39;长度在8到20个字符之间&#39;, trigger: &#39;blur&#39; }  
+            ]
+        }
+    }
+}</code></pre>
+]]></content>
+      <categories>
+        <category>element</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vant表单正则校验</title>
+    <url>/2020/06/13/vue/vant%E8%A1%A8%E5%8D%95%E6%AD%A3%E5%88%99%E6%A0%A1%E9%AA%8C/</url>
+    <content><![CDATA[<h1 id="表格翻页后仍从1开始计数，设置为连续的数字"><a href="#表格翻页后仍从1开始计数，设置为连续的数字" class="headerlink" title="表格翻页后仍从1开始计数，设置为连续的数字"></a>表格翻页后仍从1开始计数，设置为连续的数字</h1><h1 id="vant表单正则校验"><a href="#vant表单正则校验" class="headerlink" title="vant表单正则校验"></a>vant表单正则校验</h1><pre><code class="html">&lt;div class=&quot;topLabel&quot;&gt;
+    &lt;span class=&quot;topTitle_icon&quot;&gt;*&lt;/span&gt;
+    &lt;span class=&quot;toptitle_con&quot;&gt;姓名&lt;/span&gt;
+&lt;/div&gt;
+&lt;van-field
+           v-model=&quot;username&quot;
+           required
+           name=&quot;姓名&quot;
+           placeholder=&quot;请输入姓名&quot;
+           :rules=&quot;rules.username&quot;
+           /&gt;
+&lt;div class=&quot;topLabel&quot;&gt;
+    &lt;span class=&quot;topTitle_icon&quot;&gt;*&lt;/span&gt;
+    &lt;span class=&quot;toptitle_con&quot;&gt;手机号&lt;/span&gt;
+&lt;/div&gt;
+&lt;van-field
+           v-model=&quot;phone&quot;
+           required
+           type=&quot;tel&quot;
+           name=&quot;手机号&quot;
+           placeholder=&quot;手机号&quot;
+           :rules=&quot;rules.phone&quot;
+           /&gt;
+&lt;!-- &lt;van-cell title=&quot;证件类型&quot; is-link arrow-direction=&quot;down&quot; value=&quot;内容&quot; /&gt; --&gt;
+&lt;div class=&quot;topLabel&quot;&gt;
+    &lt;span class=&quot;topTitle_icon&quot;&gt;*&lt;/span&gt;
+    &lt;span class=&quot;toptitle_con&quot;&gt;证件类型&lt;/span&gt;
+&lt;/div&gt;
+&lt;van-dropdown-menu&gt;
+    &lt;van-dropdown-item v-model=&quot;uIDType&quot; :options=&quot;option1&quot; /&gt;
+&lt;/van-dropdown-menu&gt;
+&lt;div class=&quot;topLabel&quot;&gt;
+    &lt;span class=&quot;topTitle_icon&quot;&gt;*&lt;/span&gt;
+    &lt;span class=&quot;toptitle_con&quot;&gt;证件号码&lt;/span&gt;
+&lt;/div&gt;
+&lt;van-field
+           v-model=&quot;userID&quot;
+           required
+           name=&quot;证件号码&quot;
+           placeholder=&quot;请输入证件号码&quot;
+           :rules=&quot;rules.userID&quot;
+ /&gt;</code></pre>
+<pre><code class="js">rules: {
+   username: [
+     { required: true, message: &#39;请输入姓名&#39; },
+     { validator: this.validatorName, message: &#39;姓名不能为空和特殊字符&#39;, trigger: &#39;onBlur&#39; }
+    ],
+   phone: [
+      { required: true, message: &#39;请输入手机号&#39; },
+      { validator: this.validatorPhoneBlank, message: &#39;手机号不能为空&#39;, trigger: &#39;onBlur&#39; },
+      { validator: this.validatorPhone, message: &#39;手机号格式有误&#39;, trigger: &#39;onBlur&#39; },
+   ],
+   userID: [
+     { required: true, message: &#39;请输入证件号&#39; },
+     { validator: this.validatorIDBlank, message: &#39;证件号不能为空&#39;, trigger: &#39;onBlur&#39; },
+     { validator: this.validatorID, message: &#39;证件号有误&#39;, trigger: &#39;onBlur&#39; },
+   ]
+}</code></pre>
+<pre><code class="js">// 校验身份证
+validatorID () {
+    let pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.userID.trim())
+},
+validatorIDBlank () {
+   if (this.userID.trim() === &#39;&#39;) {
+      let pattern = /^[\s　]|[ ]$/gi
+      return !pattern.test(this.userID)
+   }
+},
+// 校验手机号
+validatorPhone () {
+   let pattern = /^[1][3-8][0-9]{9}$/
+   return /^[1][3-8][0-9]{9}$/.test(this.phone.trim())
+},
+validatorPhoneBlank () {
+   if (this.phone.trim() === &#39;&#39;) {
+      let pattern = /^[\s　]|[ ]$/gi
+      return !pattern.test(this.phone)
+    }
+},
+// 校验姓名
+validatorName () {
+  if (this.username&amp;&amp;this.username.trim() === &#39;&#39;) {
+     let pattern = /^[\s　]|[ ]$/gi
+     return !pattern.test(this.username)
+   } else {
+      let pattern = /[`~!@#$%^&amp;*()_\-+=&lt;&gt;?:&quot;{}|,.\/;&#39;\\[\]·~！@#￥%……&amp;*（）——\-+={}|《》？：“”【】、；‘&#39;，。、]/im
+       return !pattern.test(this.username)
+    }
+},</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -2645,6 +3366,115 @@ abc()</code></pre>]]></content>
       </categories>
       <tags>
         <tag>原型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数组去重</title>
+    <url>/2020/04/12/js/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/</url>
+    <content><![CDATA[<h1 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h1><ul>
+<li><h4 id="双层循环"><a href="#双层循环" class="headerlink" title="双层循环"></a>双层循环</h4></li>
+</ul>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+function unique(arr) {
+    var res = []
+    for (var i = 0; i &lt; arr.length; i++) {
+        for (var j = 0; j &lt; res.length; j++) {
+            if (arr[i] === res[j]) {
+                break
+            }
+        }
+        if (j === res.length) {
+            res.push(arr[i])
+        }
+    }
+    return res
+}
+console.log(unique(arr))</code></pre>
+<ul>
+<li><h4 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h4></li>
+</ul>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+function unique(arr) {
+    var res = []
+    for (var i = 0; i &lt; arr.length; i++) {
+        if (res.indexOf(arr[i]) === -1) {
+            res.push(arr[i])
+        }
+    }
+    return res
+}
+console.log(unique(arr))</code></pre>
+<ul>
+<li><h4 id="排序后去重"><a href="#排序后去重" class="headerlink" title="排序后去重"></a>排序后去重</h4></li>
+</ul>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+function unique(arr) {
+    var res = []
+    var sortedArr = arr.concat().sort()
+    var seen
+    for (var i = 0; i &lt; sortedArr.length; i++) {
+        if (!i || seen !== sortedArr[i]) {
+            res.push(sortedArr[i])
+        }
+        seen = sortedArr[i]
+    }
+    return res
+}
+console.log(unique(arr))</code></pre>
+<ul>
+<li><h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4></li>
+</ul>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+function unique(arr) {
+    debugger
+    var res = arr.filter((item, index, arr) =&gt; {
+        return arr.indexOf(item) === index
+    })
+    return res
+}
+console.log(unique(arr))</code></pre>
+<ul>
+<li><h4 id="排序去重"><a href="#排序去重" class="headerlink" title="排序去重"></a>排序去重</h4></li>
+</ul>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+function unique(arr) {
+    var res = arr.concat().sort().filter((item, index, arr) =&gt; {
+        return !index || item !== arr[index-1]
+    })
+    return res
+}
+console.log(unique(arr))</code></pre>
+<ul>
+<li><h4 id="es6"><a href="#es6" class="headerlink" title="es6"></a>es6</h4></li>
+</ul>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+function unique(arr) {
+    return Array.from(new Set(arr))
+}
+console.log(unique(arr))</code></pre>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+function unique(arr) {
+    return Array.from(new Set(arr))
+}
+console.log(unique(arr))</code></pre>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+var unique = (arr) =&gt; [...new Set(arr)]
+console.log(unique(arr))</code></pre>
+<ul>
+<li><h4 id="使用map"><a href="#使用map" class="headerlink" title="使用map"></a>使用map</h4></li>
+</ul>
+<pre><code class="js">var arr = [1, 2, 1, 3, 4]
+function unique(arr) {
+    const seen = new Map()
+    return arr.filter((arr) =&gt; !seen.has(arr) &amp;&amp; seen.set(arr, 1))
+}
+console.log(unique(arr))</code></pre>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>数组去重</tag>
       </tags>
   </entry>
   <entry>
@@ -4915,6 +5745,24 @@ export default (url, method, data) =&gt; {
  let pattern = /[`~!@#$%^&amp;*()_\-+=&lt;&gt;?:&quot;{}|,.\/;&#39;\\[\]·~！@#￥%……&amp;*（）——\-+={}|《》？：“”【】、；‘&#39;，。、]/im
 
  或 value.match(pattern)</code></pre>
+<h1 id="密码"><a href="#密码" class="headerlink" title="密码"></a>密码</h1><pre><code class="js">let pattern1 = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&amp;*-]).{8,}$/
+let validatePass = (rule, value, callback) =&gt; {
+    if (!value) {
+        return callback(new Error(&#39;密码不能为空&#39;));
+    }
+    if (value) {
+        if (!pattern1.test(value)) {
+            callback(
+                new Error(&#39;密码必须包含大小写字母、数字和特殊字符，并且在8-20位之间&#39;)
+            )
+            // callback(
+            //     new Error(&#39;不能使用特殊字符&#39;)
+            // )
+        } else {
+            callback();
+        }
+    }
+}</code></pre>
 <h1 id="邮箱"><a href="#邮箱" class="headerlink" title="邮箱"></a>邮箱</h1><pre><code class="js">let pattern = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/</code></pre>
 <h1 id="电话"><a href="#电话" class="headerlink" title="电话"></a>电话</h1><pre><code class="js">let pattern = /^[1][3-8][0-9]{9}$/</code></pre>
 <h1 id="校验身份证"><a href="#校验身份证" class="headerlink" title="校验身份证"></a>校验身份证</h1><pre><code class="js">let pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/</code></pre>
@@ -5316,7 +6164,7 @@ chart.setOption(option)
   </entry>
   <entry>
     <title>hexo引用本地图片无法显示</title>
-    <url>/2020/01/06/problem/hexoImg/</url>
+    <url>/2020/01/06/hexo/hexoImg/</url>
     <content><![CDATA[<p><strong>hexo引用本地图片无法显示</strong></p>
 <ul>
 <li>_config.yml文件中修改<code>post_asset_folder: true</code></li>
@@ -5402,7 +6250,7 @@ hexo.extend.filter.register(&#39;after_post_render&#39;, function(data){
   </entry>
   <entry>
     <title>hexo代码高亮</title>
-    <url>/2020/01/06/problem/problem/</url>
+    <url>/2020/01/06/hexo/problem/</url>
     <content><![CDATA[<p><strong>hexo代码高亮</strong></p>
 <ul>
 <li><p>在主题的_config.yml文件中修改highlight为true,可自定义主题</p>
