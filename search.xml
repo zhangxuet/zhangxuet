@@ -1260,6 +1260,30 @@ ImageListPageSize: 10,</code></pre>
             }
         }
     }
+    let patternPhone = /^[1][3-8][0-9]{9}$/
+    var validatePhone = (rule, value, callback) =&gt; {
+        if (value) {
+            if (!patternPhone.test(value.trim())) {
+                callback(
+                    new Error(&#39;手机号格式有误&#39;)
+                )
+            } else {
+                callback()
+            }
+        }
+    }
+    let patternID = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    var validateID = (rule, value, callback) =&gt; {
+        if (value) {
+            if (!patternID.test(value.trim())) {
+                callback(
+                    new Error(&#39;证件号格式有误&#39;)
+                )
+            } else {
+                callback()
+            }
+        }
+    }
     return {
         ruleForm: {
             uname: [
@@ -1274,7 +1298,18 @@ ImageListPageSize: 10,</code></pre>
                 { required: true, message: &#39;请输入密码&#39;, trigger: &#39;blur&#39; },
                 { validator: validatePass, trigger: &#39;blur&#39; },
                 { min: 8, max: 20, message: &#39;长度在8到20个字符之间&#39;, trigger: &#39;blur&#39; }  
-            ]
+            ],
+            phone: [
+                { required: true, message: &#39;请输入租客手机号码&#39;, trigger: &#39;blur&#39; },
+                { validator: validatePhone, trigger: &#39;blur&#39; }
+            ],
+            IDtype: [
+                { required: true, message: &#39;请选择租客证件类型&#39;, trigger: &#39;change&#39; }
+            ],
+            IDNum: [
+                { required: true, message: &#39;请输入租客证件号码&#39;, trigger: &#39;blur&#39; },
+                { validator: validateID, trigger: &#39;blur&#39; }
+            ],
         }
     }
 }</code></pre>

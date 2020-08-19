@@ -6,16 +6,16 @@
   <meta name="keywords" content=" element ">
   <meta name="description" content="element表单正则校验 | Ting">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="vue非父子组件传值eventBus: 事件总线 先定义公共bus没有dom，仅仅有实例方法 import Vue from &#39;vue&#39; export default new Vue() 第一种两个组件组件1：发送事件 &lt;script&gt; import Bus from &#39;@&#x2F;utils&#x2F;bus&#39; export default {   name: &amp;#39">
+<meta name="description" content="使用 引入react库文件react和react-dom 引入babel运行时（React代码浏览器不认识，需要通过babel把react代码转化为js代码）  第一个文件 &lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;en&quot;&gt; &lt;head&gt;     &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue非父子组件传值">
-<meta property="og:url" content="https://zhangxuet.github.io/2020/07/17/vue/vue%E9%9D%9E%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/index.html">
+<meta property="og:title" content="react基础">
+<meta property="og:url" content="https://zhangxuet.github.io/2020/07/17/react/react%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Ting">
-<meta property="og:description" content="vue非父子组件传值eventBus: 事件总线 先定义公共bus没有dom，仅仅有实例方法 import Vue from &#39;vue&#39; export default new Vue() 第一种两个组件组件1：发送事件 &lt;script&gt; import Bus from &#39;@&#x2F;utils&#x2F;bus&#39; export default {   name: &amp;#39">
-<meta property="article:published_time" content="2020-07-17T12:32:32.000Z">
-<meta property="article:modified_time" content="2020-07-17T12:33:51.531Z">
+<meta property="og:description" content="使用 引入react库文件react和react-dom 引入babel运行时（React代码浏览器不认识，需要通过babel把react代码转化为js代码）  第一个文件 &lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;en&quot;&gt; &lt;head&gt;     &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;">
+<meta property="article:published_time" content="2020-07-17T13:15:02.000Z">
+<meta property="article:modified_time" content="2020-08-12T11:20:27.584Z">
 <meta property="article:author" content="Ting">
-<meta property="article:tag" content="vue">
+<meta property="article:tag" content="react">
 <meta name="twitter:card" content="summary">
 
 
@@ -268,7 +268,7 @@
     <div><a class="about  site_url"  href="javascript:void(0)">关于</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="77">
-<input type="hidden" id="yelog_site_word_count" value="32.2k">
+<input type="hidden" id="yelog_site_word_count" value="32.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -1089,12 +1089,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-08-12 19:22:26'>2020-06-13 11:50</time>
+        创建时间:<time class="date" title='更新时间: 2020-08-19 21:20:36'>2020-06-13 11:50</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:202</span>
+        <span>字数:344</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1149,6 +1149,30 @@
             }
         }
     }
+    let patternPhone = /^[1][3-8][0-9]{9}$/
+    var validatePhone = (rule, value, callback) =&gt; {
+        if (value) {
+            if (!patternPhone.test(value.trim())) {
+                callback(
+                    new Error(&#39;手机号格式有误&#39;)
+                )
+            } else {
+                callback()
+            }
+        }
+    }
+    let patternID = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    var validateID = (rule, value, callback) =&gt; {
+        if (value) {
+            if (!patternID.test(value.trim())) {
+                callback(
+                    new Error(&#39;证件号格式有误&#39;)
+                )
+            } else {
+                callback()
+            }
+        }
+    }
     return {
         ruleForm: {
             uname: [
@@ -1163,7 +1187,18 @@
                 { required: true, message: &#39;请输入密码&#39;, trigger: &#39;blur&#39; },
                 { validator: validatePass, trigger: &#39;blur&#39; },
                 { min: 8, max: 20, message: &#39;长度在8到20个字符之间&#39;, trigger: &#39;blur&#39; }  
-            ]
+            ],
+            phone: [
+                { required: true, message: &#39;请输入租客手机号码&#39;, trigger: &#39;blur&#39; },
+                { validator: validatePhone, trigger: &#39;blur&#39; }
+            ],
+            IDtype: [
+                { required: true, message: &#39;请选择租客证件类型&#39;, trigger: &#39;change&#39; }
+            ],
+            IDNum: [
+                { required: true, message: &#39;请输入租客证件号码&#39;, trigger: &#39;blur&#39; },
+                { validator: validateID, trigger: &#39;blur&#39; }
+            ],
         }
     }
 }</code></pre>
@@ -1177,10 +1212,10 @@
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>element表单正则校验</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">202</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">344</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
     <p><span class="copy-title">发布时间:</span>2020-06-13, 11:50:50</p>
-    <p><span class="copy-title">最后更新:</span>2020-08-12, 19:22:26</p>
+    <p><span class="copy-title">最后更新:</span>2020-08-19, 21:20:36</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/06/13/vue/element%E8%A1%A8%E5%8D%95%E6%AD%A3%E5%88%99%E6%A0%A1%E9%AA%8C/" title="element表单正则校验">https://zhangxuet.github.io/2020/06/13/vue/element%E8%A1%A8%E5%8D%95%E6%AD%A3%E5%88%99%E6%A0%A1%E9%AA%8C/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
