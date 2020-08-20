@@ -88,6 +88,18 @@
       </tags>
   </entry>
   <entry>
+    <title>img图片为base64</title>
+    <url>/2020/08/20/vue/img%E5%9B%BE%E7%89%87%E4%B8%BAbase64/</url>
+    <content><![CDATA[<h1 id="img图片为base64"><a href="#img图片为base64" class="headerlink" title="img图片为base64"></a>img图片为base64</h1><pre><code class="html">&lt;img src=&quot;data:image/jpeg;base64,/9j/4A</code></pre>
+]]></content>
+      <categories>
+        <category>element</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>element上传图片base64格式</title>
     <url>/2020/08/20/vue/element%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87base64%E6%A0%BC%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="element上传图片base64格式"><a href="#element上传图片base64格式" class="headerlink" title="element上传图片base64格式"></a>element上传图片base64格式</h1><pre><code class="html">&lt;el-upload
@@ -1602,18 +1614,6 @@ validatorName () {
       </categories>
       <tags>
         <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>img图片为base64</title>
-    <url>/2020/06/13/vue/img%E5%9B%BE%E7%89%87%E4%B8%BAbase64/</url>
-    <content><![CDATA[<h1 id="img图片为base64"><a href="#img图片为base64" class="headerlink" title="img图片为base64"></a>img图片为base64</h1><pre><code class="html">&lt;img src=&quot;data:image/jpeg;base64,/9j/4A</code></pre>
-]]></content>
-      <categories>
-        <category>element</category>
-      </categories>
-      <tags>
-        <tag>element</tag>
       </tags>
   </entry>
   <entry>
