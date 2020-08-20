@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>img图片为base64 | Ting</title>
+  <meta name="keywords" content=" element ">
+  <meta name="description" content="img图片为base64 | Ting">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="使用 引入react库文件react和react-dom 引入babel运行时（React代码浏览器不认识，需要通过babel把react代码转化为js代码）  第一个文件 &lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;en&quot;&gt; &lt;head&gt;     &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react基础">
+<meta property="og:url" content="https://zhangxuet.github.io/2020/07/17/react/react%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Ting">
+<meta property="og:description" content="使用 引入react库文件react和react-dom 引入babel运行时（React代码浏览器不认识，需要通过babel把react代码转化为js代码）  第一个文件 &lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;en&quot;&gt; &lt;head&gt;     &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;">
+<meta property="article:published_time" content="2020-07-17T13:15:02.000Z">
+<meta property="article:modified_time" content="2020-08-12T11:20:27.584Z">
+<meta property="article:author" content="Ting">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/kimbie-dark.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>Ting</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="github" href="https://zhangxuet.github.io/" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(81)</small></div></li>
+    
+        
+            
+            <li><div data-rel="工具">工具<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="技术">技术<small>(6)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="echarts">echarts<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="node">node<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="vue">vue<small>(24)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="正则">正则<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="webpack">webpack<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="小程序">小程序<small>(7)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="css">css<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="js">js<small>(10)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="ajax">ajax<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="git">git<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="websocket">websocket<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="项目优化">项目优化<small>(3)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="element">element<small>(5)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="rem">rem<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="跨域">跨域<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="TypeScript">TypeScript<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="vant">vant<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="mockjs">mockjs<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="hexo">hexo<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="react">react<small>(5)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a class="about  site_url"  href="javascript:void(0)">关于</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="81">
+<input type="hidden" id="yelog_site_word_count" value="33.1k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode==13){return false;}">
+        <input class="search" type="text" placeholder="search..." autocomplete="off"id="local-search-input" >
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color3">工具</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">markdown</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">echarts</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">node-sass</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">vue</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">正则</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">token</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">node</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">webpack</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">小程序</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">css</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">tabbar</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">js</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">ajax</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">git</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">原型</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">闭包</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">mvvm</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">websocket</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">element</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">优化</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">rem</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">跨域</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">项目优化</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">TypeScript</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">vant</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">mockjs</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">react</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">数组去重</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">react-router</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">Ant Design</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2019/12/31/First/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="First">First</span>
+            <span class="post-date" title="2019-12-31 16:49:20">2019/12/31</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/12/31/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2019-12-31 08:37:56">2019/12/31</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2020/01/02/resources/index/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="工具">工具</span>
+            <span class="post-date" title="2020-01-02 10:06:54">2020/01/02</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/01/02/blog/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="blog搭建">blog搭建</span>
+            <span class="post-date" title="2020-01-02 22:59:41">2020/01/02</span>
+        </a>
+        
+        <a  class="echarts "
+           href="/2020/01/06/echarts/echarts/"
+           data-tag="echarts"
+           data-author="" >
+            <span class="post-title" title="echarts">echarts</span>
+            <span class="post-date" title="2020-01-06 22:27:11">2020/01/06</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/27/vue/vue-print/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="VUE打印功能">VUE打印功能</span>
+            <span class="post-date" title="2020-02-27 20:28:51">2020/02/27</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/27/vue/elemenet-print/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="element表格导出功能">element表格导出功能</span>
+            <span class="post-date" title="2020-02-27 17:52:22">2020/02/27</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/03/11/vue/token/"
+           data-tag="token"
+           data-author="" >
+            <span class="post-title" title="token">token</span>
+            <span class="post-date" title="2020-03-11 11:36:01">2020/03/11</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/03/13/vue/i18n/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="Element使用i18n国际化">Element使用i18n国际化</span>
+            <span class="post-date" title="2020-03-13 09:05:24">2020/03/13</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/02/21/vue/node-sass/"
+           data-tag="node-sass"
+           data-author="" >
+            <span class="post-title" title="离线安装node-sass">离线安装node-sass</span>
+            <span class="post-date" title="2020-02-21 12:18:27">2020/02/21</span>
+        </a>
+        
+        <a  class="node "
+           href="/2020/03/13/node/node/"
+           data-tag="node"
+           data-author="" >
+            <span class="post-title" title="node写接口">node写接口</span>
+            <span class="post-date" title="2020-03-13 09:54:42">2020/03/13</span>
+        </a>
+        
+        <a  class="webpack "
+           href="/2020/03/13/webpack/"
+           data-tag="webpack"
+           data-author="" >
+            <span class="post-title" title="webpack4打包vue文件">webpack4打包vue文件</span>
+            <span class="post-date" title="2020-03-13 19:03:46">2020/03/13</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/03/17/echarts/vue-echarts/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="vue-echarts">vue-echarts</span>
+            <span class="post-date" title="2020-03-17 17:44:49">2020/03/17</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/03/20/wxprogram/i18n/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序国际化">小程序国际化</span>
+            <span class="post-date" title="2020-03-20 10:24:27">2020/03/20</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/03/28/wxprogram/%E5%90%B8%E9%A1%B6/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序吸顶效果">小程序吸顶效果</span>
+            <span class="post-date" title="2020-03-28 14:15:14">2020/03/28</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/03/19/wxprogram/wxprogram/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="mpvue框架">mpvue框架</span>
+            <span class="post-date" title="2020-03-19 10:24:18">2020/03/19</span>
+        </a>
+        
+        <a  class="css "
+           href="/2020/03/28/css/css/"
+           data-tag="css"
+           data-author="" >
+            <span class="post-title" title="css选三角形">css选三角形</span>
+            <span class="post-date" title="2020-03-28 14:04:11">2020/03/28</span>
+        </a>
+        
+        <a  class="webpack "
+           href="/2020/03/30/webpack/vue%E5%92%8Cwebpack/"
+           data-tag="webpack"
+           data-author="" >
+            <span class="post-title" title="vue和webpack">vue和webpack</span>
+            <span class="post-date" title="2020-03-30 16:02:02">2020/03/30</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/04/02/wxprogram/tabbar/"
+           data-tag="tabbar"
+           data-author="" >
+            <span class="post-title" title="小程序自定义tabbar">小程序自定义tabbar</span>
+            <span class="post-date" title="2020-04-02 13:04:15">2020/04/02</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/10/js/js%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="时间格式化">时间格式化</span>
+            <span class="post-date" title="2020-04-10 15:42:42">2020/04/10</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/04/02/css/css%E5%8D%8A%E5%9C%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="css半圆">css半圆</span>
+            <span class="post-date" title="2020-04-02 15:36:56">2020/04/02</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/03/28/wxprogram/%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序基本使用">小程序基本使用</span>
+            <span class="post-date" title="2020-03-28 14:15:14">2020/03/28</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/04/10/wxprogram/request/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序封装通用的接口调用">小程序封装通用的接口调用</span>
+            <span class="post-date" title="2020-04-10 16:34:24">2020/04/10</span>
+        </a>
+        
+        <a  class="ajax "
+           href="/2020/04/12/ajax/ajax/"
+           data-tag="ajax"
+           data-author="" >
+            <span class="post-title" title="ajax">ajax</span>
+            <span class="post-date" title="2020-04-12 14:53:10">2020/04/12</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/12/js/this%E6%8C%87%E5%90%91/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="this指向">this指向</span>
+            <span class="post-date" title="2020-04-12 13:24:59">2020/04/12</span>
+        </a>
+        
+        <a  class="git "
+           href="/2020/04/12/git/git/"
+           data-tag="git"
+           data-author="" >
+            <span class="post-title" title="git">git</span>
+            <span class="post-date" title="2020-04-12 15:21:29">2020/04/12</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/12/js/%E5%8E%9F%E5%9E%8B/"
+           data-tag="原型"
+           data-author="" >
+            <span class="post-title" title="原型">原型</span>
+            <span class="post-date" title="2020-04-12 13:55:16">2020/04/12</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/04/12/js/%E9%97%AD%E5%8C%85/"
+           data-tag="闭包"
+           data-author="" >
+            <span class="post-title" title="闭包">闭包</span>
+            <span class="post-date" title="2020-04-12 14:28:51">2020/04/12</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/12/vue/mvvm/"
+           data-tag="vue,mvvm"
+           data-author="" >
+            <span class="post-title" title="mvvm">mvvm</span>
+            <span class="post-date" title="2020-04-12 15:45:22">2020/04/12</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/12/vue/vue%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue基础知识">vue基础知识</span>
+            <span class="post-date" title="2020-04-12 15:48:26">2020/04/12</span>
+        </a>
+        
+        <a  class="websocket "
+           href="/2020/04/14/websocket/websocket/"
+           data-tag="websocket"
+           data-author="" >
+            <span class="post-title" title="websocket">websocket</span>
+            <span class="post-date" title="2020-04-14 22:02:01">2020/04/14</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/14/vue/vue%E7%A7%BB%E5%8A%A8%E7%AB%AF/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue移动端">vue移动端</span>
+            <span class="post-date" title="2020-04-14 23:40:54">2020/04/14</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="频道管理">频道管理</span>
+            <span class="post-date" title="2020-04-15 11:12:07">2020/04/15</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/14/vue/%E6%90%9C%E7%B4%A2%E8%AE%B0%E5%BD%95/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="搜索记录">搜索记录</span>
+            <span class="post-date" title="2020-04-14 23:20:29">2020/04/14</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/14/js/js%E6%96%B9%E6%B3%95/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="js数组的方法">js数组的方法</span>
+            <span class="post-date" title="2020-04-14 23:22:16">2020/04/14</span>
+        </a>
+        
+        <a  class="小程序 "
+           href="/2020/04/22/wxprogram/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8vant-weapp/"
+           data-tag="小程序"
+           data-author="" >
+            <span class="post-title" title="小程序使用vant-weapp">小程序使用vant-weapp</span>
+            <span class="post-date" title="2020-04-22 12:38:54">2020/04/22</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/20/vue/element/"
+           data-tag="element"
+           data-author="" >
+            <span class="post-title" title="element">element</span>
+            <span class="post-date" title="2020-04-20 12:22:55">2020/04/20</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/04/28/vue/vue-router/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue-router">vue-router</span>
+            <span class="post-date" title="2020-04-28 22:50:55">2020/04/28</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/05/25/js/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="浅拷贝和深拷贝">浅拷贝和深拷贝</span>
+            <span class="post-date" title="2020-05-25 09:58:17">2020/05/25</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/05/18/js/js%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="js判断数据类型">js判断数据类型</span>
+            <span class="post-date" title="2020-05-18 09:35:45">2020/05/18</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/05/17/vue/%E6%94%B6%E8%97%8F%E5%9B%BE%E7%89%87/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="收藏图片">收藏图片</span>
+            <span class="post-date" title="2020-05-17 16:51:52">2020/05/17</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/05/17/vue/%E4%BD%BF%E7%94%A8json-bigint%E5%A4%84%E7%90%86%E6%9C%80%E5%A4%A7%E5%AE%89%E5%85%A8%E6%95%B0%E5%80%BC/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="使用json-bigint处理最大安全数值">使用json-bigint处理最大安全数值</span>
+            <span class="post-date" title="2020-05-17 16:14:20">2020/05/17</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/05/17/vue/vue%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue导航守卫">vue导航守卫</span>
+            <span class="post-date" title="2020-05-17 18:00:10">2020/05/17</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/05/17/vue/vue%E6%8F%92%E6%A7%BD/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue插槽">vue插槽</span>
+            <span class="post-date" title="2020-05-17 17:03:08">2020/05/17</span>
+        </a>
+        
+        <a  class="跨域 "
+           href="/2020/05/16/vue/%E8%B7%A8%E5%9F%9F/"
+           data-tag="跨域"
+           data-author="" >
+            <span class="post-title" title="跨域">跨域</span>
+            <span class="post-date" title="2020-05-16 19:30:01">2020/05/16</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/06/09/js/%E8%8E%B7%E5%8F%96url%E9%97%AE%E5%8F%B7%E5%90%8E%E8%BE%B9%E7%9A%84%E5%8F%82%E6%95%B0/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="获取url问号后边的参数">获取url问号后边的参数</span>
+            <span class="post-date" title="2020-06-09 00:18:30">2020/06/09</span>
+        </a>
+        
+        <a  class="项目优化 "
+           href="/2020/07/05/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/%E7%82%B9%E5%87%BBinput%E4%BC%9A%E6%94%BE%E5%A4%A7%E9%A1%B5%E9%9D%A2/"
+           data-tag="优化"
+           data-author="" >
+            <span class="post-title" title="点击input会放大页面">点击input会放大页面</span>
+            <span class="post-date" title="2020-07-05 22:33:24">2020/07/05</span>
+        </a>
+        
+        <a  class="element "
+           href="/2020/06/13/vue/element%E8%A1%A8%E6%A0%BC%E7%BF%BB%E9%A1%B5/"
+           data-tag="element"
+           data-author="" >
+            <span class="post-title" title="element表格翻页">element表格翻页</span>
+            <span class="post-date" title="2020-06-13 11:50:50">2020/06/13</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/07/05/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%9A%E5%8A%A8%E5%9B%9E%E5%BC%B9%E6%95%88%E6%9E%9C/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="移动端滚动回弹效果">移动端滚动回弹效果</span>
+            <span class="post-date" title="2020-07-05 22:33:51">2020/07/05</span>
+        </a>
+        
+        <a  class="rem "
+           href="/2020/06/13/vue/vue%E4%BD%BF%E7%94%A8rem/"
+           data-tag="rem"
+           data-author="" >
+            <span class="post-title" title="vue使用rem">vue使用rem</span>
+            <span class="post-date" title="2020-06-13 11:37:42">2020/06/13</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/06/08/vue/vue%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue预览插件">vue预览插件</span>
+            <span class="post-date" title="2020-06-08 23:11:16">2020/06/08</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/07/05/js/base64%E5%92%8C%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="base64和文件转换">base64和文件转换</span>
+            <span class="post-date" title="2020-07-05 23:48:04">2020/07/05</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/07/05/js/canvas%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="canvas压缩图片">canvas压缩图片</span>
+            <span class="post-date" title="2020-07-05 23:56:19">2020/07/05</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/07/05/js/js%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%AE%A1%E7%AE%97%E5%B9%B4%E9%BE%84/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="js身份证计算年龄">js身份证计算年龄</span>
+            <span class="post-date" title="2020-07-05 23:47:42">2020/07/05</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/07/05/vue/canvas%E7%AD%BE%E5%AD%97/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="canvas签字">canvas签字</span>
+            <span class="post-date" title="2020-07-05 23:59:23">2020/07/05</span>
+        </a>
+        
+        <a  class="项目优化 "
+           href="/2020/07/05/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/vue%E5%8D%95%E5%87%BB%E6%88%96%E5%8F%8C%E5%87%BB%E4%BC%9A%E5%87%BA%E7%8E%B0%E8%93%9D%E8%89%B2%E8%83%8C%E6%99%AF/"
+           data-tag="优化"
+           data-author="" >
+            <span class="post-title" title="vue单击或双击会出现蓝色背景">vue单击或双击会出现蓝色背景</span>
+            <span class="post-date" title="2020-07-05 23:29:22">2020/07/05</span>
+        </a>
+        
+        <a  class="项目优化 "
+           href="/2020/07/05/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/%E9%BC%A0%E6%A0%87%E7%A6%81%E6%AD%A2%E5%8D%95%E5%87%BB/"
+           data-tag="项目优化"
+           data-author="" >
+            <span class="post-title" title="鼠标禁止单击">鼠标禁止单击</span>
+            <span class="post-date" title="2020-07-05 23:31:45">2020/07/05</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/07/06/chunk/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="chunk">chunk</span>
+            <span class="post-date" title="2020-07-06 00:15:43">2020/07/06</span>
+        </a>
+        
+        <a  class="TypeScript "
+           href="/2020/07/17/TypeScript/TypeScript/"
+           data-tag="TypeScript"
+           data-author="" >
+            <span class="post-title" title="TypeScript">TypeScript</span>
+            <span class="post-date" title="2020-07-17 20:31:01">2020/07/17</span>
+        </a>
+        
+        <a  class="vant "
+           href="/2020/07/17/vue/vant-image%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA/"
+           data-tag="vant"
+           data-author="" >
+            <span class="post-title" title="vant-image本地图片无法显示">vant-image本地图片无法显示</span>
+            <span class="post-date" title="2020-07-17 20:22:29">2020/07/17</span>
+        </a>
+        
+        <a  class="mockjs "
+           href="/2020/07/17/mockjs/vue%E4%B8%AD%E4%BD%BF%E7%94%A8mock-js/"
+           data-tag="mockjs"
+           data-author="" >
+            <span class="post-title" title="vue中使用mock.js">vue中使用mock.js</span>
+            <span class="post-date" title="2020-07-17 20:29:18">2020/07/17</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/07/17/vue/Vue%E6%95%B0%E7%BB%84%E6%94%B9%E5%8F%98%E8%A7%86%E5%9B%BE%E4%B8%8D%E6%9B%B4%E6%96%B0/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="Vue数组改变视图不更新">Vue数组改变视图不更新</span>
+            <span class="post-date" title="2020-07-17 20:26:57">2020/07/17</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/07/06/vue/vue-loading-chunk/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue-loading-chunk">vue-loading-chunk</span>
+            <span class="post-date" title="2020-07-06 00:16:41">2020/07/06</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/07/17/vue/vue-print%E6%8F%92%E4%BB%B6%E6%89%93%E5%8D%B0%E6%97%B6%E5%A4%9A%E4%BA%86%E5%BC%A0%E7%A9%BA%E7%99%BD%E9%A1%B5/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue-print插件打印时多了张空白页">vue-print插件打印时多了张空白页</span>
+            <span class="post-date" title="2020-07-17 20:23:55">2020/07/17</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/07/17/vue/vue%E9%9D%9E%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vue非父子组件传值">vue非父子组件传值</span>
+            <span class="post-date" title="2020-07-17 20:32:32">2020/07/17</span>
+        </a>
+        
+        <a  class="技术 "
+           href="/2020/07/06/vue/vue%E8%BF%9B%E5%85%A5%E9%A1%B5%E9%9D%A2%E5%9C%A8%E6%9C%80%E9%A1%B6%E9%83%A8%E6%98%BE%E7%A4%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="vue进入页面在最顶部显示">vue进入页面在最顶部显示</span>
+            <span class="post-date" title="2020-07-06 00:21:30">2020/07/06</span>
+        </a>
+        
+        <a  class="正则 "
+           href="/2020/03/09/%E6%AD%A3%E5%88%99/%E6%AD%A3%E5%88%99/"
+           data-tag="正则"
+           data-author="" >
+            <span class="post-title" title="正则">正则</span>
+            <span class="post-date" title="2020-03-09 14:56:03">2020/03/09</span>
+        </a>
+        
+        <a  class="hexo "
+           href="/2020/01/06/hexo/problem/"
+           data-tag="hexo,markdown"
+           data-author="" >
+            <span class="post-title" title="hexo代码高亮">hexo代码高亮</span>
+            <span class="post-date" title="2020-01-06 22:23:34">2020/01/06</span>
+        </a>
+        
+        <a  class="hexo "
+           href="/2020/01/06/hexo/hexoImg/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="hexo引用本地图片无法显示">hexo引用本地图片无法显示</span>
+            <span class="post-date" title="2020-01-06 22:23:53">2020/01/06</span>
+        </a>
+        
+        <a  class="react "
+           href="/2020/07/17/react/react%E5%9F%BA%E7%A1%80/"
+           data-tag="react"
+           data-author="" >
+            <span class="post-title" title="react基础">react基础</span>
+            <span class="post-date" title="2020-07-17 21:15:02">2020/07/17</span>
+        </a>
+        
+        <a  class="js "
+           href="/2020/04/12/js/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/"
+           data-tag="数组去重"
+           data-author="" >
+            <span class="post-title" title="数组去重">数组去重</span>
+            <span class="post-date" title="2020-04-12 13:55:16">2020/04/12</span>
+        </a>
+        
+        <a  class="react "
+           href="/2020/07/17/react/react-router/"
+           data-tag="react-router"
+           data-author="" >
+            <span class="post-title" title="react-router">react-router</span>
+            <span class="post-date" title="2020-07-17 21:15:02">2020/07/17</span>
+        </a>
+        
+        <a  class="element "
+           href="/2020/06/13/vue/element%E8%A1%A8%E5%8D%95%E6%AD%A3%E5%88%99%E6%A0%A1%E9%AA%8C/"
+           data-tag="element"
+           data-author="" >
+            <span class="post-title" title="element表单正则校验">element表单正则校验</span>
+            <span class="post-date" title="2020-06-13 11:50:50">2020/06/13</span>
+        </a>
+        
+        <a  class="vue "
+           href="/2020/06/13/vue/vant%E8%A1%A8%E5%8D%95%E6%AD%A3%E5%88%99%E6%A0%A1%E9%AA%8C/"
+           data-tag="vue"
+           data-author="" >
+            <span class="post-title" title="vant表单正则校验">vant表单正则校验</span>
+            <span class="post-date" title="2020-06-13 11:50:50">2020/06/13</span>
+        </a>
+        
+        <a  class="react "
+           href="/2020/07/17/react/Ant%20Design/"
+           data-tag="Ant Design"
+           data-author="" >
+            <span class="post-title" title="Ant Design">Ant Design</span>
+            <span class="post-date" title="2020-07-17 21:15:02">2020/07/17</span>
+        </a>
+        
+        <a  class="react "
+           href="/2020/07/17/react/%E4%BD%BF%E7%94%A8%E8%84%9A%E6%89%8B%E6%9E%B6/"
+           data-tag="react"
+           data-author="" >
+            <span class="post-title" title="使用脚手架">使用脚手架</span>
+            <span class="post-date" title="2020-07-17 21:15:02">2020/07/17</span>
+        </a>
+        
+        <a  class="react "
+           href="/2020/07/17/react/%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"
+           data-tag="react"
+           data-author="" >
+            <span class="post-title" title="组件的生命周期">组件的生命周期</span>
+            <span class="post-date" title="2020-07-17 21:15:02">2020/07/17</span>
+        </a>
+        
+        <a  class="echarts "
+           href="/2020/01/06/echarts/%E5%9C%A8webpack%E4%B8%AD%E4%BD%BF%E7%94%A8ECharts/"
+           data-tag="echarts"
+           data-author="" >
+            <span class="post-title" title="在webpack中使用echarts">在webpack中使用echarts</span>
+            <span class="post-date" title="2020-01-06 22:27:11">2020/01/06</span>
+        </a>
+        
+        <a  class="element "
+           href="/2020/06/13/vue/element%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87base64%E6%A0%BC%E5%BC%8F/"
+           data-tag="element"
+           data-author="" >
+            <span class="post-title" title="element上传图片base64格式">element上传图片base64格式</span>
+            <span class="post-date" title="2020-06-13 11:50:50">2020/06/13</span>
+        </a>
+        
+        <a  class="element "
+           href="/2020/06/13/vue/img%E5%9B%BE%E7%89%87%E4%B8%BAbase64/"
+           data-tag="element"
+           data-author="" >
+            <span class="post-title" title="img图片为base64">img图片为base64</span>
+            <span class="post-date" title="2020-06-13 11:50:50">2020/06/13</span>
+        </a>
+        
+        <a  class="element "
+           href="/2020/06/13/vue/%E5%AF%BC%E5%87%BAexcel%E6%96%87%E4%BB%B6/"
+           data-tag="element"
+           data-author="" >
+            <span class="post-title" title="导出excel文件">导出excel文件</span>
+            <span class="post-date" title="2020-06-13 11:50:50">2020/06/13</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-vue/img图片为base64" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">img图片为base64</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="element">element</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color3">element</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-08-20 20:52:17'>2020-06-13 11:50</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:14</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#img图片为base64"><span class="toc-text">img图片为base64</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="img图片为base64"><a href="#img图片为base64" class="headerlink" title="img图片为base64"></a>img图片为base64</h1><pre><code class="html">&lt;img src=&quot;data:image/jpeg;base64,/9j/4A</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>img图片为base64</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">14</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Ting">Ting</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-06-13, 11:50:50</p>
+    <p><span class="copy-title">最后更新:</span>2020-08-20, 20:52:17</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/06/13/vue/img%E5%9B%BE%E7%89%87%E4%B8%BAbase64/" title="img图片为base64">https://zhangxuet.github.io/2020/06/13/vue/img%E5%9B%BE%E7%89%87%E4%B8%BAbase64/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2019-2020 Ting</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#工具','#hexo','#markdown','#echarts','#node-sass','#vue','#正则','#token','#node','#webpack','#小程序','#css','#tabbar','#js','#ajax','#git','#原型','#闭包','#mvvm','#websocket','#element','#优化','#rem','#跨域','#项目优化','#TypeScript','#vant','#mockjs','#react','#数组去重','#react-router','#Ant Design',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+
+</html>
