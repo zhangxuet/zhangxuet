@@ -1,6 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>在webpack中使用echarts</title>
+    <url>/2020/08/20/echarts/%E5%9C%A8webpack%E4%B8%AD%E4%BD%BF%E7%94%A8ECharts/</url>
+    <content><![CDATA[<h1 id="在webpack中使用echarts"><a href="#在webpack中使用echarts" class="headerlink" title="在webpack中使用echarts"></a>在webpack中使用echarts</h1><p>按需引入需要的模块</p>
+<pre><code class="j">npm install echarts --save
+
+&lt;div ref=&quot;echarts&quot; style=&quot;width: 100%;height:390px;&quot; class=&quot;canvas&quot;&gt;&lt;/div&gt;</code></pre>
+<pre><code class="js"> initEcharts () {
+     // 引入 ECharts 主模块
+     var echarts = require(&#39;echarts/lib/echarts&#39;);
+     // 引入折线图
+     require(&#39;echarts/lib/chart/line&#39;);
+     // 引入提示框和标题组件
+     require(&#39;echarts/lib/component/tooltip&#39;);
+     require(&#39;echarts/lib/component/title&#39;);
+
+     // 基于准备好的dom，初始化echarts实例
+     // var myChart = echarts.init(document.getElementById(&#39;echarts&#39;));
+     var myChart = echarts.init(this.$refs.echarts);
+     // 绘制图表
+     myChart.setOption({
+         title: {
+             text: &#39;近一周访客统计&#39;,
+             left: &#39;center&#39;,
+             top: &#39;26px&#39;
+         },
+         legend: {
+             top: &quot;bottom&quot;,
+             data: [&quot;意向&quot;]
+         },
+         tooltip: {
+             show: true,
+             trigger: &#39;axis&#39;,
+             //show: true,   //default true
+             showDelay: 0,//显示延时，添加显示延时可以避免频繁切换
+             hideDelay: 50,//隐藏延时
+             transitionDuration: 0,//动画变换时长
+             backgroundColor: &#39;rgba(0,0,0,0.7)&#39;,//背景颜色（此时为默认色）
+             borderRadius: 8,//边框圆角
+             padding: 10,
+             position: function (p) {
+                 // 位置回调
+                 return [p[0] - 20, p[1] - 80];
+             },
+             extraCssText:&#39;width:120px !important;height:60px;&#39;
+         },
+         xAxis: {
+             type: &#39;category&#39;,
+             boundaryGap: false,
+             data: [this.weeksStatistics[0].date, this.weeksStatistics[1].date, this.weeksStatistics[2].date, this.weeksStatistics[3].date, this.weeksStatistics[4].date, this.weeksStatistics[5].date, this.weeksStatistics[6].date]
+         },
+         yAxis: {},
+         series: [{
+             name: &#39;访客数量&#39;,
+             type: &#39;line&#39;,
+             smooth: true,
+             data: [this.weeksStatistics[0].count, this.weeksStatistics[1].count, this.weeksStatistics[2].count, this.weeksStatistics[3].count, this.weeksStatistics[4].count, this.weeksStatistics[5].count, this.weeksStatistics[6].count],
+             areaStyle: {
+                 // color: &#39;rgba(123, 202, 251, 1)&#39;
+                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                     offset: 0,
+                     color: &#39;rgb(61, 152, 218)&#39;
+                 }, {
+                     offset: 0.5,
+                     color: &#39;rgb(61, 152, 218)&#39;
+                 }, {
+                     offset: 1,
+                     color: &#39;rgb(238, 249, 253)&#39;
+                 }])
+             },
+             lineStyle: {
+                 color: &quot;rgba(61, 152, 218, 1)&quot;
+             },
+             itemStyle: {
+                 borderColor: &quot;rgba(248, 133, 11, 1)&quot;
+             }
+         }]
+     })
+ },</code></pre>
+]]></content>
+      <categories>
+        <category>echarts</category>
+      </categories>
+      <tags>
+        <tag>echarts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element上传图片base64格式</title>
+    <url>/2020/08/20/vue/element%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87base64%E6%A0%BC%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="element上传图片base64格式"><a href="#element上传图片base64格式" class="headerlink" title="element上传图片base64格式"></a>element上传图片base64格式</h1><pre><code class="html">&lt;el-upload
+    class=&quot;avatar-uploader&quot;
+    action=&quot;#&quot;
+    :http-request=&quot;httpRequest&quot;
+    :show-file-list=&quot;false&quot;
+    :before-upload=&quot;beforeAvatarUpload&quot;&gt;
+    &lt;img v-if=&quot;newTenantForm.avatar&quot; :src=&quot;newTenantForm.avatar&quot; class=&quot;avatar&quot;&gt;
+    &lt;i v-else class=&quot;el-icon-plus avatar-uploader-icon&quot;&gt;&lt;/i&gt;
+&lt;/el-upload&gt;</code></pre>
+<pre><code class="js">beforeAvatarUpload(file) {
+    const isJPG = file.type === &#39;image/jpeg&#39;;
+    const isLt2M = file.size / 1024 / 1024 &lt; 2;
+
+    if (!isJPG) {
+        this.$message.error(&#39;上传头像图片只能是 JPG 格式!&#39;);
+    }
+    if (!isLt2M) {
+        this.$message.error(&#39;上传头像图片大小不能超过 2MB!&#39;);
+    }
+    return isJPG &amp;&amp; isLt2M;
+},
+httpRequest (data) {
+    let _this = this
+    let rd = new FileReader() // 创建文件读取对象
+    let file = data.file
+    rd.readAsDataURL(file) // 文件读取装换为base64类型
+    rd.onloadend = function (e) {
+       _this.newTenantForm.avatar = this.result // this指向当前方法onloadend的作用域
+    }
+},</code></pre>
+]]></content>
+      <categories>
+        <category>element</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>导出excel文件</title>
+    <url>/2020/08/20/vue/%E5%AF%BC%E5%87%BAexcel%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h1 id="导出excel文件"><a href="#导出excel文件" class="headerlink" title="导出excel文件"></a>导出excel文件</h1><pre><code class="js">// 导出
+async handleExport () {
+    let param = {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+        keyValues: {
+            TenantPicture: &#39;租客照片 &#39;,
+            TenantName: &#39;租客姓名&#39;,
+            TenantPhone: &#39;手机号码&#39;,
+            TenantIDCardType: &#39;证件类型&#39;,
+            TenantIDCardNo: &#39;证件号码&#39;,
+            TenantAddress: &#39;办公地点&#39;,
+            TenantDetailAddress: &#39;公司名称/部门&#39;
+        },
+        tenantName: this.tenantform.name,
+        tenantPhone: this.tenantform.phone,
+        tenantIDCard: this.tenantform.userID
+    }
+    // arraybuffer必加
+    let res = await HandleExport(param, &#39;arraybuffer&#39;)
+
+    // let blob = new Blob([res], {type: &#39;application/.xls&#39;})
+    if (res) {
+        const link = document.createElement(&#39;a&#39;)
+        let blob = new Blob([res], {type: &#39;application/vnd.ms-excel&#39;})
+        link.style.display = &#39;none&#39;
+        link.href = URL.createObjectURL(blob)
+        //下载的文件名
+        link.download = &#39;租客信息+&#39; + formatDate(new Date(), &#39;yyyy-MM-dd&#39;) + &#39;.xlsx&#39;
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    }
+},</code></pre>
+<p>request.js</p>
+<pre><code class="js">export default (url, method, data, responseType) =&gt; {
+    return instance({
+        url,
+        method,
+        [method.toLowerCase() === &#39;get&#39;?&#39;params&#39;:&#39;data&#39;]:data,
+        responseType: responseType
+    })
+}</code></pre>
+]]></content>
+      <categories>
+        <category>element</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>react基础</title>
     <url>/2020/07/17/react/react%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><ul>
@@ -1423,104 +1605,9 @@ validatorName () {
       </tags>
   </entry>
   <entry>
-    <title>element上传图片base64格式</title>
-    <url>/2020/06/13/vue/element%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87base64%E6%A0%BC%E5%BC%8F/</url>
-    <content><![CDATA[<h1 id="element上传图片base64格式"><a href="#element上传图片base64格式" class="headerlink" title="element上传图片base64格式"></a>element上传图片base64格式</h1><pre><code class="html">&lt;el-upload
-    class=&quot;avatar-uploader&quot;
-    action=&quot;#&quot;
-    :http-request=&quot;httpRequest&quot;
-    :show-file-list=&quot;false&quot;
-    :before-upload=&quot;beforeAvatarUpload&quot;&gt;
-    &lt;img v-if=&quot;newTenantForm.avatar&quot; :src=&quot;newTenantForm.avatar&quot; class=&quot;avatar&quot;&gt;
-    &lt;i v-else class=&quot;el-icon-plus avatar-uploader-icon&quot;&gt;&lt;/i&gt;
-&lt;/el-upload&gt;</code></pre>
-<pre><code class="js">beforeAvatarUpload(file) {
-    const isJPG = file.type === &#39;image/jpeg&#39;;
-    const isLt2M = file.size / 1024 / 1024 &lt; 2;
-
-    if (!isJPG) {
-        this.$message.error(&#39;上传头像图片只能是 JPG 格式!&#39;);
-    }
-    if (!isLt2M) {
-        this.$message.error(&#39;上传头像图片大小不能超过 2MB!&#39;);
-    }
-    return isJPG &amp;&amp; isLt2M;
-},
-httpRequest (data) {
-    let _this = this
-    let rd = new FileReader() // 创建文件读取对象
-    let file = data.file
-    rd.readAsDataURL(file) // 文件读取装换为base64类型
-    rd.onloadend = function (e) {
-       _this.newTenantForm.avatar = this.result // this指向当前方法onloadend的作用域
-    }
-},</code></pre>
-]]></content>
-      <categories>
-        <category>element</category>
-      </categories>
-      <tags>
-        <tag>element</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>img图片为base64</title>
     <url>/2020/06/13/vue/img%E5%9B%BE%E7%89%87%E4%B8%BAbase64/</url>
     <content><![CDATA[<h1 id="img图片为base64"><a href="#img图片为base64" class="headerlink" title="img图片为base64"></a>img图片为base64</h1><pre><code class="html">&lt;img src=&quot;data:image/jpeg;base64,/9j/4A</code></pre>
-]]></content>
-      <categories>
-        <category>element</category>
-      </categories>
-      <tags>
-        <tag>element</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>导出excel文件</title>
-    <url>/2020/06/13/vue/%E5%AF%BC%E5%87%BAexcel%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h1 id="导出excel文件"><a href="#导出excel文件" class="headerlink" title="导出excel文件"></a>导出excel文件</h1><pre><code class="js">// 导出
-async handleExport () {
-    let param = {
-        pageIndex: this.pageIndex,
-        pageSize: this.pageSize,
-        keyValues: {
-            TenantPicture: &#39;租客照片 &#39;,
-            TenantName: &#39;租客姓名&#39;,
-            TenantPhone: &#39;手机号码&#39;,
-            TenantIDCardType: &#39;证件类型&#39;,
-            TenantIDCardNo: &#39;证件号码&#39;,
-            TenantAddress: &#39;办公地点&#39;,
-            TenantDetailAddress: &#39;公司名称/部门&#39;
-        },
-        tenantName: this.tenantform.name,
-        tenantPhone: this.tenantform.phone,
-        tenantIDCard: this.tenantform.userID
-    }
-    // arraybuffer必加
-    let res = await HandleExport(param, &#39;arraybuffer&#39;)
-
-    // let blob = new Blob([res], {type: &#39;application/.xls&#39;})
-    if (res) {
-        const link = document.createElement(&#39;a&#39;)
-        let blob = new Blob([res], {type: &#39;application/vnd.ms-excel&#39;})
-        link.style.display = &#39;none&#39;
-        link.href = URL.createObjectURL(blob)
-        //下载的文件名
-        link.download = &#39;租客信息+&#39; + formatDate(new Date(), &#39;yyyy-MM-dd&#39;) + &#39;.xlsx&#39;
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-    }
-},</code></pre>
-<p>request.js</p>
-<pre><code class="js">export default (url, method, data, responseType) =&gt; {
-    return instance({
-        url,
-        method,
-        [method.toLowerCase() === &#39;get&#39;?&#39;params&#39;:&#39;data&#39;]:data,
-        responseType: responseType
-    })
-}</code></pre>
 ]]></content>
       <categories>
         <category>element</category>
@@ -6296,93 +6383,6 @@ chart.setOption(option)
         &lt;/script&gt;
     &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-]]></content>
-      <categories>
-        <category>echarts</category>
-      </categories>
-      <tags>
-        <tag>echarts</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在webpack中使用echarts</title>
-    <url>/2020/01/06/echarts/%E5%9C%A8webpack%E4%B8%AD%E4%BD%BF%E7%94%A8ECharts/</url>
-    <content><![CDATA[<h1 id="在webpack中使用echarts"><a href="#在webpack中使用echarts" class="headerlink" title="在webpack中使用echarts"></a>在webpack中使用echarts</h1><p>按需引入需要的模块</p>
-<pre><code class="j">npm install echarts --save
-
-&lt;div ref=&quot;echarts&quot; style=&quot;width: 100%;height:390px;&quot; class=&quot;canvas&quot;&gt;&lt;/div&gt;</code></pre>
-<pre><code class="js"> initEcharts () {
-     // 引入 ECharts 主模块
-     var echarts = require(&#39;echarts/lib/echarts&#39;);
-     // 引入折线图
-     require(&#39;echarts/lib/chart/line&#39;);
-     // 引入提示框和标题组件
-     require(&#39;echarts/lib/component/tooltip&#39;);
-     require(&#39;echarts/lib/component/title&#39;);
-
-     // 基于准备好的dom，初始化echarts实例
-     // var myChart = echarts.init(document.getElementById(&#39;echarts&#39;));
-     var myChart = echarts.init(this.$refs.echarts);
-     // 绘制图表
-     myChart.setOption({
-         title: {
-             text: &#39;近一周访客统计&#39;,
-             left: &#39;center&#39;,
-             top: &#39;26px&#39;
-         },
-         legend: {
-             top: &quot;bottom&quot;,
-             data: [&quot;意向&quot;]
-         },
-         tooltip: {
-             show: true,
-             trigger: &#39;axis&#39;,
-             //show: true,   //default true
-             showDelay: 0,//显示延时，添加显示延时可以避免频繁切换
-             hideDelay: 50,//隐藏延时
-             transitionDuration: 0,//动画变换时长
-             backgroundColor: &#39;rgba(0,0,0,0.7)&#39;,//背景颜色（此时为默认色）
-             borderRadius: 8,//边框圆角
-             padding: 10,
-             position: function (p) {
-                 // 位置回调
-                 return [p[0] - 20, p[1] - 80];
-             },
-             extraCssText:&#39;width:120px !important;height:60px;&#39;
-         },
-         xAxis: {
-             type: &#39;category&#39;,
-             boundaryGap: false,
-             data: [this.weeksStatistics[0].date, this.weeksStatistics[1].date, this.weeksStatistics[2].date, this.weeksStatistics[3].date, this.weeksStatistics[4].date, this.weeksStatistics[5].date, this.weeksStatistics[6].date]
-         },
-         yAxis: {},
-         series: [{
-             name: &#39;访客数量&#39;,
-             type: &#39;line&#39;,
-             smooth: true,
-             data: [this.weeksStatistics[0].count, this.weeksStatistics[1].count, this.weeksStatistics[2].count, this.weeksStatistics[3].count, this.weeksStatistics[4].count, this.weeksStatistics[5].count, this.weeksStatistics[6].count],
-             areaStyle: {
-                 // color: &#39;rgba(123, 202, 251, 1)&#39;
-                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                     offset: 0,
-                     color: &#39;rgb(61, 152, 218)&#39;
-                 }, {
-                     offset: 0.5,
-                     color: &#39;rgb(61, 152, 218)&#39;
-                 }, {
-                     offset: 1,
-                     color: &#39;rgb(238, 249, 253)&#39;
-                 }])
-             },
-             lineStyle: {
-                 color: &quot;rgba(61, 152, 218, 1)&quot;
-             },
-             itemStyle: {
-                 borderColor: &quot;rgba(248, 133, 11, 1)&quot;
-             }
-         }]
-     })
- },</code></pre>
 ]]></content>
       <categories>
         <category>echarts</category>
