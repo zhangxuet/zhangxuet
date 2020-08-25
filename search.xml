@@ -143,7 +143,8 @@ httpRequest (data) {
   <entry>
     <title>导出excel文件</title>
     <url>/2020/08/20/vue/%E5%AF%BC%E5%87%BAexcel%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h1 id="导出excel文件"><a href="#导出excel文件" class="headerlink" title="导出excel文件"></a>导出excel文件</h1><pre><code class="js">// 导出
+    <content><![CDATA[<h1 id="导出excel文件"><a href="#导出excel文件" class="headerlink" title="导出excel文件"></a>导出excel文件</h1><p>responseType必写</p>
+<pre><code class="js">// 导出
 async handleExport () {
     let param = {
         pageIndex: this.pageIndex,
@@ -186,6 +187,120 @@ async handleExport () {
         responseType: responseType
     })
 }</code></pre>
+]]></content>
+      <categories>
+        <category>element</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element上传图片</title>
+    <url>/2020/08/20/vue/element%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</url>
+    <content><![CDATA[<h1 id="上传图片limit为1时，第二次上传无反应"><a href="#上传图片limit为1时，第二次上传无反应" class="headerlink" title="上传图片limit为1时，第二次上传无反应"></a>上传图片limit为1时，第二次上传无反应</h1><p>需设置ref,上传成功清除file</p>
+<p>this.$refs.uploadNewAvater.clearFiles()</p>
+<pre><code class="html">&lt;el-upload
+    ref=&quot;uploadNewAvater&quot;  /////////////////////////////
+    class=&quot;avatar-uploader&quot;
+    :multiple=&quot;false&quot;
+    :limit=&quot;1&quot;
+    action=&quot;#&quot;
+    :show-file-list=&quot;false&quot;
+    :before-upload=&quot;beforeAvatarUpload&quot;
+    :on-success=&quot;handleAvatarSuccess&quot;
+    :http-request=&quot;httpRequestAvatar&quot;
+    name=&quot;file&quot;&gt;
+    &lt;img v-if=&quot;newTenantForm.avatar&quot; :src=&quot;newTenantForm.avatar&quot; class=&quot;avatar&quot;&gt;
+    &lt;i v-else class=&quot;el-icon-plus avatar-uploader-icon&quot;&gt;&lt;/i&gt;
+&lt;/el-upload&gt;</code></pre>
+<pre><code class="js">// 新建上传头像
+beforeAvatarUpload(file) {
+    const isJPG = file.type === &#39;image/jpeg&#39;;
+    const isLt2M = file.size / 1024 / 1024 &lt; 2;
+    // console.log(isJPG)
+    if (!isJPG) {
+        this.$message.error(&#39;上传头像图片只能是 JPG 格式!&#39;)
+    } else if (!isLt2M) {
+        this.$message.error(&#39;上传头像图片大小不能超过 2MB!&#39;)
+    }
+    return isJPG &amp;&amp; isLt2M
+},
+handleAvatarSuccess(res, file) {
+    // console.log(file)
+    this.newTenantForm.avatar = URL.createObjectURL(file.raw)
+    this.$refs.uploadNewAvater.clearFiles()    ///////////////////////////
+},
+async httpRequestAvatar (data) {
+     // let _this = this
+     // let rd = new FileReader() // 创建文件读取对象
+     // let file = data.file
+     // rd.readAsDataURL(file) // 文件读取装换为base64类型
+     // rd.onloadend = function (e) {
+     // _this.newTenantForm.avatar = this.result // this指向当前方法onloadend的作用域// }
+     var formData = new FormData()
+     formData.append(&quot;formCollection&quot;, data.file)
+     // formData.append(&quot;name&quot;, data.file.name)
+     let res = await HandleFileUpload(formData)
+     if (res.isSucceed) {
+         this.newAvatar = res.entity
+     }
+},</code></pre>
+]]></content>
+      <categories>
+        <category>element</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>导入excel文件</title>
+    <url>/2020/08/20/vue/%E5%AF%BC%E5%85%A5excel%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h1 id="导入excel文件"><a href="#导入excel文件" class="headerlink" title="导入excel文件"></a>导入excel文件</h1><pre><code class="html">&lt;el-upload
+           ref=&quot;uploadFile&quot;
+           class=&quot;upload-demo&quot;
+           :multiple=&quot;false&quot;
+           :limit=&quot;1&quot;
+           action=&quot;#&quot;
+           :show-file-list=&quot;false&quot;
+           :before-upload=&quot;beforeExcelUpload&quot;
+           :http-request=&quot;httpRequestExcel&quot;
+           name=&quot;file&quot;      // 圈
+           &gt;
+    &lt;div class=&quot;btn_icon&quot;&gt;&lt;/div&gt;
+    &lt;el-button size=&quot;small&quot; type=&quot;primary&quot;&gt;导入&lt;/el-button&gt;
+&lt;/el-upload&gt;</code></pre>
+<pre><code class="js">// 上传Excel
+beforeExcelUpload(file) {
+    const isXlsx = file.type === &#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;
+    if (!isXlsx) {
+        this.$message.error(&#39;上传文件只能是 xlsx 格式!&#39;)
+    }
+    return isXlsx
+},
+// 导入
+async httpRequestExcel (data) {
+   // console.log(data)
+   var formData = new FormData()
+   formData.append(&quot;formCollection&quot;, data.file)    // 圈
+   // formData.append(&quot;name&quot;, data.file.name)
+   let res = await HandleImport(formData)
+   if (res.isSucceed) {
+       this.$message({
+          type: &#39;success&#39;,
+          message: &#39;导入成功&#39;
+       })
+       this.$refs.uploadFile.clearFiles()
+       this.loading = true
+       this.getTenantMsg()
+   } else {
+       this.$message({
+          type: &#39;erroe&#39;,
+          message: res.message
+       })
+    }
+},</code></pre>
 ]]></content>
       <categories>
         <category>element</category>
@@ -5754,6 +5869,109 @@ app.get(&#39;/deleteHero&#39;, (req, res) =&gt; {
       </tags>
   </entry>
   <entry>
+    <title>node上传文件</title>
+    <url>/2020/03/13/node/node%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h1 id="安装express-mysql-body-parser-multer"><a href="#安装express-mysql-body-parser-multer" class="headerlink" title="安装express  mysql  body-parser multer"></a>安装express  mysql  body-parser multer</h1><pre><code>npm i express mysql body-parser multer</code></pre><h1 id="创建db-js"><a href="#创建db-js" class="headerlink" title="创建db.js"></a>创建db.js</h1><pre><code>module.exports = (sql, values, cb) =&gt; {
+    const mysql = require(&#39;mysql&#39;)
+    const conn = mysql.createConnection({
+        host: &#39;localhost&#39;,
+        port: &#39;3306&#39;,
+        user: &#39;root&#39;,
+        password: &#39;&#39;,
+        database: &#39;hero&#39;,
+        multipleStatements: true
+    })
+    conn.connect()
+    conn.query(sql, values, cb)
+    conn.end()
+}</code></pre><h1 id="创建app-js"><a href="#创建app-js" class="headerlink" title="创建app.js"></a>创建app.js</h1><pre><code>const express = require(&#39;express&#39;)
+const app = express()
+var bodyParser = require(&#39;body-parser&#39;)
+var urlencodedParser = bodyParser.urlencoded({extended: false})
+var fs = require(&#39;fs&#39;)
+var multer = require(&#39;multer&#39;)
+
+// app.use(&#39;/public&#39;, express.static(&#39;public&#39;))   http://127.0.0.1:4000/public/index.html
+app.use(express.static(__dirname + &#39;/public/&#39;))
+app.use(multer({ dest: &#39;/tmp/&#39;}).array(&#39;file&#39;))
+
+app.get(&#39;/login&#39;, (req, res) =&gt; {
+    res.send(&#39;hello world&#39;)
+})
+app.post(&#39;/addUser&#39;, (req, res) =&gt; {
+    res.send(&#39;nihao&#39;)
+})
+app.get(&#39;/index.html&#39;, (req, res) =&gt; {
+    // console.log(__dirname)
+    res.sendFile(__dirname + &#39;index.html&#39;)
+})
+
+// app.get(&#39;/process_get&#39;, (req, res) =&gt; {
+//     var response = {
+//         &#39;first_name&#39;: req.query.first_name,
+//         &#39;last_name&#39;: req.query.last_name
+//     }
+//     res.send(JSON.stringify(response))
+// })
+app.post(&#39;/process_get&#39;, urlencodedParser, (req, res) =&gt; {
+    var response = {
+        &#39;first_name&#39;: req.body.first_name,
+        &#39;last_name&#39;: req.body.last_name
+    }
+    res.end(JSON.stringify(response))
+})
+
+app.post(&#39;/file_upload&#39;, (req, res) =&gt; {
+    console.log(req.files[0])
+    var des_file = __dirname + req.files[0].originalname
+    fs.readFile(req.files[0].path, (err, data) =&gt; {
+        fs.writeFile(des_file, data, err =&gt; {
+            if (err) {
+                console.log(err)
+            } else {
+                response = {
+                    message: &#39;successfuly&#39;,
+                    filename: req.files[0].originalname
+                }
+            }
+            res.end(JSON.stringify(response))  
+        })
+    })
+})
+// console.log(__dirname)
+app.listen(4000, () =&gt; console.log(&#39;app is running&#39;))
+</code></pre><h1 id="public-index-html"><a href="#public-index-html" class="headerlink" title="public/index.html"></a>public/index.html</h1><p>enctype必有</p>
+<p>name=”file”与app.use(multer({ dest: ‘/tmp/‘}).array(‘file’))里面的name要统一</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- &lt;div id=&quot;app&quot;&gt;&lt;/div&gt; --&gt;
+    &lt;!-- &lt;form action=&quot;http://127.0.0.1:4000/process_get&quot; method=&quot;post&quot;&gt;
+      First Name: &lt;input type=&quot;text&quot; name=&quot;first_name&quot;&gt;  &lt;br&gt;
+
+      Last Name: &lt;input type=&quot;text&quot; name=&quot;last_name&quot;&gt;
+      &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+      &lt;/form&gt; --&gt;
+      &lt;form action=&quot;/file_upload&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+        &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;上传&quot;&gt;
+        &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+]]></content>
+      <categories>
+        <category>node</category>
+      </categories>
+      <tags>
+        <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Element使用i18n国际化</title>
     <url>/2020/03/13/vue/i18n/</url>
     <content><![CDATA[<h1 id="安装i18n-elementUI"><a href="#安装i18n-elementUI" class="headerlink" title="安装i18n+elementUI"></a>安装i18n+elementUI</h1><pre><code>npm i vue-i18n element-ui</code></pre><h1 id="在main-js中导入"><a href="#在main-js中导入" class="headerlink" title="在main.js中导入"></a>在main.js中导入</h1><pre><code>import i18n from &#39;./i18n.js&#39;
@@ -6608,6 +6826,29 @@ git config --global user.email &quot;111111@qq.com&quot;</code></pre><ul>
       <tags>
         <tag>工具</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>h5和css3新特性</title>
+    <url>/2020/01/02/%E6%8B%93%E5%B1%95/h5%E5%92%8Ccss3%E6%96%B0%E7%89%B9%E6%80%A7/</url>
+    <content><![CDATA[<h1 id="h5新特性"><a href="#h5新特性" class="headerlink" title="h5新特性"></a>h5新特性</h1><p>1、语义化标签 header、footer、aside、article、nav、section</p>
+<p>2、音频、视频: audio、video</p>
+<p>3、画布canvas</p>
+<p>4、本地存储localstorage</p>
+<p>5、input新增控件: date、time、tel、email、url、search</p>
+<p>6、websocket</p>
+<p>7、拖拽释放API</p>
+<h1 id="CSS3新特性"><a href="#CSS3新特性" class="headerlink" title="CSS3新特性"></a>CSS3新特性</h1><p>1、颜色rgb</p>
+<p>2、文字阴影 text-shadow</p>
+<p>3、边框: border-radius 边框阴影: box-shadow</p>
+<p>4、盒模型: box-sizing</p>
+<p>5、背景: background-size</p>
+<p>6、渐变: background-image: linear-gradient    radial-gradient</p>
+<p>7、过渡: transition: all 1s linear</p>
+<p>8、2D、3D</p>
+]]></content>
+      <categories>
+        <category>拓展</category>
+      </categories>
   </entry>
   <entry>
     <title>First</title>
