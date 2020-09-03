@@ -2324,6 +2324,259 @@ this.checkAll = false</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>element城市组件</title>
+    <url>/2020/04/20/vue/element%E5%9F%8E%E5%B8%82%E7%BB%84%E4%BB%B6/</url>
+    <content><![CDATA[<h1 id="element城市组件"><a href="#element城市组件" class="headerlink" title="element城市组件"></a>element城市组件</h1><pre><code class="html">&lt;el-cascader
+    size=&quot;large&quot;
+    clearable
+    :options=&quot;areaoptions&quot;
+    v-model=&quot;selectedOptions&quot;
+    @change=&quot;handleChangeArea&quot;&gt;
+&lt;/el-cascader&gt;</code></pre>
+<pre><code class="js">import { myAreaList } from &quot;@/utils/myArea.js&quot;;
+
+areaoptions: myAreaList,
+selectedOptions: [],</code></pre>
+<pre><code class="js">handleChangeArea(val){
+    console.log(val);
+    let strarray = [];
+    val.forEach(item=&gt;{
+        strarray.push(myCodetoText[item]);
+    })
+    this.formInline.area = strarray.join(&#39;&#39;);
+    // console.log(this.formInline.area)
+},</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element国籍组件</title>
+    <url>/2020/04/20/vue/element%E5%9B%BD%E7%B1%8D%E7%BB%84%E4%BB%B6/</url>
+    <content><![CDATA[<h1 id="element国籍组件"><a href="#element国籍组件" class="headerlink" title="element国籍组件"></a>element国籍组件</h1><pre><code class="html">&lt;el-select  placeholder=&quot;请选择国籍&quot; filterable style=&quot;width: 77.9%&quot; v-model=&quot;formInline.nation&quot;&gt;
+ &lt;el-option-group v-for=&quot;group in country&quot; :key=&quot;group.label&quot; :label=&quot;group.label&quot;&gt;
+   &lt;el-option v-for=&quot;item in group.options&quot; :key=&quot;item.value&quot; :label=&quot;item.label&quot; :value=&quot;item.label&quot;&gt;
+     &lt;span style=&quot;float: left&quot;&gt;{{ item.label }}&lt;/span&gt;
+     &lt;span style=&quot;float: right; color: #8492a6; font-size: 13px&quot;&gt;{{ item.value }}&lt;/span&gt;
+  &lt;/el-option&gt;
+ &lt;/el-option-group&gt;
+&lt;/el-select&gt;</code></pre>
+<pre><code class="js">import { Country } from &quot;@/utils/myArea.js&quot;;
+
+country: Country</code></pre>
+<p>国籍js</p>
+<p>/utils/myArea.js</p>
+<pre><code class="js">// 国籍
+export const Country = [{
+    label: &#39;热门国家&#39;,
+    options: [{value:&#39;China&#39;,label:&#39;中国&#39;},]
+},{
+    label: &#39;所有国家&#39;,
+    options: [
+        {value:&#39;Angola&#39;,label:&#39;安哥拉&#39;},
+        {value:&#39;Afghanistan&#39;,label:&#39;阿富汗&#39;},
+        {value:&#39;Albania&#39;,label:&#39;阿尔巴尼亚&#39;},
+        {value:&#39;Algeria&#39;,label:&#39;阿尔及利亚&#39;},
+        {value:&#39;Andorra&#39;,label:&#39;安道尔共和国&#39;},
+        {value:&#39;Anguilla&#39;,label:&#39;安圭拉岛&#39;},
+        {value:&#39;Antigua and Barbuda&#39;,label:&#39;安提瓜和巴布达&#39;},
+        {value:&#39;Argentina&#39;,label:&#39;阿根廷&#39;},
+        {value:&#39;Armenia&#39;,label:&#39;亚美尼亚&#39;},
+        {value:&#39;Ascension&#39;,label:&#39;阿森松&#39;},
+        {value:&#39;Australia&#39;,label:&#39;澳大利亚&#39;},
+        {value:&#39;Austria&#39;,label:&#39;奥地利&#39;},
+        {value:&#39;Azerbaijan&#39;,label:&#39;阿塞拜疆&#39;},
+        {value:&#39;Bahamas&#39;,label:&#39;巴哈马&#39;},
+        {value:&#39;Bahrain&#39;,label:&#39;巴林&#39;},
+        {value:&#39;Bangladesh&#39;,label:&#39;孟加拉国&#39;},
+        {value:&#39;Barbados&#39;,label:&#39;巴巴多斯&#39;},
+        {value:&#39;Belarus&#39;,label:&#39;白俄罗斯&#39;},
+        {value:&#39;Belgium&#39;,label:&#39;比利时&#39;},
+        {value:&#39;Belize&#39;,label:&#39;伯利兹&#39;},
+        {value:&#39;Benin&#39;,label:&#39;贝宁&#39;},
+        {value:&#39;Bermuda Is&#39;,label:&#39;百慕大群岛&#39;},
+        {value:&#39;Bolivia&#39;,label:&#39;玻利维亚&#39;},
+        {value:&#39;Botswana&#39;,label:&#39;博茨瓦纳&#39;},
+        {value:&#39;Brazil&#39;,label:&#39;巴西&#39;},
+        {value:&#39;Brunei&#39;,label:&#39;文莱&#39;},
+        {value:&#39;Bulgaria&#39;,label:&#39;保加利亚&#39;},
+        {value:&#39;Burkina Faso&#39;,label:&#39;布基纳法索&#39;},
+        {value:&#39;Burma&#39;,label:&#39;缅甸&#39;},
+        {value:&#39;Burundi&#39;,label:&#39;布隆迪&#39;},
+        {value:&#39;Cameroon&#39;,label:&#39;喀麦隆&#39;},
+        {value:&#39;Canada&#39;,label:&#39;加拿大&#39;},
+        {value:&#39;Cayman Is&#39;,label:&#39;开曼群岛&#39;},
+        {value:&#39;Central African Republic&#39;,label:&#39;中非共和国&#39;},
+        {value:&#39;Chad&#39;,label:&#39;乍得&#39;},
+        {value:&#39;Chile&#39;,label:&#39;智利&#39;},
+        {value:&#39;China&#39;,label:&#39;中国&#39;},
+        {value:&#39;Colombia&#39;,label:&#39;哥伦比亚&#39;},
+        {value:&#39;Congo&#39;,label:&#39;刚果&#39;},
+        {value:&#39;Cook Is&#39;,label:&#39;库克群岛&#39;},
+        {value:&#39;Costa Rica&#39;,label:&#39;哥斯达黎加&#39;},
+        {value:&#39;Cuba&#39;,label:&#39;古巴&#39;},
+        {value:&#39;Cyprus&#39;,label:&#39;塞浦路斯&#39;},
+        {value:&#39;Czech Republic&#39;,label:&#39;捷克&#39;},
+        {value:&#39;Denmark&#39;,label:&#39;丹麦&#39;},
+        {value:&#39;Djibouti&#39;,label:&#39;吉布提&#39;},
+        {value:&#39;Dominica Rep&#39;,label:&#39;多米尼加共和国&#39;},
+        {value:&#39;Ecuador&#39;,label:&#39;厄瓜多尔&#39;},
+        {value:&#39;Egypt&#39;,label:&#39;埃及&#39;},
+        {value:&#39;EI Salvador&#39;,label:&#39;萨尔瓦多&#39;},
+        {value:&#39;Estonia&#39;,label:&#39;爱沙尼亚&#39;},
+        {value:&#39;Ethiopia&#39;,label:&#39;埃塞俄比亚&#39;},
+        {value:&#39;Fiji&#39;,label:&#39;斐济&#39;},
+        {value:&#39;Finland&#39;,label:&#39;芬兰&#39;},
+        {value:&#39;France&#39;,label:&#39;法国&#39;},
+        {value:&#39;French Guiana&#39;,label:&#39;法属圭亚那&#39;},
+        {value:&#39;French Polynesia&#39;,label:&#39;法属玻利尼西亚&#39;},
+        {value:&#39;Gabon&#39;,label:&#39;加蓬&#39;},
+        {value:&#39;Gambia&#39;,label:&#39;冈比亚&#39;},
+        {value:&#39;Georgia&#39;,label:&#39;格鲁吉亚&#39;},
+        {value:&#39;Germany&#39;,label:&#39;德国&#39;},
+        {value:&#39;Ghana&#39;,label:&#39;加纳&#39;},
+        {value:&#39;Gibraltar&#39;,label:&#39;直布罗陀&#39;},
+        {value:&#39;Greece&#39;,label:&#39;希腊&#39;},
+        {value:&#39;Grenada&#39;,label:&#39;格林纳达&#39;},
+        {value:&#39;Guam&#39;,label:&#39;关岛&#39;},
+        {value:&#39;Guatemala&#39;,label:&#39;危地马拉&#39;},
+        {value:&#39;Guinea&#39;,label:&#39;几内亚&#39;},
+        {value:&#39;Guyana&#39;,label:&#39;圭亚那&#39;},
+        {value:&#39;Haiti&#39;,label:&#39;海地&#39;},
+        {value:&#39;Honduras&#39;,label:&#39;洪都拉斯&#39;},
+        {value:&#39;Hungary&#39;,label:&#39;匈牙利&#39;},
+        {value:&#39;Iceland&#39;,label:&#39;冰岛&#39;},
+        {value:&#39;India&#39;,label:&#39;印度&#39;},
+        {value:&#39;Indonesia&#39;,label:&#39;印度尼西亚&#39;},
+        {value:&#39;Iran&#39;,label:&#39;伊朗&#39;},
+        {value:&#39;Iraq&#39;,label:&#39;伊拉克&#39;},
+        {value:&#39;Ireland&#39;,label:&#39;爱尔兰&#39;},
+        {value:&#39;Israel&#39;,label:&#39;以色列&#39;},
+        {value:&#39;Italy&#39;,label:&#39;意大利&#39;},
+        {value:&#39;Ivory Coast&#39;,label:&#39;科特迪瓦&#39;},
+        {value:&#39;Jamaica&#39;,label:&#39;牙买加&#39;},
+        {value:&#39;Japan&#39;,label:&#39;日本&#39;},
+        {value:&#39;Jordan&#39;,label:&#39;约旦&#39;},
+        {value:&#39;Kampuchea (Cambodia )&#39;,label:&#39;柬埔寨&#39;},
+        {value:&#39;Kazakstan&#39;,label:&#39;哈萨克斯坦&#39;},
+        {value:&#39;Kenya&#39;,label:&#39;肯尼亚&#39;},
+        {value:&#39;Korea&#39;,label:&#39;韩国&#39;},
+        {value:&#39;Kuwait&#39;,label:&#39;科威特&#39;},
+        {value:&#39;Kyrgyzstan&#39;,label:&#39;吉尔吉斯坦&#39;},
+        {value:&#39;Laos&#39;,label:&#39;老挝&#39;},
+        {value:&#39;Latvia&#39;,label:&#39;拉脱维亚&#39;},
+        {value:&#39;Lebanon&#39;,label:&#39;黎巴嫩&#39;},
+        {value:&#39;Lesotho&#39;,label:&#39;莱索托&#39;},
+        {value:&#39;Liberia&#39;,label:&#39;利比里亚&#39;},
+        {value:&#39;Libya&#39;,label:&#39;利比亚&#39;},
+        {value:&#39;Liechtenstein&#39;,label:&#39;列支敦士登&#39;},
+        {value:&#39;Lithuania&#39;,label:&#39;立陶宛&#39;},
+        {value:&#39;Luxembourg&#39;,label:&#39;卢森堡&#39;},
+        {value:&#39;Madagascar&#39;,label:&#39;马达加斯加&#39;},
+        {value:&#39;Malawi&#39;,label:&#39;马拉维&#39;},
+        {value:&#39;Malaysia&#39;,label:&#39;马来西亚&#39;},
+        {value:&#39;Maldives&#39;,label:&#39;马尔代夫&#39;},
+        {value:&#39;Mali&#39;,label:&#39;马里&#39;},
+        {value:&#39;Malta&#39;,label:&#39;马耳他&#39;},
+        {value:&#39;Mariana Is&#39;,label:&#39;马里亚那群岛&#39;},
+        {value:&#39;Martinique&#39;,label:&#39;马提尼克&#39;},
+        {value:&#39;Mauritius&#39;,label:&#39;毛里求斯&#39;},
+        {value:&#39;Mexico&#39;,label:&#39;墨西哥&#39;},
+        {value:&#39;Moldova&#39;,label:&#39;摩尔多瓦&#39;},
+        {value:&#39;Monaco&#39;,label:&#39;摩纳哥&#39;},
+        {value:&#39;Mongolia&#39;,label:&#39;蒙古&#39;},
+        {value:&#39;Montserrat Is&#39;,label:&#39;蒙特塞拉特岛&#39;},
+        {value:&#39;Morocco&#39;,label:&#39;摩洛哥&#39;},
+        {value:&#39;Mozambique&#39;,label:&#39;莫桑比克&#39;},
+        {value:&#39;Namibia&#39;,label:&#39;纳米比亚&#39;},
+        {value:&#39;Nauru&#39;,label:&#39;瑙鲁&#39;},
+        {value:&#39;Nepal&#39;,label:&#39;尼泊尔&#39;},
+        {value:&#39;Netheriands Antilles&#39;,label:&#39;荷属安的列斯&#39;},
+        {value:&#39;Netherlands&#39;,label:&#39;荷兰&#39;},
+        {value:&#39;New Zealand&#39;,label:&#39;新西兰&#39;},
+        {value:&#39;Nicaragua&#39;,label:&#39;尼加拉瓜&#39;},
+        {value:&#39;Niger&#39;,label:&#39;尼日尔&#39;},
+        {value:&#39;Nigeria&#39;,label:&#39;尼日利亚&#39;},
+        {value:&#39;North Korea&#39;,label:&#39;朝鲜&#39;},
+        {value:&#39;Norway&#39;,label:&#39;挪威&#39;},
+        {value:&#39;Oman&#39;,label:&#39;阿曼&#39;},
+        {value:&#39;Pakistan&#39;,label:&#39;巴基斯坦&#39;},
+        {value:&#39;Panama&#39;,label:&#39;巴拿马&#39;},
+        {value:&#39;Papua New Cuinea&#39;,label:&#39;巴布亚新几内亚&#39;},
+        {value:&#39;Paraguay&#39;,label:&#39;巴拉圭&#39;},
+        {value:&#39;Peru&#39;,label:&#39;秘鲁&#39;},
+        {value:&#39;Philippines&#39;,label:&#39;菲律宾&#39;},
+        {value:&#39;Poland&#39;,label:&#39;波兰&#39;},
+        {value:&#39;Portugal&#39;,label:&#39;葡萄牙&#39;},
+        {value:&#39;Puerto Rico&#39;,label:&#39;波多黎各&#39;},
+        {value:&#39;Qatar&#39;,label:&#39;卡塔尔&#39;},
+        {value:&#39;Reunion&#39;,label:&#39;留尼旺&#39;},
+        {value:&#39;Romania&#39;,label:&#39;罗马尼亚&#39;},
+        {value:&#39;Russia&#39;,label:&#39;俄罗斯&#39;},
+        {value:&#39;Saint Lueia&#39;,label:&#39;圣卢西亚&#39;},
+        {value:&#39;Saint Vincent&#39;,label:&#39;圣文森特岛&#39;},
+        {value:&#39;Samoa Eastern&#39;,label:&#39;东萨摩亚(美)&#39;},
+        {value:&#39;Samoa Western&#39;,label:&#39;西萨摩亚&#39;},
+        {value:&#39;San Marino&#39;,label:&#39;圣马力诺&#39;},
+        {value:&#39;Sao Tome and Principe&#39;,label:&#39;圣多美和普林西比&#39;},
+        {value:&#39;Saudi Arabia&#39;,label:&#39;沙特阿拉伯&#39;},
+        {value:&#39;Senegal&#39;,label:&#39;塞内加尔&#39;},
+        {value:&#39;Seychelles&#39;,label:&#39;塞舌尔&#39;},
+        {value:&#39;Sierra Leone&#39;,label:&#39;塞拉利昂&#39;},
+        {value:&#39;Singapore&#39;,label:&#39;新加坡&#39;},
+        {value:&#39;Slovakia&#39;,label:&#39;斯洛伐克&#39;},
+        {value:&#39;Slovenia&#39;,label:&#39;斯洛文尼亚&#39;},
+        {value:&#39;Solomon Is&#39;,label:&#39;所罗门群岛&#39;},
+        {value:&#39;Somali&#39;,label:&#39;索马里&#39;},
+        {value:&#39;South Africa&#39;,label:&#39;南非&#39;},
+        {value:&#39;Spain&#39;,label:&#39;西班牙&#39;},
+        {value:&#39;SriLanka&#39;,label:&#39;斯里兰卡&#39;},
+        {value:&#39;St.Lucia&#39;,label:&#39;圣卢西亚&#39;},
+        {value:&#39;St.Vincent&#39;,label:&#39;圣文森特&#39;},
+        {value:&#39;Sudan&#39;,label:&#39;苏丹&#39;},
+        {value:&#39;Suriname&#39;,label:&#39;苏里南&#39;},
+        {value:&#39;Swaziland&#39;,label:&#39;斯威士兰&#39;},
+        {value:&#39;Sweden&#39;,label:&#39;瑞典&#39;},
+        {value:&#39;Switzerland&#39;,label:&#39;瑞士&#39;},
+        {value:&#39;Syria&#39;,label:&#39;叙利亚&#39;},
+        {value:&#39;Tajikstan&#39;,label:&#39;塔吉克斯坦&#39;},
+        {value:&#39;Tanzania&#39;,label:&#39;坦桑尼亚&#39;},
+        {value:&#39;Thailand&#39;,label:&#39;泰国&#39;},
+        {value:&#39;Togo&#39;,label:&#39;多哥&#39;},
+        {value:&#39;Tonga&#39;,label:&#39;汤加&#39;},
+        {value:&#39;Trinidad and Tobago&#39;,label:&#39;特立尼达和多巴哥&#39;},
+        {value:&#39;Tunisia&#39;,label:&#39;突尼斯&#39;},
+        {value:&#39;Turkey&#39;,label:&#39;土耳其&#39;},
+        {value:&#39;Turkmenistan&#39;,label:&#39;土库曼斯坦&#39;},
+        {value:&#39;Uganda&#39;,label:&#39;乌干达&#39;},
+        {value:&#39;Ukraine&#39;,label:&#39;乌克兰&#39;},
+        {value:&#39;United Arab Emirates&#39;,label:&#39;阿拉伯联合酋长国&#39;},
+        {value:&#39;United Kiongdom&#39;,label:&#39;英国&#39;},
+        {value:&#39;United States of America&#39;,label:&#39;美国&#39;},
+        {value:&#39;Uruguay&#39;,label:&#39;乌拉圭&#39;},
+        {value:&#39;Uzbekistan&#39;,label:&#39;乌兹别克斯坦&#39;},
+        {value:&#39;Venezuela&#39;,label:&#39;委内瑞拉&#39;},
+        {value:&#39;Vietnam&#39;,label:&#39;越南&#39;},
+        {value:&#39;Yemen&#39;,label:&#39;也门&#39;},
+        {value:&#39;Yugoslavia&#39;,label:&#39;南斯拉夫&#39;},
+        {value:&#39;Zimbabwe&#39;,label:&#39;津巴布韦&#39;},
+        {value:&#39;Zaire&#39;,label:&#39;扎伊尔&#39;},
+        {value:&#39;Zambia&#39;,label:&#39;赞比亚&#39;}
+    ]
+}]</code></pre>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>频道管理</title>
     <url>/2020/04/15/vue/%E9%A2%91%E9%81%93%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<h1 id="准备组件"><a href="#准备组件" class="headerlink" title="准备组件"></a>准备组件</h1><p>使用组件：<code>src/views/home/index.vue</code></p>
@@ -5969,6 +6222,265 @@ app.listen(4000, () =&gt; console.log(&#39;app is running&#39;))
       </categories>
       <tags>
         <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>egg.js框架</title>
+    <url>/2020/03/13/node/egg/</url>
+    <content><![CDATA[<h1 id="egg-js"><a href="#egg-js" class="headerlink" title="egg.js"></a>egg.js</h1><pre><code class="js">mkdir egg-demo
+cd egg-demo
+npm init egg --type=simple
+npm i</code></pre>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>Router主要用来描述请求URL和具体承担执行动作的Controller的对应关系，框架约定了app/router.js文件用于统一所有的路由规则</p>
+<pre><code class="js">const Controller = require(&#39;egg&#39;).Controller
+
+class ProductController extends Controller {
+    async index () {
+        const { cts } = this
+        ctx.body = &#39;product&#39;
+    }
+}
+
+module.exports = ProductController</code></pre>
+<p>app/router.js</p>
+<pre><code class="js">router.get(&#39;/product&#39;, controller.product.index);</code></pre>
+<h2 id="GET方式请求中的两种传参方式"><a href="#GET方式请求中的两种传参方式" class="headerlink" title="GET方式请求中的两种传参方式"></a>GET方式请求中的两种传参方式</h2><h5 id="后边传参"><a href="#后边传参" class="headerlink" title="?后边传参"></a>?后边传参</h5><pre><code class="js">const Controller = require(&#39;egg&#39;).Controller
+
+class ProductController extends Controller {
+    async index () {
+        const { ctx } = this
+        ctx.body = &#39;product&#39;
+    }
+    async detail () {
+        const { ctx } = this
+        console.log(ctx.query)  // {id: &#39;100&#39;}
+        // ctx.body = &#39;info&#39;
+        ctx.body = `id==${ctx.query.id}`
+    }
+}
+
+module.exports = ProductController</code></pre>
+<pre><code class="js">router.get(&#39;/product/detail&#39;, controller.product.detail);</code></pre>
+<h5 id="传参"><a href="#传参" class="headerlink" title="/传参"></a>/传参</h5><pre><code class="js">async detail2 () { 
+    const { ctx } = this
+    console.log(ctx.params)
+    // ctx.body = &#39;info&#39;
+    ctx.body = `id==${ctx.params.id}`
+    // ctx.body = `id==${ctx.query.id}`
+}</code></pre>
+<pre><code class="js">router.get(&#39;/product/detail2/:id&#39;, controller.product.detail2);</code></pre>
+<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><pre><code class="js">async create () { 
+    const { ctx } = this
+    console.log(ctx.request.body)
+    const { name, age } = ctx.request.body
+    ctx.body = {
+        name,
+        age
+    }
+}</code></pre>
+<pre><code class="js">router.post(&#39;/product/create&#39;, controller.product.create);</code></pre>
+<p>测试会报csrf错</p>
+<p>config/config.default.js</p>
+<pre><code class="js">// 暂时关闭csrf
+  config.security = {
+    csrf: {
+      enable: false
+    }
+  }</code></pre>
+<h2 id="PUT请求"><a href="#PUT请求" class="headerlink" title="PUT请求"></a>PUT请求</h2><pre><code class="js">async update () { 
+    const { ctx } = this
+    console.log(ctx.params)
+    ctx.body = {
+        id: ctx.params.id
+    }
+}</code></pre>
+<pre><code class="js">router.put(&#39;/product/update/:id&#39;, controller.product.update);</code></pre>
+<h2 id="DELETE请求"><a href="#DELETE请求" class="headerlink" title="DELETE请求"></a>DELETE请求</h2><pre><code class="js">async delete () { 
+    const { ctx } = this
+    console.log(ctx.params)
+    ctx.body = {
+        id: ctx.params.id
+    }
+}</code></pre>
+<pre><code class="js">router.delete(&#39;/product/delete/:id&#39;, controller.product.delete);</code></pre>
+<h1 id="egg-js中的service服务"><a href="#egg-js中的service服务" class="headerlink" title="egg.js中的service服务"></a>egg.js中的service服务</h1><p>service是在复杂业务场景下用于做业务逻辑封装的一个抽象层</p>
+<p>优点</p>
+<ul>
+<li>保持controller中的逻辑更加简洁</li>
+<li>保持业务逻辑的独立性，抽象出来的Service可以被多个controller重复调用</li>
+<li>将逻辑和展现分离，更容易编写测试用例</li>
+</ul>
+<p>app/service/product.js</p>
+<pre><code class="js">const Service = require(&#39;egg&#39;).Service
+
+class ProductService extends Service {
+    async index () {
+        return {
+            id: 100,
+            name: &#39;测试&#39;
+        }
+    }
+}
+
+module.exports = ProductService</code></pre>
+<p>app/controller/product.js</p>
+<pre><code class="js">async index () {
+    const { ctx } = this
+    const res = await ctx.service.product.index()
+    // ctx.body = &#39;product&#39;
+    ctx.body = res
+}</code></pre>
+<h1 id="egg中模板引擎的使用"><a href="#egg中模板引擎的使用" class="headerlink" title="egg中模板引擎的使用"></a>egg中模板引擎的使用</h1><p>egg-view</p>
+<pre><code class="js">npm i egg-view-nunjucks --save</code></pre>
+<p>或</p>
+<pre><code class="js">npm i egg-view-ejs --save</code></pre>
+<p>config/plugin.js</p>
+<pre><code class="js">exports.ejs = {
+  enable: true,
+  package: &#39;egg-view-ejs&#39;,
+};</code></pre>
+<p>config/config.default.js</p>
+<pre><code class="js">config.view = {
+    mapping: {
+      &#39;.html&#39;: &#39;ejs&#39;,
+    },
+  };</code></pre>
+<pre><code class="js">async index() {
+    const { ctx } = this;
+    const res = await ctx.service.product.index()
+    await ctx.render(&#39;index.html&#39;, {
+      res,
+      lists: [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+    })
+  }</code></pre>
+<p>app/view/index.html</p>
+<pre><code class="html">&lt;h1&gt;hello&lt;/h1&gt;
+&lt;h2&gt;id: &lt;%=res.id%&gt;&lt;/h2&gt;
+&lt;h2&gt;name: &lt;%=res.name%&gt;&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;%for(var i = 0; i &lt; lists.length; i++) {%>
+    <li><%=lists[i]%></%=lists[i]%></li>
+    <%}%&gt; &lt; ul&gt;< code></%}%&gt;></code></pre>
+<h1 id="egg中静态资源的使用"><a href="#egg中静态资源的使用" class="headerlink" title="egg中静态资源的使用"></a>egg中静态资源的使用</h1><p>app/public/</p>
+<pre><code class="js">&lt;link rel=&quot;stylesheet&quot; href=&quot;/public/css/index.css&quot;&gt;&lt;/link&gt;</code></pre>
+<h1 id="搭建前端系统，引入vant组件库"><a href="#搭建前端系统，引入vant组件库" class="headerlink" title="搭建前端系统，引入vant组件库"></a>搭建前端系统，引入vant组件库</h1><pre><code class="js">npm i -g @vue/cli
+vue create client
+npm i vant -S
+npm i babel-plugin-import -D</code></pre>
+<pre><code class="vue">&lt;template&gt;
+  &lt;div class=&quot;home&quot;&gt;
+    &lt;van-button type=&quot;primary&quot;&gt;主要按钮&lt;/van-button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { Button } from &#39;vant&#39;
+export default {
+  name: &#39;Home&#39;,
+  components: {
+    [Button.name]: Button
+  }
+}
+&lt;/script&gt;</code></pre>
+<p>在 babel.config.js 中配置</p>
+<pre><code class="js">module.exports = {
+  plugins: [
+    [&#39;import&#39;, {
+      libraryName: &#39;vant&#39;,
+      libraryDirectory: &#39;es&#39;,
+      style: true
+    }, &#39;vant&#39;]
+  ]
+}</code></pre>
+<h1 id="egg-mysql"><a href="#egg-mysql" class="headerlink" title="egg-mysql"></a>egg-mysql</h1><pre><code class="js">npm i --save egg-mysql</code></pre>
+<p>config/plugin.js</p>
+<pre><code class="js">exports.mysql = {
+  enable: true,
+  package: &#39;egg-mysql&#39;,
+};</code></pre>
+<p>config/config.default.js</p>
+<pre><code class="js">  exports.mysql = {
+    // 单数据库信息配置
+    client: {
+      // host
+      host: &#39;localhost&#39;,
+      // 端口号
+      port: &#39;3306&#39;,
+      // 用户名
+      user: &#39;root&#39;,
+      // 密码
+      password: &#39;&#39;,
+      // 数据库名
+      database: &#39;egg_article&#39;,
+    },
+    // 是否加载到 app 上，默认开启
+    app: true,
+    // 是否加载到 agent 上，默认关闭
+    agent: false,
+  };</code></pre>
+<p>app/controller/home.js</p>
+<pre><code class="js">async index() {
+    const { ctx, app } = this;
+    const res = await app.mysql.select(&#39;article&#39;)   // Promise用await修饰
+    console.log(res)
+    ctx.body = res;
+  }</code></pre>
+<h5 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h5><p>app/controller/article.js</p>
+<pre><code class="js">async create () {
+    const { ctx } = this
+    const res = await ctx.service.article.create(ctx.request.body)
+    if (res) {
+        ctx.body = {
+            status: 200,
+            data: res
+        }
+    } else {
+        ctx.body = {
+            status: 500,
+            message: &#39;发布失败&#39;
+        }
+    }
+}</code></pre>
+<p>app/service/article</p>
+<pre><code class="js">async create(params) {
+    const { app } = this
+    try {
+        const res = app.mysql.insert(&#39;article&#39;, params)
+        return res
+    } catch(err) {
+        console.log(err)
+        return null
+    }
+}</code></pre>
+<p>router.js</p>
+<pre><code class="js">router.post(&#39;/article/create&#39;, controller.article.create);</code></pre>
+<h1 id="moment-js处理时间问题"><a href="#moment-js处理时间问题" class="headerlink" title="moment.js处理时间问题"></a>moment.js处理时间问题</h1><pre><code class="js">npm i --save moment</code></pre>
+<pre><code class="js">const moment = require(&#39;moment&#39;)
+
+const params = {
+    ...ctx.request.body,
+    createTime: moment().format(&#39;YYYY-MM-DD HH-mm-ss&#39;)
+}
+const res = await ctx.service.article.create(params)</code></pre>
+<p>联调 </p>
+<p>vue.config.js</p>
+<pre><code class="js">module.exports = {
+    devServer: {
+        proxy: {
+            &#39;/article&#39;: {
+                target: &#39;http://localhost:7001&#39;,
+                ws: true,
+                changeOrigin: true
+            }
+        }
+    }
+}</code></pre>
+]]></content>
+      <categories>
+        <category>node</category>
+      </categories>
+      <tags>
+        <tag>egg</tag>
       </tags>
   </entry>
   <entry>
